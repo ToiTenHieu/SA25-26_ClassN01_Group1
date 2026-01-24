@@ -1,0 +1,309 @@
+{% extends "base.html" %}
+
+{% block title %}Thư viện{% endblock %}
+
+{% block extra_css%}
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .contact-card:hover { transform: translateY(-4px); }
+        .hero-gradient { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .map-container { height: 400px; background: linear-gradient(45deg, #f0f9ff, #e0e7ff); }
+        .info-card:hover { transform: translateY(-2px); }
+  
+{% endblock %}
+{% block content %}
+
+<body class="bg-gray-50">
+    <!-- Header -->
+    
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4">Liên Hệ Với Chúng Tôi</h2>
+            <p class="text-xl opacity-90 max-w-3xl mx-auto mb-8">
+                Chúng tôi luôn sẵn sàng hỗ trợ bạn. Hãy liên hệ để được tư vấn và giải đáp mọi thắc mắc
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg px-6 py-3">
+                    <span class="text-2xl mr-2">📞</span>
+                    <span class="font-medium">Hotline 24/7</span>
+                </div>
+                <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg px-6 py-3">
+                    <span class="text-2xl mr-2">💬</span>
+                    <span class="font-medium">Chat trực tuyến</span>
+                </div>
+                <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg px-6 py-3">
+                    <span class="text-2xl mr-2">📧</span>
+                    <span class="font-medium">Email hỗ trợ</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Information -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-bold text-gray-900 mb-4">Thông tin liên hệ</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">Nhiều cách để bạn có thể liên hệ và tương tác với chúng tôi</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="info-card bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl text-center transition-transform duration-300 hover:shadow-lg">
+                    <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-white text-2xl">📍</span>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-4 text-gray-900">Địa chỉ</h4>
+                    <p class="text-gray-600 mb-4">Thúy Lai, Phú Kim, Thạch Thất, Hà Nội</p>
+                    <a href="https://www.google.com/maps/@21.0615043,105.5766845,107m/data=!3m1!1e3?entry=ttu&g_ep=EgoyMDI1MTAwNC4wIKXMDSoASAFQAw%3D%3D" target="_blank">
+                        Bấm vào đây để xem vị trí của chúng tôi trên Google Maps
+                    </a>
+                </div>
+
+                <div class="info-card bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-xl text-center transition-transform duration-300 hover:shadow-lg">
+                    <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-white text-2xl">📞</span>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-4 text-gray-900">Điện thoại</h4>
+                    <p class="text-gray-600 mb-2">Hotline: <a href="tel:+84123456789" class="text-green-600 hover:text-green-700 font-medium">0396984248</a></p>
+                    <p class="text-gray-600 mb-2">Fax: <span class="font-medium">123456789</span></p>
+                    <p class="text-sm text-gray-500">Hỗ trợ 24/7</p>
+                </div>
+
+                <div class="info-card bg-gradient-to-br from-purple-50 to-purple-100 p-8 rounded-xl text-center transition-transform duration-300 hover:shadow-lg">
+                    <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-white text-2xl">📧</span>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-4 text-gray-900">Email</h4>
+                    <p class="text-gray-600 mb-2">Tổng đài: <a href="mailto:info@thuvien.edu.vn" class="text-purple-600 hover:text-purple-700 font-medium">info@thuvien.edu.vn</a></p>
+                    <p class="text-gray-600 mb-2">Hỗ trợ: <a href="mailto:support@thuvien.edu.vn" class="text-purple-600 hover:text-purple-700 font-medium">support@thuvien.edu.vn</a></p>
+                    <p class="text-sm text-gray-500">Phản hồi trong 24h</p>
+                </div>
+
+                <div class="info-card bg-gradient-to-br from-orange-50 to-orange-100 p-8 rounded-xl text-center transition-transform duration-300 hover:shadow-lg">
+                    <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-white text-2xl">🌐</span>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-4 text-gray-900">Mạng xã hội</h4>
+                    <div class="space-y-2">
+                        <p><a href="#" class="text-orange-600 hover:text-orange-700 font-medium">Facebook</a></p>
+                        <p><a href="#" class="text-orange-600 hover:text-orange-700 font-medium">Instagram</a></p>
+                        <p><a href="#" class="text-orange-600 hover:text-orange-700 font-medium">YouTube</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map and Contact Form -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Map -->
+                <div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">Vị trí thư viện</h3>
+                    <div class="map-container rounded-xl shadow-lg overflow-hidden relative">
+                        <div id="map"class="absolute inset-0 flex items-center justify-center"></div>
+                        <script>
+                            function initMap() {
+                                const myLatLng = { lat: {{ lat }}, lng: {{ lng }} };
+                                const map = new google.maps.Map(document.getElementById("map"), {
+                                    zoom: 15,
+                                    center: myLatLng,
+                                });
+                                new google.maps.Marker({
+                                    position: myLatLng,
+                                    map: map,
+                                    title: "Thư viện trung tâm",
+                                });
+                            }
+                        </script>
+
+                        <script async defer
+                        src="https://maps.googleapis.com/maps/api/js?key= AIzaSyCS0waA3JxAA9bB0-rAd-YH_eM2ayhugD0 &callback=initMap">
+                        </script>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">Gửi góp ý cho thư viện</h3>
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <form id="contactForm" class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Họ và tên *</label>
+                                    <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Nhập họ và tên">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                                    <input type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Nhập email">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Số điện thoại</label>
+                                    <input type="tel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Nhập số điện thoại">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Chủ đề</label>
+                                    <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                        <option value="">Chọn chủ đề</option>
+                                        <option value="services">Dịch vụ thư viện</option>
+                                        <option value="technical">Hỗ trợ kỹ thuật</option>
+                                        <option value="complaint">Khiếu nại</option>
+                                        <option value="suggestion">Góp ý</option>
+                                        <option value="other">Khác</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Tin nhắn *</label>
+                                <textarea rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Nhập nội dung tin nhắn..."></textarea>
+                            </div>
+
+                            <div class="flex items-center">
+                                <input type="checkbox" id="newsletter" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                                <label for="newsletter" class="ml-2 block text-sm text-gray-700">
+                                    Đăng ký nhận thông tin mới từ thư viện
+                                </label>
+                            </div>
+
+                            <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition-colors font-medium">
+                                Gửi tin nhắn
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Operating Hours -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-bold text-gray-900 mb-4">Giờ làm việc</h3>
+                <p class="text-gray-600">Thời gian hoạt động của các dịch vụ thư viện</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-xl p-8 text-center">
+                    <div class="w-16 h-16 bg-indigo-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-white text-2xl">📚</span>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-4 text-gray-900">Thư viện chính</h4>
+                    <div class="space-y-2 text-gray-600">
+                        <p><strong>Thứ 2 - Thứ 6:</strong> 7:00 - 22:00</p>
+                        <p><strong>Thứ 7 - Chủ nhật:</strong> 8:00 - 20:00</p>
+                        <p><strong>Ngày lễ:</strong> 9:00 - 17:00</p>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-8 text-center">
+                    <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-white text-2xl">💻</span>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-4 text-gray-900">Thư viện số</h4>
+                    <div class="space-y-2 text-gray-600">
+                        <p><strong>Truy cập:</strong> 24/7</p>
+                        <p><strong>Hỗ trợ kỹ thuật:</strong></p>
+                        <p>7:00 - 23:00 hàng ngày</p>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-8 text-center">
+                    <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-white text-2xl">🎯</span>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-4 text-gray-900">Dịch vụ đặc biệt</h4>
+                    <div class="space-y-2 text-gray-600">
+                        <p><strong>Tư vấn nghiên cứu:</strong></p>
+                        <p>Thứ 2 - Thứ 6: 9:00 - 17:00</p>
+                        <p><strong>Đào tạo kỹ năng:</strong></p>
+                        <p>Theo lịch đăng ký</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Emergency Contact -->
+            <div class="mt-12 bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+                <h4 class="text-lg font-semibold text-red-800 mb-2">Liên hệ khẩn cấp</h4>
+                <p class="text-red-700 mb-4">Trong trường hợp khẩn cấp ngoài giờ làm việc</p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="tel:+84987654321" class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors">
+                        📞 0987 654 321
+                    </a>
+                    <a href="mailto:emergency@thuvien.edu.vn" class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors">
+                        📧 emergency@thuvien.edu.vn
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Quick Access -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-bold text-gray-900 mb-4">Câu hỏi thường gặp</h3>
+                <p class="text-gray-600">Tìm câu trả lời nhanh cho những thắc mắc phổ biến</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="contact-card bg-white rounded-xl p-6 shadow-sm transition-transform duration-300 hover:shadow-lg">
+                    <h4 class="font-semibold text-gray-900 mb-3">Làm thẻ thư viện mất bao lâu?</h4>
+                    <p class="text-gray-600 text-sm mb-4">Thẻ thư viện được làm ngay trong ngày, chỉ mất 15-30 phút.</p>
+                    <button class="text-indigo-600 hover:text-indigo-700 text-sm font-medium">Xem chi tiết →</button>
+                </div>
+
+                <div class="contact-card bg-white rounded-xl p-6 shadow-sm transition-transform duration-300 hover:shadow-lg">
+                    <h4 class="font-semibold text-gray-900 mb-3">Có thể mượn sách về nhà không?</h4>
+                    <p class="text-gray-600 text-sm mb-4">Có, thành viên có thể mượn sách về nhà với thời hạn tùy theo gói thành viên.</p>
+                    <button class="text-indigo-600 hover:text-indigo-700 text-sm font-medium">Xem chi tiết →</button>
+                </div>
+
+                <div class="contact-card bg-white rounded-xl p-6 shadow-sm transition-transform duration-300 hover:shadow-lg">
+                    <h4 class="font-semibold text-gray-900 mb-3">Có wifi miễn phí không?</h4>
+                    <p class="text-gray-600 text-sm mb-4">Có, thư viện cung cấp wifi miễn phí tốc độ cao cho tất cả độc giả.</p>
+                    <button class="text-indigo-600 hover:text-indigo-700 text-sm font-medium">Xem chi tiết →</button>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <button class="bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transition-colors">
+                    Xem tất cả FAQ
+                </button>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <script>
+        // Handle contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const name = this.querySelector('input[type="text"]').value;
+            const email = this.querySelector('input[type="email"]').value;
+            const phone = this.querySelector('input[type="tel"]').value;
+            const subject = this.querySelector('select').value;
+            const message = this.querySelector('textarea').value;
+            const newsletter = this.querySelector('#newsletter').checked;
+            
+            // Show success message
+            alert(`Cảm ơn ${name}! Tin nhắn của bạn đã được gửi thành công. Chúng tôi sẽ phản hồi qua email ${email} trong vòng 24 giờ.${newsletter ? ' Bạn đã đăng ký nhận thông tin mới từ thư viện.' : ''}`);
+            
+            // Reset form
+            this.reset();
+        });
+
+        // Show location on map
+        
+
+
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97e7fe4492e704b5',t:'MTc1Nzc3MDE2NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+{% endblock %}

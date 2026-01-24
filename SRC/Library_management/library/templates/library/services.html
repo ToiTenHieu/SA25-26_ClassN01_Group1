@@ -1,0 +1,249 @@
+{% extends "base.html" %}
+
+{% block title %}Thư viện{% endblock %}
+
+{% block extra_css%}
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .service-card:hover { transform: translateY(-4px); }
+        .hero-gradient { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .pricing-card:hover { transform: translateY(-2px); }
+        .faq-item { transition: all 0.3s ease; }   
+{% endblock %}
+{% block content %}
+
+
+<body class="bg-gray-50">
+    <!-- Header -->
+    
+
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4">Dịch Vụ Thư Viện</h2>
+            <p class="text-xl opacity-90 max-w-3xl mx-auto mb-8">
+                Chúng tôi cung cấp đa dạng dịch vụ chất lượng cao để hỗ trợ việc học tập, nghiên cứu và phát triển tri thức của bạn
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg px-6 py-3">
+                    <span class="text-2xl mr-2">⏰</span>
+                    <span class="font-medium">Mở cửa 24/7</span>
+                </div>
+                <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg px-6 py-3">
+                    <span class="text-2xl mr-2">📱</span>
+                    <span class="font-medium">Dịch vụ số</span>
+                </div>
+                <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg px-6 py-3">
+                    <span class="text-2xl mr-2">👥</span>
+                    <span class="font-medium">Hỗ trợ chuyên nghiệp</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Main Services -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-bold text-gray-900 mb-4">Dịch vụ chính</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">Khám phá các dịch vụ đa dạng được thiết kế để đáp ứng mọi nhu cầu học tập và nghiên cứu</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="service-card bg-gradient-to-br from-blue-50 to-indigo-100 p-8 rounded-xl transition-transform duration-300 hover:shadow-lg">
+                    <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-white text-2xl">📖</span>
+                    </div>
+                    <h4 class="text-xl font-semibold text-center mb-4">Mượn sách truyền thống</h4>
+                    <ul class="space-y-2 text-gray-600 mb-6">
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Mượn tại chỗ và về nhà</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Thời hạn mượn linh hoạt</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Gia hạn online</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Đặt trước sách</li>
+                    </ul>
+                    <a href="{% url 'library:about' %}">
+                        <button class="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition-colors">
+                            Tìm hiểu thêm
+                        </button>
+                    </a>
+                </div>
+
+                <div class="service-card bg-gradient-to-br from-purple-50 to-purple-100 p-8 rounded-xl transition-transform duration-300 hover:shadow-lg">
+                    <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-white text-2xl">💻</span>
+                    </div>
+                    <h4 class="text-xl font-semibold text-center mb-4">Thư viện số</h4>
+                    <ul class="space-y-2 text-gray-600 mb-6">
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>10,000+ e-book</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Tạp chí điện tử</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Cơ sở dữ liệu học thuật</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Truy cập 24/7</li>
+                    </ul>
+                    <a href="{% url 'ebook_reader:digital' %}">
+                        <button class="w-full bg-purple-500 text-white py-3 rounded-lg hover:bg-purple-600 transition-colors">
+                            Truy cập ngay
+                        </button>
+                    </a>
+                </div>
+
+                <div class="service-card bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-xl transition-transform duration-300 hover:shadow-lg">
+                    <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-white text-2xl">🎓</span>
+                    </div>
+                    <h4 class="text-xl font-semibold text-center mb-4">Hỗ trợ nghiên cứu</h4>
+                    <ul class="space-y-2 text-gray-600 mb-6">
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Tư vấn chuyên môn</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Hướng dẫn trích dẫn</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Tìm kiếm tài liệu</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Đào tạo kỹ năng</li>
+                    </ul>
+                    <button class="w-full bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition-colors">
+                        Sắp ra mắt
+                    </button>
+                </div>
+
+                <div class="service-card bg-gradient-to-br from-orange-50 to-orange-100 p-8 rounded-xl transition-transform duration-300 hover:shadow-lg">
+                    <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-white text-2xl">🏢</span>
+                    </div>
+                    <h4 class="text-xl font-semibold text-center mb-4">Không gian học tập</h4>
+                    <ul class="space-y-2 text-gray-600 mb-6">
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Phòng học nhóm</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Khu vực yên tĩnh</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Wifi miễn phí</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Thiết bị hỗ trợ</li>
+                    </ul>
+                    <button class="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 transition-colors">
+                        Đặt chỗ
+                    </button>
+                </div>
+
+                <div class="service-card bg-gradient-to-br from-pink-50 to-pink-100 p-8 rounded-xl transition-transform duration-300 hover:shadow-lg">
+                    <div class="w-16 h-16 bg-pink-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-white text-2xl">🎨</span>
+                    </div>
+                    <h4 class="text-xl font-semibold text-center mb-4">Sự kiện & Hoạt động</h4>
+                    <ul class="space-y-2 text-gray-600 mb-6">
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Hội thảo khoa học</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Câu lạc bộ đọc sách</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Triển lãm</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Khóa học kỹ năng</li>
+                    </ul>
+                    <button class="w-full bg-pink-500 text-white py-3 rounded-lg hover:bg-pink-600 transition-colors">
+                        Sắp ra mắt
+                    </button>
+                </div>
+
+                <div class="service-card bg-gradient-to-br from-teal-50 to-teal-100 p-8 rounded-xl transition-transform duration-300 hover:shadow-lg">
+                    <div class="w-16 h-16 bg-teal-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-white text-2xl">🖨️</span>
+                    </div>
+                    <h4 class="text-xl font-semibold text-center mb-4">Dịch vụ kỹ thuật</h4>
+                    <ul class="space-y-2 text-gray-600 mb-6">
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>In ấn, photocopy</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Scan tài liệu</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Máy tính công cộng</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Hỗ trợ kỹ thuật</li>
+                    </ul>
+                    <button class="w-full bg-teal-500 text-white py-3 rounded-lg hover:bg-teal-600 transition-colors">
+                        Dịch vụ tại thư viện
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Plans -->
+    <!-- Registration Form -->
+<section class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-bold text-gray-900 mb-4">Câu hỏi thường gặp</h3>
+                <p class="text-gray-600">Tìm câu trả lời cho những thắc mắc phổ biến</p>
+            </div>
+
+            <div class="space-y-4">
+                <div class="faq-item bg-gray-50 rounded-lg">
+                    <button onclick="toggleFAQ(1)" class="w-full text-left p-6 focus:outline-none">
+                        <div class="flex justify-between items-center">
+                            <h4 class="text-lg font-semibold text-gray-900">Làm thế nào để đăng ký thành viên thư viện?</h4>
+                            <span id="faq-icon-1" class="text-2xl text-gray-400">+</span>
+                        </div>
+                    </button>
+                    <div id="faq-content-1" class="hidden px-6 pb-6">
+                        <p class="text-gray-600">Bạn có thể đăng ký trực tiếp tại quầy thủ thư hoặc online qua website. Cần mang theo CMND/CCCD và ảnh 3x4. Sinh viên cần thêm thẻ sinh viên còn hiệu lực.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-gray-50 rounded-lg">
+                    <button onclick="toggleFAQ(2)" class="w-full text-left p-6 focus:outline-none">
+                        <div class="flex justify-between items-center">
+                            <h4 class="text-lg font-semibold text-gray-900">Thời gian mở cửa của thư viện?</h4>
+                            <span id="faq-icon-2" class="text-2xl text-gray-400">+</span>
+                        </div>
+                    </button>
+                    <div id="faq-content-2" class="hidden px-6 pb-6">
+                        <p class="text-gray-600">Thư viện mở cửa từ 7:00 - 22:00 hàng ngày, kể cả cuối tuần. Dịch vụ thư viện số có thể truy cập 24/7. Một số dịch vụ đặc biệt có thể có giờ hoạt động khác.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-gray-50 rounded-lg">
+                    <button onclick="toggleFAQ(3)" class="w-full text-left p-6 focus:outline-none">
+                        <div class="flex justify-between items-center">
+                            <h4 class="text-lg font-semibold text-gray-900">Có thể gia hạn sách online không?</h4>
+                            <span id="faq-icon-3" class="text-2xl text-gray-400">+</span>
+                        </div>
+                    </button>
+                    <div id="faq-content-3" class="hidden px-6 pb-6">
+                        <p class="text-gray-600">Có, bạn có thể gia hạn sách qua website hoặc app di động. Mỗi cuốn sách có thể gia hạn tối đa 2 lần, với điều kiện không có người khác đặt trước.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-gray-50 rounded-lg">
+                    <button onclick="toggleFAQ(4)" class="w-full text-left p-6 focus:outline-none">
+                        <div class="flex justify-between items-center">
+                            <h4 class="text-lg font-semibold text-gray-900">Phí phạt khi trả sách muộn?</h4>
+                            <span id="faq-icon-4" class="text-2xl text-gray-400">+</span>
+                        </div>
+                    </button>
+                    <div id="faq-content-4" class="hidden px-6 pb-6">
+                        <p class="text-gray-600">Phí phạt là 2,000₫/ngày/cuốn cho sách thường và 5,000₫/ngày/cuốn cho sách tham khảo. Sau 30 ngày quá hạn, bạn sẽ phải bồi thường theo giá sách.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-gray-50 rounded-lg">
+                    <button onclick="toggleFAQ(5)" class="w-full text-left p-6 focus:outline-none">
+                        <div class="flex justify-between items-center">
+                            <h4 class="text-lg font-semibold text-gray-900">Làm thế nào để đặt phòng học nhóm?</h4>
+                            <span id="faq-icon-5" class="text-2xl text-gray-400">+</span>
+                        </div>
+                    </button>
+                    <div id="faq-content-5" class="hidden px-6 pb-6">
+                        <p class="text-gray-600">Bạn có thể đặt phòng qua hệ thống online hoặc tại quầy thông tin. Cần đặt trước ít nhất 2 giờ. Thành viên Tiêu chuẩn và Cao cấp được ưu tiên và miễn phí.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+
+
+    <script>
+        // Toggle FAQ
+        function toggleFAQ(id) {
+            const content = document.getElementById(`faq-content-${id}`);
+            const icon = document.getElementById(`faq-icon-${id}`);
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.textContent = '−';
+                icon.classList.add('text-indigo-600');
+            } else {
+                content.classList.add('hidden');
+                icon.textContent = '+';
+                icon.classList.remove('text-indigo-600');
+            }
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97e6d59f62cbb451',t:'MTc1Nzc1ODAxMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
+{% endblock %}

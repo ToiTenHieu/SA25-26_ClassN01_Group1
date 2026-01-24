@@ -1,0 +1,108 @@
+{% extends "librarian_dashboard.html" %}
+{% block content %}
+
+<!-- Overlay nền mờ phủ toàn trang -->
+<div id="overlay" class="fixed inset-0 bg-black bg-opacity-30 z-40"></div>
+
+<!-- Form Chỉnh Sửa Người Dùng (nổi sáng, giống bản trên) -->
+<div id="editForm"
+     class="fixed inset-0 flex items-center justify-center z-[9999] transition-all duration-300 animate-fadeIn">
+  <div class="bg-white rounded-2xl shadow-2xl p-6 w-[500px] card-hover">
+
+    <!-- Header Gradient -->
+    <div class="bg-gradient-to-r from-blue-500 to-purple-500 p-4 rounded-t-2xl -mx-6 -mt-6 mb-6 flex items-center justify-between">
+      <h2 class="text-white font-bold text-lg flex items-center gap-2">
+        👤 Chỉnh Sửa Người Dùng
+      </h2>
+    </div>
+
+    <!-- Form -->
+    <form method="POST" class="space-y-4">
+      {% csrf_token %}
+
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Tên đầy đủ</label>
+        <input type="text" name="name" value="{{ user.name }}"
+               class="border rounded-lg p-2 w-full focus:ring-2 focus:ring-purple-400"/>
+      </div>
+
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Điện thoại</label>
+        <input type="text" name="phone" value="{{ user.phone }}"
+               class="border rounded-lg p-2 w-full focus:ring-2 focus:ring-purple-400"/>
+      </div>
+
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Địa chỉ</label>
+        <input type="text" name="address" value="{{ user.address }}"
+               class="border rounded-lg p-2 w-full focus:ring-2 focus:ring-purple-400"/>
+      </div>
+
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Ngày sinh</label>
+        <input type="date" name="date_of_birth" value="{{ user.date_of_birth|date:'Y-m-d' }}"
+               class="border rounded-lg p-2 w-full focus:ring-2 focus:ring-purple-400"/>
+      </div>
+
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Giới tính</label>
+        <select name="gender"
+                class="border rounded-lg p-2 w-full focus:ring-2 focus:ring-purple-400">
+          <option value="male" {% if user.gender == 'male' %}selected{% endif %}>Nam</option>
+          <option value="female" {% if user.gender == 'female' %}selected{% endif %}>Nữ</option>
+        </select>
+      </div>
+
+      <!-- Nút -->
+      <div class="flex justify-end gap-3 pt-4">
+        <button type="submit"
+                class="px-5 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-blue-500 text-white font-medium hover:opacity-90"
+                onclick="unlockPage()">
+          ✔ Lưu
+        </button>
+        <a href="{% url 'librarian:managebook' %}?section=quanLyNguoiDung"
+           class="px-5 py-2 rounded-lg bg-gray-400 hover:bg-gray-500 text-white font-medium"
+           onclick="unlockPage()">
+          ✖ Huỷ
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<style>
+/* Hiệu ứng hover nhẹ cho form */
+.card-hover {
+  transition: all 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Hiệu ứng mở popup */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease-out;
+}
+
+/* Khóa phần nền */
+.locked {
+  pointer-events: none;
+  opacity: 0.4;
+}
+</style>
+
+<script>
+function unlockPage() {
+  const overlay = document.getElementById("overlay");
+  const lockedContent = document.getElementById("lockedContent");
+  if (overlay) overlay.remove();
+  if (lockedContent) lockedContent.classList.remove("locked");
+}
+</script>
+
+{% endblock %}

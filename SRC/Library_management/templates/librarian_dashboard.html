@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hệ Thống Quản Lý Thư Viện</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+      body {
+        box-sizing: border-box;
+      }
+
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+      * {
+        font-family: "Inter", sans-serif;
+      }
+
+      .gradient-bg {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+
+      .glass-effect {
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+      }
+
+      .card-hover {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .card-hover:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+      }
+
+      .floating-animation {
+        animation: floating 6s ease-in-out infinite;
+      }
+
+      @keyframes floating {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .slide-in-right {
+        animation: slideInRight 0.5s ease-out;
+      }
+
+      @keyframes slideInRight {
+        from {
+          transform: translateX(100px);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      .fade-in-up {
+        animation: fadeInUp 0.6s ease-out;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          transform: translateY(30px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .pulse-glow {
+        animation: pulseGlow 2s infinite;
+      }
+
+      @keyframes pulseGlow {
+        0%,
+        100% {
+          box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+        }
+        50% {
+          box-shadow: 0 0 30px rgba(102, 126, 234, 0.6);
+        }
+      }
+
+      .nav-item {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .nav-item::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+
+      .nav-item:hover::before {
+        left: 100%;
+      }
+
+      .book-card {
+        background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+        border: 1px solid rgba(226, 232, 240, 0.8);
+      }
+
+      .status-badge {
+        backdrop-filter: blur(10px);
+      }
+
+      .modal-backdrop {
+        backdrop-filter: blur(8px);
+      }
+
+      .category-btn {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .category-btn::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition: width 0.3s, height 0.3s;
+      }
+
+      .category-btn:hover::after {
+        width: 300px;
+        height: 300px;
+      }
+
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+
+      .text-shadow {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .icon-bounce {
+        animation: iconBounce 2s infinite;
+      }
+
+      @keyframes iconBounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-10px);
+        }
+        60% {
+          transform: translateY(-5px);
+        }
+      }
+    </style>
+  </head>
+  <body class="min-h-screen gradient-bg">
+    <!-- Header với hiệu ứng glass -->
+  <header class="glass-effect border-b border-white/20">
+  <div class="container mx-auto px-6 py-6">
+    <div class="flex items-center justify-between">
+      <!-- Logo + tên -->
+      <div class="flex items-center space-x-4">
+        <div class="relative">
+          <div
+            class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center pulse-glow"
+          >
+            <svg
+              class="w-8 h-8 text-white icon-bounce"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+        </div>
+        <div>
+          <h1 class="text-3xl font-bold text-white text-shadow">Thư Viện Số</h1>
+          <p class="text-white/80 font-medium">Hệ thống quản lý hiện đại</p>
+        </div>
+      </div>
+
+      <!-- Thông tin người dùng -->
+      <div class="text-right">
+        <div class="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
+          <p class="text-white/90 font-semibold">
+            👋 Xin chào,
+            <span class="text-yellow-300">
+              {{ request.user.name|default:request.user.username }}
+            </span>
+          </p>
+
+          <p id="real-time" class="text-xs text-gray-400 mt-1"></p>
+
+          <script>
+            function updateTime() {
+              const now = new Date();
+              const formatted = now.toLocaleString("vi-VN", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+              });
+              document.getElementById("real-time").textContent = formatted;
+            }
+            updateTime();
+            setInterval(updateTime, 1000);
+          </script>
+
+          <!-- Hai nút nằm cạnh nhau -->
+          <div class="flex justify-end gap-3 mt-3">
+            <button
+              class="bg-white/20 text-white px-4 py-2 rounded-lg hover:bg-white/30 transition-all duration-300 text-sm font-medium"
+            >
+              👤 Hồ Sơ
+            </button>
+
+            <form method="POST" action="{% url 'account:logout' %}">
+              {% csrf_token %}
+              <button
+                type="submit"
+                class="bg-gradient-to-r from-red-500 to-red-700 text-white px-4 py-2 rounded-lg shadow-md hover:from-red-600 hover:to-red-800 hover:shadow-lg transform hover:scale-105 transition-all duration-300 text-sm font-medium"
+              >
+                🚪 Đăng Xuất
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="container mx-auto px-6 py-8">
+      <!-- Navigation Menu với hiệu ứng đẹp -->
+      <div
+        class="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl mb-8 overflow-hidden border border-white/20"
+      >
+        <div class="grid grid-cols-1 md:grid-cols-4">
+          <a
+            href="?section=quanLySach"
+            onclick="showSection('quanLySach', this); return false;"
+            class="nav-item px-8 py-6 ..."
+          >
+            <div class="flex flex-col items-center space-y-2">
+              <span class="text-2xl">📚</span>
+              <span>Quản Lý Sách</span>
+            </div>
+          </a>
+
+          <a
+            href="?section=muonTraSach"
+            onclick="showSection('muonTraSach', this); return false;"
+            class="nav-item px-8 py-6 ..."
+          >
+            <div class="flex flex-col items-center space-y-2">
+              <span class="text-2xl">🔄</span>
+              <span>Mượn/Trả Sách</span>
+            </div>
+          </a>
+
+          <a
+            href="?section=quanLyNguoiDung"
+            onclick="showSection('quanLyNguoiDung', this); return false;"
+            class="nav-item px-8 py-6 ..."
+          >
+            <div class="flex flex-col items-center space-y-2">
+              <span class="text-2xl">👥</span>
+              <span>Người Dùng</span>
+            </div>
+          </a>
+
+          <a
+            href="?section=kiemTraTinhTrang"
+            onclick="showSection('kiemTraTinhTrang', this); return false;"
+            class="nav-item px-8 py-6 ..."
+          >
+            <div class="flex flex-col items-center space-y-2">
+              <span class="text-2xl">📊</span>
+              <span>Thống Kê</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Quản Lý Sách Section -->
+      {% block content %} {% endblock %}
+
+      <!-- Notification Toast -->
+      <div id="notification" class="fixed top-4 right-4 z-50 hidden">
+        <div
+          class="bg-white rounded-2xl shadow-2xl p-6 border-l-4 border-green-500 slide-in-right"
+        >
+          <div class="flex items-center space-x-3">
+            <div
+              class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center"
+            >
+              <span class="text-white text-sm">✓</span>
+            </div>
+            <p id="notificationText" class="text-gray-800 font-semibold"></p>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        // Chuyển đổi giữa các section với hiệu ứng đẹp
+        function showSection(sectionName, buttonElement) {
+          // Ẩn tất cả sections
+          document.querySelectorAll(".section").forEach((section) => {
+            section.classList.add("hidden");
+          });
+
+          // Hiển thị section được chọn
+          const targetSection = document.getElementById(sectionName);
+          if (targetSection) {
+            targetSection.classList.remove("hidden");
+            targetSection.classList.add("fade-in-up");
+          }
+
+          // Cập nhật active state cho navigation buttons
+          document.querySelectorAll(".nav-item").forEach((btn) => {
+            btn.classList.remove(
+              "bg-gradient-to-r",
+              "from-blue-500",
+              "to-purple-600",
+              "from-green-500",
+              "to-teal-600",
+              "from-purple-500",
+              "to-pink-600",
+              "from-orange-500",
+              "to-red-600",
+              "text-white"
+            );
+            btn.classList.add("text-gray-700");
+          });
+
+          // Thêm active state cho button được click
+          if (buttonElement) {
+            buttonElement.classList.remove("text-gray-700");
+            if (sectionName === "quanLySach") {
+              buttonElement.classList.add(
+                "bg-gradient-to-r",
+                "from-blue-500",
+                "to-purple-600",
+                "text-white"
+              );
+            } else if (sectionName === "muonTraSach") {
+              buttonElement.classList.add(
+                "bg-gradient-to-r",
+                "from-green-500",
+                "to-teal-600",
+                "text-white"
+              );
+            } else if (sectionName === "quanLyNguoiDung") {
+              buttonElement.classList.add(
+                "bg-gradient-to-r",
+                "from-purple-500",
+                "to-pink-600",
+                "text-white"
+              );
+            } else if (sectionName === "kiemTraTinhTrang") {
+              buttonElement.classList.add(
+                "bg-gradient-to-r",
+                "from-orange-500",
+                "to-red-600",
+                "text-white"
+              );
+            }
+          }
+
+          // 👉 Cập nhật URL mà không reload
+          const newUrl = window.location.pathname + "?section=" + sectionName;
+          history.pushState(null, "", newUrl);
+        }
+
+        // Mở modal thêm sách
+        function openAddBookModal() {
+          document.getElementById("addBookModal").classList.remove("hidden");
+          document.body.style.overflow = "hidden";
+        }
+
+        // Đóng modal thêm sách
+        function closeAddBookModal() {
+          document.getElementById("addBookModal").classList.add("hidden");
+          document.body.style.overflow = "auto";
+          // Reset form
+          document.querySelector("#addBookModal form").reset();
+        }
+
+        // Thêm sách mới với hiệu ứng đẹp
+        async function addNewBook(event) {
+          event.preventDefault();
+
+          const form = event.target;
+          const formData = new FormData(form);
+          const categorySelect = form.querySelector('select[name="category"]');
+          const selectedCategoryText =
+            categorySelect.options[categorySelect.selectedIndex].text;
+
+          const bookData = {
+            name: formData.get("bookName"),
+            author: formData.get("author"),
+            category: selectedCategoryText,
+            quantity: parseInt(formData.get("quantity")),
+            publishYear: formData.get("publishYear"),
+            description: formData.get("description"),
+          };
+
+          try {
+            const response = await fetch("/librarian/api/add-book/", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCookie("csrftoken"), // cần cho Django
+              },
+              body: JSON.stringify(bookData),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+              showNotification("📚 Thêm sách mới thành công!");
+              closeAddBookModal();
+              form.reset();
+              // 👉 Nếu muốn thì sau khi thêm thành công gọi hàm loadBooks() để load lại danh sách từ DB
+            } else {
+              showNotification("❌ Lỗi: " + result.error);
+            }
+          } catch (error) {
+            console.error("Lỗi:", error);
+            showNotification("⚠️ Không thể kết nối server!");
+          }
+        }
+
+        // Hàm lấy CSRF token trong Django
+        function getCookie(name) {
+          let cookieValue = null;
+          if (document.cookie && document.cookie !== "") {
+            const cookies = document.cookie.split(";");
+            for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              if (cookie.startsWith(name + "=")) {
+                cookieValue = decodeURIComponent(
+                  cookie.substring(name.length + 1)
+                );
+                break;
+              }
+            }
+          }
+          return cookieValue;
+        }
+
+        function showNotification(message) {
+          const notif = document.createElement("div");
+          notif.textContent = message;
+          notif.className =
+            "fixed top-5 right-5 bg-green-500 text-white px-4 py-2 rounded shadow-lg animate-fade-in";
+          document.body.appendChild(notif);
+
+          // Tự động ẩn sau 3 giây
+          setTimeout(() => {
+            notif.remove();
+          }, 3000);
+        }
+        // Lọc sách theo thể loại với hiệu ứng đẹp
+        function filterBooks(category) {
+          const bookItems = document.querySelectorAll(".book-item");
+          const filterButtons = document.querySelectorAll(".filter-btn");
+
+          // Reset trạng thái nút
+          filterButtons.forEach((btn) => {
+            btn.classList.remove(
+              "bg-gradient-to-r",
+              "from-blue-500",
+              "to-purple-600",
+              "text-white"
+            );
+            btn.classList.add(
+              "bg-white",
+              "text-gray-700",
+              "border",
+              "border-gray-200"
+            );
+          });
+
+          // Active nút vừa click
+          const activeButton = Array.from(filterButtons).find((btn) =>
+            btn.getAttribute("onclick")?.includes(category)
+          );
+          if (activeButton) {
+            activeButton.classList.remove(
+              "bg-white",
+              "text-gray-700",
+              "border",
+              "border-gray-200"
+            );
+            activeButton.classList.add(
+              "bg-gradient-to-r",
+              "from-blue-500",
+              "to-purple-600",
+              "text-white"
+            );
+          }
+
+          // Lọc sách
+          let visibleCount = 0;
+          bookItems.forEach((item, index) => {
+            if (category === "all" || item.dataset.category === category) {
+              item.style.display = "block";
+              item.style.animationDelay = `${index * 0.1}s`;
+              visibleCount++;
+            } else {
+              item.style.display = "none";
+            }
+          });
+
+          // Cập nhật số lượng
+          document.getElementById("bookCount").textContent = visibleCount;
+        }
+        async function loadBookCount() {
+  try {
+    const response = await fetch("/librarian/api/book-count/");
+    const data = await response.json();
+    document.getElementById("bookCount").textContent = data.count;
+  } catch (error) {
+    console.error("Lỗi khi tải tổng số sách:", error);
+    document.getElementById("bookCount").textContent = "⚠️ Lỗi";
+  }
+}
+window.onload = function () {
+  const params = new URLSearchParams(window.location.search);
+  const section = params.get("section") || "quanLySach";
+  const button = document.querySelector(`.nav-item[onclick*="${section}"]`);
+  
+  if (button) {
+    showSection(section, button);
+  } else {
+    showSection("quanLySach", document.querySelector(".nav-item"));
+  }
+
+  // 👉 Gọi API đếm tổng sách
+  loadBookCount();
+};
+
+
+        function showBorrowTab(tabName, buttonElement) {
+          // Ẩn tất cả borrow content
+          document.querySelectorAll(".borrow-content").forEach((content) => {
+            content.classList.add("hidden");
+          });
+
+          // Hiển thị tab được chọn
+          document.getElementById(tabName).classList.remove("hidden");
+          document.getElementById(tabName).classList.add("fade-in");
+
+          // Cập nhật active state cho borrow tab buttons
+          document.querySelectorAll(".borrow-tab").forEach((btn) => {
+            btn.classList.remove("bg-green-500", "text-white");
+            btn.classList.add("text-gray-600");
+          });
+
+          // Thêm active state cho button được click
+          if (buttonElement) {
+            buttonElement.classList.remove("text-gray-600");
+            buttonElement.classList.add("bg-green-500", "text-white");
+          }
+        }
+        window.onload = function () {
+          const params = new URLSearchParams(window.location.search);
+          const section = params.get("section") || "quanLySach"; // mặc định mở quản lý sách
+
+          // Tìm đúng nút tương ứng (dùng nav-item, không phải nav-btn)
+          const button = document.querySelector(
+            `.nav-item[onclick*="${section}"]`
+          );
+
+          // Gọi showSection để hiển thị
+          if (button) {
+            showSection(section, button);
+          } else {
+            // fallback nếu không có button (tránh lỗi)
+            showSection("quanLySach", document.querySelector(".nav-item"));
+          }
+        };
+      </script>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const defaultSection = "{{ default_section }}";
+          if (defaultSection) {
+            showSection(
+              defaultSection,
+              document.querySelector(`[onclick*="${defaultSection}"]`)
+            );
+          }
+        });
+      </script>
+    </div>
+  </body>
+</html>

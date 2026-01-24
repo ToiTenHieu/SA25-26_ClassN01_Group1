@@ -1,0 +1,618 @@
+{% extends "base.html" %}
+
+{% block title %}Đăng nhập{% endblock %}
+{% block extra_css %}
+        body {
+            box-sizing: border-box;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        
+        .celebration-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .celebration-bg::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #fbbf24;
+            animation: confetti-fall 3s linear infinite;
+        }
+        
+        .confetti:nth-child(1) { left: 10%; animation-delay: 0s; background: #ef4444; }
+        .confetti:nth-child(2) { left: 20%; animation-delay: 0.5s; background: #3b82f6; }
+        .confetti:nth-child(3) { left: 30%; animation-delay: 1s; background: #10b981; }
+        .confetti:nth-child(4) { left: 40%; animation-delay: 1.5s; background: #f59e0b; }
+        .confetti:nth-child(5) { left: 50%; animation-delay: 2s; background: #8b5cf6; }
+        .confetti:nth-child(6) { left: 60%; animation-delay: 0.3s; background: #ec4899; }
+        .confetti:nth-child(7) { left: 70%; animation-delay: 0.8s; background: #06b6d4; }
+        .confetti:nth-child(8) { left: 80%; animation-delay: 1.3s; background: #84cc16; }
+        .confetti:nth-child(9) { left: 90%; animation-delay: 1.8s; background: #f97316; }
+        
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+        
+        .progress-ring-circle {
+            stroke-dasharray: 251.2;
+            stroke-dashoffset: 188.4; /* 75% progress */
+            transition: stroke-dashoffset 0.5s ease-in-out;
+        }
+        
+        .membership-badge {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+            to { box-shadow: 0 0 30px rgba(59, 130, 246, 0.8); }
+        }
+        
+        .step-card {
+            transition: all 0.3s ease;
+        }
+        
+        .step-card:hover {
+            background: #f0f9ff;
+            border-color: #3b82f6;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .slide-in-left {
+            animation: slideInLeft 0.8s ease-out;
+        }
+        
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .slide-in-right {
+            animation: slideInRight 0.8s ease-out;
+        }
+        
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .bounce-in {
+            animation: bounceIn 1s ease-out;
+        }
+        
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .notification-badge {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+{% endblock %}
+
+{% block content %}
+<body class="bg-gray-50">
+    <!-- Header -->
+   
+
+    <!-- Celebration Hero -->
+    <section class="celebration-bg text-white py-20 relative">
+        <!-- Confetti -->
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <div class="bounce-in">
+                <div class="w-24 h-24 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <span class="text-5xl">🎉</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                    Chúc Mừng!
+                    <span class="block text-yellow-300">Bạn Đã Trở Thành{{ profile_form.instance.get_membership_level_display }}</span>
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 opacity-90">
+                    Cảm ơn bạn đã tin tưởng và nâng cấp! Hãy khám phá những đặc quyền tuyệt vời đang chờ bạn.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="{% url 'library:home' %}">
+                    <button  class="bg-white text-indigo-600 px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 transition-colors">
+                        🚀 Bắt đầu khám phá
+                    </button>
+                    </a>
+                    <button onclick="scrollToFeatures()" class="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-indigo-600 transition-colors">
+                        📋 Xem đặc quyền
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Membership Status -->
+    <section class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div class="slide-in-left">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-4">Thông Tin Thành Viên</h2>
+                        <div class="space-y-4">
+                            <div class="flex items-center">
+                                <span class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3">
+                                    <span class="text-white text-xs">✓</span>
+                                </span>
+                                <span class="text-gray-700">Gói: Thành viên <strong>{{ profile_form.instance.get_membership_level_display }}</strong></span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3">
+                                    <span class="text-white text-xs">✓</span>
+                                </span>
+                                <span class="text-gray-700">Kích hoạt: <strong>{{ profile_form.instance.membership_upgrade_date|date:"d/m/Y" }}</strong></span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3">
+                                    <span class="text-white text-xs">✓</span>
+                                </span>
+                                <span class="text-gray-700">Hết hạn: <strong style="color: red;">{{ profile_form.instance.membership_expiry_date|date:"d/m/Y" }}</strong></span>
+                            </div>
+                            <div class="flex items-center">
+
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="slide-in-right text-center">
+                        <div class="relative inline-block">
+                            <svg class="progress-ring w-32 h-32" viewBox="0 0 84 84">
+                                <circle cx="42" cy="42" r="40" stroke="#e5e7eb" stroke-width="4" fill="none"/>
+                                <circle class="progress-ring-circle" cx="42" cy="42" r="40" stroke="#3b82f6" stroke-width="4" fill="none"/>
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-indigo-600">30</div>
+                                    <div class="text-sm text-gray-600">ngày còn lại</div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mt-4 text-gray-600">Thời gian sử dụng gói Cao Cấp</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Features -->
+    <section id="features" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Đặc Quyền Mới Của Bạn</h2>
+                <p class="text-xl text-gray-600">Khám phá những tính năng độc quyền dành cho thành viên Cao Cấp</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="feature-card rounded-2xl p-8 border border-gray-200 fade-in">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">
+                        <span class="text-3xl">📚</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Mượn Nhiều Sách Hơn</h3>
+                    <p class="text-gray-600 mb-4">Tăng từ 3 lên 8 cuốn sách cùng lúc</p>
+                    <div class="bg-blue-50 rounded-lg p-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-blue-800">Hiện tại: 2/8 cuốn</span>
+                            <span class="text-blue-600 font-semibold">+5 cuốn</span>
+                        </div>
+                        <div class="w-full bg-blue-200 rounded-full h-2 mt-2">
+                            <div class="bg-blue-600 h-2 rounded-full" style="width: 25%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="feature-card rounded-2xl p-8 border border-gray-200 fade-in">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
+                        <span class="text-3xl">⏰</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Thời Gian Dài Hơn</h3>
+                    <p class="text-gray-600 mb-4">Mượn sách 21 ngày thay vì 14 ngày</p>
+                    <div class="bg-green-50 rounded-lg p-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-green-800">Thời gian mượn</span>
+                            <span class="text-green-600 font-semibold">21 ngày</span>
+                        </div>
+                        <div class="text-xs text-green-600 mt-1">+7 ngày so với trước</div>
+                    </div>
+                </div>
+                
+                <div class="feature-card rounded-2xl p-8 border border-gray-200 fade-in">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-6">
+                        <span class="text-3xl">🔄</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Gia Hạn Miễn Phí</h3>
+                    <p class="text-gray-600 mb-4">3 lần gia hạn miễn phí mỗi cuốn sách</p>
+                    <div class="bg-purple-50 rounded-lg p-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-purple-800">Lượt gia hạn</span>
+                            <span class="text-purple-600 font-semibold">3 lần</span>
+                        </div>
+                        <div class="text-xs text-purple-600 mt-1">Tiết kiệm đến 30,000đ/tháng</div>
+                    </div>
+                </div>
+                
+                <div class="feature-card rounded-2xl p-8 border border-gray-200 fade-in">
+                    <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-6">
+                        <span class="text-3xl">🎯</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Đặt Chỗ Ưu Tiên</h3>
+                    <p class="text-gray-600 mb-4">Được ưu tiên khi đặt chỗ sách hot</p>
+                    <div class="bg-yellow-50 rounded-lg p-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-yellow-800">Hàng đợi</span>
+                            <span class="text-yellow-600 font-semibold">Ưu tiên</span>
+                        </div>
+                        <div class="text-xs text-yellow-600 mt-1">Giảm 70% thời gian chờ</div>
+                    </div>
+                </div>
+                
+                <div class="feature-card rounded-2xl p-8 border border-gray-200 fade-in">
+                    <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mb-6">
+                        <span class="text-3xl">📱</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Sách Điện Tử</h3>
+                    <p class="text-gray-600 mb-4">Truy cập thư viện sách điện tử</p>
+                    <div class="bg-indigo-50 rounded-lg p-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-indigo-800">Sách có sẵn</span>
+                            <span class="text-indigo-600 font-semibold">5,000+</span>
+                        </div>
+                        <div class="text-xs text-indigo-600 mt-1">Đọc mọi lúc, mọi nơi</div>
+                    </div>
+                </div>
+                
+                <div class="feature-card rounded-2xl p-8 border border-gray-200 fade-in">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-6">
+                        <span class="text-3xl">💬</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Hỗ Trợ Ưu Tiên</h3>
+                    <p class="text-gray-600 mb-4">Hỗ trợ khách hàng 24/7 ưu tiên</p>
+                    <div class="bg-red-50 rounded-lg p-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-red-800">Thời gian phản hồi</span>
+                            <span class="text-red-600 font-semibold">< 5 phút</span>
+                        </div>
+                        <div class="text-xs text-red-600 mt-1">Hỗ trợ qua chat, email, điện thoại</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Start Guide -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Hướng Dẫn Bắt Đầu</h2>
+                <p class="text-xl text-gray-600">4 bước đơn giản để tận dụng tối đa gói Cao Cấp</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="step-card border-2 border-gray-200 rounded-xl p-6 text-center">
+                    <div class="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold">
+                        1
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-2">Cập Nhật Hồ Sơ</h3>
+                    <p class="text-sm text-gray-600 mb-4">Hoàn thiện thông tin để nhận đề xuất sách phù hợp</p>
+                    <button onclick="updateProfile()" class="text-blue-600 hover:text-blue-700 font-medium text-sm">
+                        Cập nhật ngay →
+                    </button>
+                </div>
+                
+                <div class="step-card border-2 border-gray-200 rounded-xl p-6 text-center">
+                    <div class="w-12 h-12 bg-green-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold">
+                        2
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-2">Khám Phá Sách Mới</h3>
+                    <p class="text-sm text-gray-600 mb-4">Duyệt danh mục sách được cập nhật hàng tuần</p>
+                    <button onclick="browseCatalog()" class="text-green-600 hover:text-green-700 font-medium text-sm">
+                        Xem danh mục →
+                    </button>
+                </div>
+                
+                <div class="step-card border-2 border-gray-200 rounded-xl p-6 text-center">
+                    <div class="w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold">
+                        3
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-2">Mượn Sách Đầu Tiên</h3>
+                    <p class="text-sm text-gray-600 mb-4">Thử nghiệm khả năng mượn 8 cuốn cùng lúc</p>
+                    <button onclick="borrowBooks()" class="text-purple-600 hover:text-purple-700 font-medium text-sm">
+                        Mượn sách →
+                    </button>
+                </div>
+                
+                <div class="step-card border-2 border-gray-200 rounded-xl p-6 text-center">
+                    <div class="w-12 h-12 bg-yellow-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold">
+                        4
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-2">Tải App Mobile</h3>
+                    <p class="text-sm text-gray-600 mb-4">Đọc sách điện tử mọi lúc mọi nơi</p>
+                    <button onclick="downloadApp()" class="text-yellow-600 hover:text-yellow-700 font-medium text-sm">
+                        Tải app →
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Special Offers -->
+    <section class="py-16 bg-gradient-to-br from-indigo-50 to-blue-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Ưu Đãi Đặc Biệt</h2>
+                <p class="text-xl text-gray-600">Những món quà chào mừng dành riêng cho bạn</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-2xl p-6 shadow-lg border-2 border-green-200">
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-3xl">🎁</span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900">Voucher Giảm Giá</h3>
+                    </div>
+                    <div class="bg-green-50 rounded-lg p-4 mb-4">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-green-600">20%</div>
+                            <div class="text-sm text-green-800">Giảm giá tháng tiếp theo</div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 text-center mb-4">Mã: <strong>WELCOME20</strong></p>
+                    <button onclick="claimVoucher('WELCOME20')" class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors">
+                        Nhận voucher
+                    </button>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 shadow-lg border-2 border-blue-200">
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-3xl">📖</span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900">Sách Miễn Phí</h3>
+                    </div>
+                    <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-blue-600">3</div>
+                            <div class="text-sm text-blue-800">Cuốn sách bestseller</div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 text-center mb-4">Đã thêm vào thư viện của bạn</p>
+                    <button onclick="viewFreeBooks()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                        Xem sách
+                    </button>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 shadow-lg border-2 border-purple-200">
+                    <div class="text-center mb-4">
+                        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-3xl">⭐</span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900">Điểm Thưởng</h3>
+                    </div>
+                    <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-purple-600">500</div>
+                            <div class="text-sm text-purple-800">Điểm thưởng khởi đầu</div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 text-center mb-4">Đổi quà tặng và ưu đãi</p>
+                    <button onclick="viewRewards()" class="w-full bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition-colors">
+                        Xem điểm thưởng
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Cần Hỗ Trợ?</h2>
+            <p class="text-xl text-gray-600 mb-8">Đội ngũ hỗ trợ ưu tiên 24/7 luôn sẵn sàng giúp bạn</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-gray-50 rounded-xl p-6">
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">💬</span>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-2">Live Chat</h3>
+                    <p class="text-sm text-gray-600 mb-4">Phản hồi trong vòng 5 phút</p>
+                    <button onclick="openChat()" class="text-blue-600 hover:text-blue-700 font-medium">
+                        Bắt đầu chat
+                    </button>
+                </div>
+                
+                <div class="bg-gray-50 rounded-xl p-6">
+                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">📞</span>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-2">Hotline</h3>
+                    <p class="text-sm text-gray-600 mb-4">1900-1234 (24/7)</p>
+                    <button onclick="callSupport()" class="text-green-600 hover:text-green-700 font-medium">
+                        Gọi ngay
+                    </button>
+                </div>
+                
+                <div class="bg-gray-50 rounded-xl p-6">
+                    <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">📧</span>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-2">Email</h3>
+                    <p class="text-sm text-gray-600 mb-4">support@thuvien.com</p>
+                    <button onclick="sendEmail()" class="text-purple-600 hover:text-purple-700 font-medium">
+                        Gửi email
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <section class="py-16 bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-4">Sẵn Sàng Bắt Đầu?</h2>
+            <p class="text-xl mb-8 opacity-90">Hãy khám phá thế giới sách với những đặc quyền mới của bạn!</p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="goToDashboard()" class="bg-white text-indigo-600 px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 transition-colors">
+                    🏠 Về trang chủ
+                </button>
+                <button onclick="browseCatalog()" class="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-indigo-600 transition-colors">
+                    📚 Duyệt sách ngay
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Scroll to features section
+        function scrollToFeatures() {
+            document.getElementById('features').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Start interactive tour
+        function startTour() {
+            alert('🎯 Chào mừng bạn! Hãy bắt đầu với việc cập nhật hồ sơ để nhận đề xuất sách phù hợp nhất.');
+            updateProfile();
+        }
+        
+        // Navigation functions
+        function updateProfile() {
+            alert('📝 Đang chuyển đến trang cập nhật hồ sơ...');
+            // window.location.href = '/profile';
+        }
+        
+        function browseCatalog() {
+            alert('📚 Đang mở danh mục sách với hơn 50,000 đầu sách...');
+            // window.location.href = '/catalog';
+        }
+        
+        function borrowBooks() {
+            alert('📖 Đang chuyển đến trang mượn sách. Bạn có thể mượn tối đa 8 cuốn!');
+            // window.location.href = '/borrow';
+        }
+        
+        function downloadApp() {
+            alert('📱 Đang chuyển đến trang tải ứng dụng mobile...');
+            // window.open('https://app.thuvien.com/download', '_blank');
+        }
+        
+        // Offer functions
+        function claimVoucher(code) {
+            alert(`🎁 Voucher ${code} đã được thêm vào tài khoản của bạn! Sử dụng khi gia hạn gói tiếp theo.`);
+        }
+        
+        function viewFreeBooks() {
+            alert('📖 Đang mở danh sách 3 cuốn sách bestseller miễn phí của bạn...');
+            // window.location.href = '/my-books?filter=free';
+        }
+        
+        function viewRewards() {
+            alert('⭐ Bạn có 500 điểm thưởng! Có thể đổi voucher giảm giá hoặc quà tặng.');
+            // window.location.href = '/rewards';
+        }
+        
+        // Support functions
+        function openChat() {
+            alert('💬 Đang kết nối với tư vấn viên ưu tiên...');
+            // Open chat widget
+        }
+        
+        function callSupport() {
+            alert('📞 Số hotline ưu tiên: 1900-1234. Bạn sẽ được ưu tiên trong hàng đợi!');
+        }
+        
+        function sendEmail() {
+            alert('📧 Đang mở ứng dụng email để gửi đến support@thuvien.com...');
+            // window.location.href = 'mailto:support@thuvien.com?subject=Hỗ trợ thành viên Cao Cấp';
+        }
+        
+        function goToDashboard() {
+            alert('🏠 Đang chuyển về trang chủ với giao diện thành viên Cao Cấp...');
+            // window.location.href = '/dashboard';
+        }
+        
+        // Initialize animations on scroll
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.feature-card, .step-card').forEach(el => {
+                observer.observe(el);
+            });
+        }
+        
+        // Initialize page
+
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'985d2afc070910a6',t:'MTc1ODk5ODgyOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
+{%endblock%}

@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudySpace - Đặt Chỗ Không Gian Học Tập</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        .space-card {
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        }
+        
+        .space-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .status-available {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+        
+        .status-occupied {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+        
+        .status-reserved {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+        
+        .time-slot {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .time-slot:hover {
+            background: #dbeafe;
+            border-color: #3b82f6;
+        }
+        
+        .time-slot.selected {
+            background: #3b82f6;
+            color: white;
+            border-color: #1d4ed8;
+        }
+        
+        .time-slot.unavailable {
+            background: #f3f4f6;
+            color: #9ca3af;
+            cursor: not-allowed;
+        }
+        
+        .calendar-day {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .calendar-day:hover {
+            background: #dbeafe;
+        }
+        
+        .calendar-day.selected {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .calendar-day.disabled {
+            color: #d1d5db;
+            cursor: not-allowed;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .booking-modal {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">📚</span>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">StudySpace</h1>
+                        <p class="text-xs text-gray-500">Đặt chỗ học tập thông minh</p>
+                    </div>
+                </div>
+                
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="text-blue-600 font-medium">Trang chủ</a>
+                    <a href="#spaces" class="text-gray-700 hover:text-blue-600 font-medium">Không gian</a>
+                    <a href="#booking" class="text-gray-700 hover:text-blue-600 font-medium">Đặt chỗ</a>
+                    <a href="#mybookings" class="text-gray-700 hover:text-blue-600 font-medium">Lịch của tôi</a>
+                </nav>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button onclick="showNotifications()" class="relative">
+                            <span class="text-2xl">🔔</span>
+                            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1">3</span>
+                        </button>
+                    </div>
+                    <div class="w-8 h-8 bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center">
+                        <span class="text-white text-sm font-bold">N</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-bg text-white py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                    Không Gian Học Tập
+                    <span class="block text-yellow-300">Lý Tưởng</span>
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 opacity-90">
+                    Đặt chỗ nhanh chóng - Học tập hiệu quả - Môi trường yên tĩnh
+                </p>
+                
+                <!-- Quick Booking -->
+                <div class="max-w-4xl mx-auto bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl p-6">
+                    <h3 class="text-xl font-semibold mb-4">Đặt chỗ nhanh</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Ngày</label>
+                            <input type="date" id="quickDate" class="w-full px-3 py-2 rounded-lg text-gray-900" value="2024-12-20">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Giờ bắt đầu</label>
+                            <select id="quickStartTime" class="w-full px-3 py-2 rounded-lg text-gray-900">
+                                <option value="08:00">08:00</option>
+                                <option value="09:00">09:00</option>
+                                <option value="10:00">10:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="15:00">15:00</option>
+                                <option value="16:00">16:00</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Thời lượng</label>
+                            <select id="quickDuration" class="w-full px-3 py-2 rounded-lg text-gray-900">
+                                <option value="1">1 giờ</option>
+                                <option value="2">2 giờ</option>
+                                <option value="3">3 giờ</option>
+                                <option value="4">4 giờ</option>
+                            </select>
+                        </div>
+                        <div class="flex items-end">
+                            <button onclick="quickSearch()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                                🔍 Tìm chỗ trống
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+                <div class="text-center">
+                    <div class="text-3xl font-bold">150+</div>
+                    <div class="text-sm opacity-80">Chỗ ngồi</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold">24/7</div>
+                    <div class="text-sm opacity-80">Mở cửa</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold">5K+</div>
+                    <div class="text-sm opacity-80">Lượt đặt/tháng</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold">4.9★</div>
+                    <div class="text-sm opacity-80">Đánh giá</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Spaces Section -->
+    <section id="spaces" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Không Gian Học Tập</h2>
+                <p class="text-gray-600">Chọn không gian phù hợp với nhu cầu học tập của bạn</p>
+            </div>
+            
+            <!-- Filter Tabs -->
+            <div class="flex justify-center mb-8">
+                <div class="bg-gray-100 rounded-lg p-1 flex space-x-1">
+                    <button onclick="filterSpaces('all')" class="filter-tab active px-4 py-2 rounded-md font-medium transition-colors">Tất cả</button>
+                    <button onclick="filterSpaces('individual')" class="filter-tab px-4 py-2 rounded-md font-medium transition-colors">Cá nhân</button>
+                    <button onclick="filterSpaces('group')" class="filter-tab px-4 py-2 rounded-md font-medium transition-colors">Nhóm</button>
+                    <button onclick="filterSpaces('silent')" class="filter-tab px-4 py-2 rounded-md font-medium transition-colors">Yên tĩnh</button>
+                    <button onclick="filterSpaces('discussion')" class="filter-tab px-4 py-2 rounded-md font-medium transition-colors">Thảo luận</button>
+                </div>
+            </div>
+            
+            <!-- Spaces Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Individual Study Room -->
+                <div class="space-card bg-white rounded-2xl shadow-lg overflow-hidden fade-in" data-type="individual">
+                    <div class="relative">
+                        <div class="h-48 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                            <div class="text-white text-center">
+                                <div class="text-4xl mb-2">🪑</div>
+                                <div class="font-bold text-lg">Phòng Cá Nhân</div>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <span class="status-available text-white px-3 py-1 rounded-full text-sm font-medium">
+                                ✓ Có sẵn
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg text-gray-900 mb-2">Phòng Học Cá Nhân A1</h3>
+                        <p class="text-gray-600 text-sm mb-4">Không gian riêng tư, yên tĩnh, phù hợp cho việc tập trung cao độ</p>
+                        
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center text-sm text-gray-600">
+                                <span class="mr-2">👤</span>
+                                <span>1 người</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <span class="mr-2">🔌</span>
+                                <span>Ổ cắm điện, WiFi</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <span class="mr-2">🌡️</span>
+                                <span>Điều hòa không khí</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <span class="mr-2">💰</span>
+                                <span class="font-semibold text-blue-600">15,000đ/giờ</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-2">
+                            <button onclick="viewSpace('A1')" class="flex-1 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors text-sm">
+                                👁️ Xem chi tiết
+                            </button>
+                            <button onclick="bookSpace('A1', 'individual')" class="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors text-sm">
+                                📅 Đặt chỗ
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Group Study Room -->
+                <div class="space-card bg-white rounded-2xl shadow-lg overflow-hidden fade-in" data-type="group">
+                    <div class="relative">
+                        <div class="h-48 bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
+                            <div class="text-white text-center">
+                                <div class="text-4xl mb-2">👥</div>
+                                <div class="font-bold text-lg">Phòng Nhóm</div>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <span class="status-occupied text-white px-3 py-1 rounded-full text-sm font-medium">
+                                ⏰ Đang sử dụng
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg text-gray-900 mb-2">Phòng Nhóm B2</h3>
+                        <p class="text-gray-600 text-sm mb-4">Không gian rộng rãi cho nhóm học tập, có bảng trắng và máy chiếu</p>
+                        
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center text-sm text-gray-600">
+                                <span class="mr-2">👥</span>
+                                <span>4-8 người</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <span class="mr-2">📺</span>
+                                <span>TV, bảng trắng</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <span class="mr-2">🔊</span>
+                                <span>Cho phép thảo luận</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <span class="mr-2">💰</span>
+                                <span class="font-semibold text-green-600">50,000đ/giờ</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <div class="text-sm text-gray-600 mb-1">Có sẵn lúc: <strong>16:00</strong></div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-red-500 h-2 rounded-full" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-2">
+                            <button onclick="viewSpace('B2')" class="flex-1 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors text-sm">
+                                👁️ Xem chi tiết
+                            </button>
+                            <button onclick="bookSpace('B2', 'group')" class="flex-1 bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-orange-700 transition-colors text-sm">
+                                ⏰ Đặt trước
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Silent Study Area -->
+                <div class="space-card bg-white rounded-2xl shadow-lg overflow-hidden fade-in" data-type="silent">
+                    <div class="relative">
+                        <div class="h-48 bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center">
+                            <div class="text-white text-center">
+                                <div class="text-4xl mb-2">🤫</div>
+                                <div class="font-bold text-lg">Khu Yên Tĩnh</div>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <span class="status-available text-white px-3 py-1 rounded-full text-sm font-medium">
+                                ✓ Có sẵn
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg text-gray-900 mb-2">Khu Yên Tĩnh C1</h3>
+                        <p class="text-gray-600 text-sm mb-4">Không gian tuyệt đối yên tĩnh, cấm nói chuyện và gọi điện</p>
+                        
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center text-sm text-gray-600">
+                                <span class="mr-2">👤</span>
+                                <span>20 chỗ ngồi</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <span class="mr-2">🔇</span>
+                                <span>Tuyệt đối yên tĩnh</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <span class="mr-2">📚</span>
+                                <span>Kệ sách tham khảo</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <span class="mr-2">💰</span>
+                                <span class="font-semibold text-purple-600">10,000đ/giờ</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <div class="text-sm text-gray-600 mb-1">Tình trạng: <strong>12/20 chỗ</strong></div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-purple-500 h-2 rounded-full" style="width: 60%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-2">
+                            <button onclick="viewSpace('C1')" class="flex-1 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors text-sm">
+                                👁️ Xem chi tiết
+                            </button>
+                            <button onclick="bookSpace('C1', 'silent')" class="flex-1 bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition-colors text-sm">
+                                📅 Đặt chỗ
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Discussion Area -->
+                <div class="space-card bg-white rounded-2xl shadow-lg overflow-hidden fade-in" data-type="discussion">
+                    <div class="relative">
+                        <div class="h-48 bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center">
+                            <div class="text-white text-center">
+                                <div class="text-4xl mb-2">💬</div>
+                                <div class="font-bold text-lg">Khu Thảo Luận</div>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <span class="status-reserved text-white px-3 py-1 rounded-full text-sm font-medium">
+                                📅 Đã đặt
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg text-gray-900 mb-2">Khu Thảo Luận D1</h3>
+                        <p class="text-gray-600 text-sm mb-4">Không gian mở cho thảo luận nhóm, học tập tương tác</p>
+                        
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center text-sm text-gray-600">
+                                <span class="mr-2">👥</span>
+                                <span>15 chỗ ngồi</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <span class="mr-2">🗣️</span>
+                                <span>Cho phép nói chuyện</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <span class="mr-2">☕</span>
+                                <span>Gần khu ăn uống</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <span class="mr-2">💰</span>
+                                <span class="font-semibold text-orange-600">8,000đ/giờ</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <div class="text-sm text-gray-600 mb-1">Có sẵn lúc: <strong>18:00</strong></div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-orange-500 h-2 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-2">
+                            <button onclick="viewSpace('D1')" class="flex-1 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors text-sm">
+                                👁️ Xem chi tiết
+                            </button>
+                            <button onclick="bookSpace('D1', 'discussion')" class="flex-1 bg-yellow-600 text-white py-2 px-4 rounded-lg hover:bg-yellow-700 transition-colors text-sm">
+                                ⏰ Đặt trước
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Premium Study Room -->
+                <div class="space-card bg-white rounded-2xl shadow-lg overflow-hidden fade-in" data-type="individual">
+                    <div class="relative">
+                        <div class="h-48 bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center">
+                            <div class="text-white text-center">
+                                <div class="text-4xl mb-2">⭐</div>
+                                <div class="font-bold text-lg">Phòng VIP</div>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <span class="status-available text-white px-3 py-1 rounded-full text-sm font-medium">
+                                ✓ Có sẵn
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg text-gray-900 mb-2">Phòng VIP E1</h3>
+                        <p class="text-gray-600 text-sm mb-4">Phòng cao cấp với đầy đủ tiện nghi, view đẹp, không gian sang trọng</p>
+                        
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center text-sm text-gray-600">
+                                <span class="mr-2">👤</span>
+                                <span>1-2 người</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <span class="mr-2">🖥️</span>
+                                <span>Màn hình 4K, ghế massage</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <span class="mr-2">🌆</span>
+                                <span>View thành phố</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <span class="mr-2">💰</span>
+                                <span class="font-semibold text-indigo-600">35,000đ/giờ</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-2">
+                            <button onclick="viewSpace('E1')" class="flex-1 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors text-sm">
+                                👁️ Xem chi tiết
+                            </button>
+                            <button onclick="bookSpace('E1', 'premium')" class="flex-1 bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors text-sm">
+                                ⭐ Đặt VIP
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Computer Lab -->
+                <div class="space-card bg-white rounded-2xl shadow-lg overflow-hidden fade-in" data-type="individual">
+                    <div class="relative">
+                        <div class="h-48 bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center">
+                            <div class="text-white text-center">
+                                <div class="text-4xl mb-2">💻</div>
+                                <div class="font-bold text-lg">Phòng Máy</div>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <span class="status-available text-white px-3 py-1 rounded-full text-sm font-medium">
+                                ✓ Có sẵn
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg text-gray-900 mb-2">Phòng Máy Tính F1</h3>
+                        <p class="text-gray-600 text-sm mb-4">Máy tính hiện đại, phần mềm đầy đủ cho lập trình và thiết kế</p>
+                        
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center text-sm text-gray-600">
+                                <span class="mr-2">💻</span>
+                                <span>30 máy tính</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <span class="mr-2">⚡</span>
+                                <span>Core i7, 16GB RAM</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <span class="mr-2">🛠️</span>
+                                <span>Phần mềm chuyên nghiệp</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <span class="mr-2">💰</span>
+                                <span class="font-semibold text-teal-600">20,000đ/giờ</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <div class="text-sm text-gray-600 mb-1">Tình trạng: <strong>25/30 máy</strong></div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-teal-500 h-2 rounded-full" style="width: 83%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-2">
+                            <button onclick="viewSpace('F1')" class="flex-1 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors text-sm">
+                                👁️ Xem chi tiết
+                            </button>
+                            <button onclick="bookSpace('F1', 'computer')" class="flex-1 bg-teal-600 text-white py-2 px-4 rounded-lg hover:bg-teal-700 transition-colors text-sm">
+                                💻 Đặt máy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="hidden fixed inset-0 booking-modal flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-full overflow-y-auto">
+            <!-- Modal Header -->
+            <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 rounded-t-2xl">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="text-2xl font-bold">Đặt Chỗ Học Tập</h3>
+                        <p id="modalSpaceName" class="opacity-90">Tên không gian</p>
+                    </div>
+                    <button onclick="closeBooking()" class="text-white hover:text-gray-200 text-2xl">✕</button>
+                </div>
+            </div>
+            
+            <!-- Modal Content -->
+            <div class="p-6">
+                <!-- Calendar -->
+                <div class="mb-6">
+                    <h4 class="text-lg font-semibold text-gray-900 mb-4">Chọn ngày</h4>
+                    <div class="grid grid-cols-7 gap-2 mb-4">
+                        <div class="text-center text-sm font-medium text-gray-500 py-2">CN</div>
+                        <div class="text-center text-sm font-medium text-gray-500 py-2">T2</div>
+                        <div class="text-center text-sm font-medium text-gray-500 py-2">T3</div>
+                        <div class="text-center text-sm font-medium text-gray-500 py-2">T4</div>
+                        <div class="text-center text-sm font-medium text-gray-500 py-2">T5</div>
+                        <div class="text-center text-sm font-medium text-gray-500 py-2">T6</div>
+                        <div class="text-center text-sm font-medium text-gray-500 py-2">T7</div>
+                    </div>
+                    <div class="grid grid-cols-7 gap-2" id="calendarGrid">
+                        <!-- Calendar days will be generated by JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Time Slots -->
+                <div class="mb-6">
+                    <h4 class="text-lg font-semibold text-gray-900 mb-4">Chọn giờ</h4>
+                    <div class="grid grid-cols-4 gap-3" id="timeSlots">
+                        <!-- Time slots will be generated by JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Duration -->
+                <div class="mb-6">
+                    <h4 class="text-lg font-semibold text-gray-900 mb-4">Thời lượng</h4>
+                    <div class="grid grid-cols-4 gap-3">
+                        <button onclick="selectDuration(1)" class="duration-btn border-2 border-gray-300 rounded-lg py-3 px-4 text-center hover:border-blue-500 transition-colors">
+                            <div class="font-semibold">1 giờ</div>
+                            <div class="text-sm text-gray-500" id="price1">15,000đ</div>
+                        </button>
+                        <button onclick="selectDuration(2)" class="duration-btn border-2 border-gray-300 rounded-lg py-3 px-4 text-center hover:border-blue-500 transition-colors">
+                            <div class="font-semibold">2 giờ</div>
+                            <div class="text-sm text-gray-500" id="price2">30,000đ</div>
+                        </button>
+                        <button onclick="selectDuration(3)" class="duration-btn border-2 border-gray-300 rounded-lg py-3 px-4 text-center hover:border-blue-500 transition-colors">
+                            <div class="font-semibold">3 giờ</div>
+                            <div class="text-sm text-gray-500" id="price3">45,000đ</div>
+                        </button>
+                        <button onclick="selectDuration(4)" class="duration-btn border-2 border-gray-300 rounded-lg py-3 px-4 text-center hover:border-blue-500 transition-colors">
+                            <div class="font-semibold">4 giờ</div>
+                            <div class="text-sm text-gray-500" id="price4">60,000đ</div>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Additional Options -->
+                <div class="mb-6">
+                    <h4 class="text-lg font-semibold text-gray-900 mb-4">Tùy chọn thêm</h4>
+                    <div class="space-y-3">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="mr-3 rounded">
+                            <span>Đặt bàn gần cửa sổ (+5,000đ)</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="mr-3 rounded">
+                            <span>Thuê thêm sạc laptop (+3,000đ)</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="mr-3 rounded">
+                            <span>Đặt trước đồ uống (+10,000đ)</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="mb-6">
+                    <h4 class="text-lg font-semibold text-gray-900 mb-4">Thông tin liên hệ</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Họ tên</label>
+                            <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Nhập họ tên">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Số điện thoại</label>
+                            <input type="tel" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Nhập số điện thoại">
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Ghi chú (tùy chọn)</label>
+                        <textarea class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" rows="3" placeholder="Yêu cầu đặc biệt..."></textarea>
+                    </div>
+                </div>
+                
+                <!-- Booking Summary -->
+                <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                    <h4 class="font-semibold text-gray-900 mb-3">Tóm tắt đặt chỗ</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span>Không gian:</span>
+                            <span id="summarySpace">-</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Ngày:</span>
+                            <span id="summaryDate">-</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Giờ:</span>
+                            <span id="summaryTime">-</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Thời lượng:</span>
+                            <span id="summaryDuration">-</span>
+                        </div>
+                        <hr class="my-2">
+                        <div class="flex justify-between font-semibold text-lg">
+                            <span>Tổng cộng:</span>
+                            <span id="summaryTotal" class="text-blue-600">0đ</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="flex gap-4">
+                    <button onclick="closeBooking()" class="flex-1 bg-gray-200 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-300 transition-colors font-medium">
+                        Hủy
+                    </button>
+                    <button onclick="confirmBooking()" class="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                        💳 Xác nhận đặt chỗ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg">
+        <div class="flex items-center">
+            <span class="mr-3 text-xl">✅</span>
+            <div>
+                <div class="font-semibold">Đặt chỗ thành công!</div>
+                <div class="text-sm opacity-90">Mã đặt chỗ: #SP2024001</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedDate = null;
+        let selectedTime = null;
+        let selectedDuration = null;
+        let currentSpace = null;
+        let spacePrice = 15000;
+        
+        // Space data
+        const spaces = {
+            'A1': { name: 'Phòng Học Cá Nhân A1', price: 15000, type: 'individual' },
+            'B2': { name: 'Phòng Nhóm B2', price: 50000, type: 'group' },
+            'C1': { name: 'Khu Yên Tĩnh C1', price: 10000, type: 'silent' },
+            'D1': { name: 'Khu Thảo Luận D1', price: 8000, type: 'discussion' },
+            'E1': { name: 'Phòng VIP E1', price: 35000, type: 'premium' },
+            'F1': { name: 'Phòng Máy Tính F1', price: 20000, type: 'computer' }
+        };
+        
+        // Filter spaces
+        function filterSpaces(type) {
+            // Update filter tabs
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active', 'bg-blue-600', 'text-white');
+                tab.classList.add('text-gray-700');
+            });
+            event.target.classList.add('active', 'bg-blue-600', 'text-white');
+            event.target.classList.remove('text-gray-700');
+            
+            // Filter space cards
+            document.querySelectorAll('.space-card').forEach(card => {
+                if (type === 'all' || card.dataset.type === type) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        
+        // Quick search
+        function quickSearch() {
+            const date = document.getElementById('quickDate').value;
+            const startTime = document.getElementById('quickStartTime').value;
+            const duration = document.getElementById('quickDuration').value;
+            
+            alert(`🔍 Tìm kiếm chỗ trống:\n📅 Ngày: ${date}\n⏰ Giờ: ${startTime}\n⏱️ Thời lượng: ${duration} giờ\n\nTìm thấy 8 không gian phù hợp!`);
+        }
+        
+        // View space details
+        function viewSpace(spaceId) {
+            const space = spaces[spaceId];
+            alert(`📍 ${space.name}\n\n🏷️ Loại: ${space.type}\n💰 Giá: ${space.price.toLocaleString()}đ/giờ\n\n✨ Tiện nghi:\n• WiFi tốc độ cao\n• Điều hòa không khí\n• Ổ cắm điện\n• Ánh sáng tự nhiên\n• Bảo vệ 24/7`);
+        }
+        
+        // Book space
+        function bookSpace(spaceId, type) {
+            currentSpace = spaceId;
+            spacePrice = spaces[spaceId].price;
+            
+            document.getElementById('modalSpaceName').textContent = spaces[spaceId].name;
+            document.getElementById('summarySpace').textContent = spaces[spaceId].name;
+            
+            // Update prices
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`price${i}`).textContent = (spacePrice * i).toLocaleString() + 'đ';
+            }
+            
+            generateCalendar();
+            generateTimeSlots();
+            document.getElementById('bookingModal').classList.remove('hidden');
+        }
+        
+        // Generate calendar
+        function generateCalendar() {
+            const grid = document.getElementById('calendarGrid');
+            grid.innerHTML = '';
+            
+            const today = new Date();
+            const currentMonth = today.getMonth();
+            const currentYear = today.getFullYear();
+            
+            // Get first day of month and number of days
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            
+            // Add empty cells for days before month starts
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDay = document.createElement('div');
+                grid.appendChild(emptyDay);
+            }
+            
+            // Add days of month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day text-center py-2 rounded-lg border';
+                dayElement.textContent = day;
+                
+                const dayDate = new Date(currentYear, currentMonth, day);
+                if (dayDate < today) {
+                    dayElement.classList.add('disabled');
+                } else {
+                    dayElement.onclick = () => selectDate(dayDate);
+                }
+                
+                grid.appendChild(dayElement);
+            }
+        }
+        
+        // Generate time slots
+        function generateTimeSlots() {
+            const container = document.getElementById('timeSlots');
+            container.innerHTML = '';
+            
+            const times = ['08:00', '09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'];
+            
+            times.forEach(time => {
+                const slot = document.createElement('button');
+                slot.className = 'time-slot border-2 border-gray-300 rounded-lg py-2 px-3 text-sm font-medium transition-colors';
+                slot.textContent = time;
+                
+                // Randomly make some slots unavailable for demo
+                if (Math.random() > 0.7) {
+                    slot.classList.add('unavailable');
+                    slot.textContent += ' (Đã đặt)';
+                } else {
+                    slot.onclick = () => selectTime(time);
+                }
+                
+                container.appendChild(slot);
+            });
+        }
+        
+        // Select date
+        function selectDate(date) {
+            selectedDate = date;
+            
+            // Update UI
+            document.querySelectorAll('.calendar-day').forEach(day => {
+                day.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+            
+            // Update summary
+            document.getElementById('summaryDate').textContent = date.toLocaleDateString('vi-VN');
+            updateSummary();
+        }
+        
+        // Select time
+        function selectTime(time) {
+            selectedTime = time;
+            
+            // Update UI
+            document.querySelectorAll('.time-slot').forEach(slot => {
+                slot.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+            
+            // Update summary
+            document.getElementById('summaryTime').textContent = time;
+            updateSummary();
+        }
+        
+        // Select duration
+        function selectDuration(hours) {
+            selectedDuration = hours;
+            
+            // Update UI
+            document.querySelectorAll('.duration-btn').forEach(btn => {
+                btn.classList.remove('selected', 'border-blue-500', 'bg-blue-50');
+            });
+            event.target.classList.add('selected', 'border-blue-500', 'bg-blue-50');
+            
+            // Update summary
+            document.getElementById('summaryDuration').textContent = hours + ' giờ';
+            updateSummary();
+        }
+        
+        // Update booking summary
+        function updateSummary() {
+            if (selectedDuration) {
+                const total = spacePrice * selectedDuration;
+                document.getElementById('summaryTotal').textContent = total.toLocaleString() + 'đ';
+            }
+        }
+        
+        // Close booking modal
+        function closeBooking() {
+            document.getElementById('bookingModal').classList.add('hidden');
+            
+            // Reset selections
+            selectedDate = null;
+            selectedTime = null;
+            selectedDuration = null;
+            currentSpace = null;
+        }
+        
+        // Confirm booking
+        function confirmBooking() {
+            if (!selectedDate || !selectedTime || !selectedDuration) {
+                alert('⚠️ Vui lòng chọn đầy đủ ngày, giờ và thời lượng!');
+                return;
+            }
+            
+            // Generate booking code
+            const bookingCode = 'SP' + new Date().getFullYear() + String(Math.floor(Math.random() * 1000)).padStart(3, '0');
+            
+            // Close modal
+            closeBooking();
+            
+            // Show success notification
+            showNotification('success', `Đặt chỗ thành công! Mã đặt chỗ: #${bookingCode}`);
+            
+            // Simulate booking confirmation
+            setTimeout(() => {
+                alert(`✅ Xác nhận đặt chỗ thành công!\n\n📍 ${spaces[currentSpace].name}\n📅 ${selectedDate.toLocaleDateString('vi-VN')}\n⏰ ${selectedTime} (${selectedDuration} giờ)\n💰 ${(spacePrice * selectedDuration).toLocaleString()}đ\n🎫 Mã đặt chỗ: #${bookingCode}\n\n📱 Bạn sẽ nhận được SMS xác nhận trong vài phút tới.`);
+            }, 1000);
+        }
+        
+        // Show notification
+        function showNotification(type, message) {
+            const notification = document.getElementById('notification');
+            
+            // Update content
+            if (type === 'success') {
+                notification.className = 'notification bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg show';
+                notification.innerHTML = `
+                    <div class="flex items-center">
+                        <span class="mr-3 text-xl">✅</span>
+                        <div>
+                            <div class="font-semibold">Thành công!</div>
+                            <div class="text-sm opacity-90">${message}</div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+        }
+        
+        // Show notifications panel
+        function showNotifications() {
+            alert(`🔔 Thông báo:\n\n• Đặt chỗ #SP2024001 sẽ bắt đầu trong 30 phút\n• Phòng A1 đã được dọn dẹp xong\n• Khuyến mãi 20% cho đặt chỗ cuối tuần`);
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default date to today
+            const today = new Date();
+            document.getElementById('quickDate').value = today.toISOString().split('T')[0];
+            
+            // Initialize filter
+            document.querySelector('.filter-tab').classList.add('bg-blue-600', 'text-white');
+            
+            // Add animation observer
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.space-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98b4413e156203e9',t:'MTc1OTkxMjAwMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

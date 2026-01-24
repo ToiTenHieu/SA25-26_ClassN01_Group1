@@ -1,0 +1,919 @@
+{% extends "base.html" %}
+
+{% block title %}Đăng nhập{% endblock %}
+
+{% block extra_css %}
+
+        body {
+            box-sizing: border-box;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Google Sans', sans-serif; }
+        
+        .membership-card {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .membership-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .membership-card.popular {
+            border: 2px solid #3b82f6;
+            position: relative;
+        }
+        
+        .membership-card.popular::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8, #3b82f6);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        .popular-badge {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            padding: 8px 40px;
+            transform: rotate(45deg);
+            font-size: 12px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .benefit-item {
+            transition: all 0.2s ease;
+        }
+        
+        .benefit-item:hover {
+            background: #f3f4f6;
+            padding-left: 1rem;
+        }
+        
+        .price-highlight {
+            background: linear-gradient(135deg, #10b981, #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .comparison-table {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+        }
+        
+        .feature-check {
+            color: #10b981;
+            font-weight: bold;
+        }
+        
+        .feature-cross {
+            color: #ef4444;
+        }        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .testimonial-card {
+            background: linear-gradient(135deg, #fef3c7, #fbbf24);
+        }        
+
+{% endblock %}
+{% block content %}
+<body class="bg-gray-50 min-h-screen">
+        <section class="bg-gradient-to-br from-indigo-600 via-purple-600 to-blue-700 text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                Nâng Cấp Trải Nghiệm
+                <span class="block text-yellow-300">Thư Viện Của Bạn</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto">
+                Mở khóa những đặc quyền độc quyền, mượn nhiều sách hơn và tận hưởng dịch vụ cao cấp
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="scrollToPlans()" class="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-indigo-600 transition-colors">
+                    🚀 Khám phá gói dịch vụ
+                </button>
+                <button onclick="showComparison()" class="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-indigo-600 transition-colors">
+                    📊 So sánh gói dịch vụ
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Current Status -->
+    <section class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8">
+                <div class="flex flex-col lg:flex-row items-center justify-between">
+                    <div class="mb-6 lg:mb-0">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-2">Tình trạng thành viên hiện tại</h2>
+                        <p class="text-gray-600">Bạn đang sử dụng gói Thành viên {{ profile.get_membership_level_display }}</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 w-full lg:w-auto">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-indigo-600">{{ privileges.max_books }}</div>
+                            <div class="text-sm text-gray-600">Sách đang mượn</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-green-600">{{ privileges.max_days }}</div>
+                            <div class="text-sm text-gray-600">Ngày mượn tối đa</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-yellow-600">{{ privileges.free_extend }}</div>
+                            <div class="text-sm text-gray-600">Gia hạn miễn phí</div>
+                        </div>
+                        <div class="text-center">
+                            {% if privileges.priority %}
+                                <div class="text-2xl font-bold text-purple-600">✅</div>
+                                <div class="text-sm text-gray-600">Đặt chỗ ưu tiên</div>
+                            {% else %}
+                                <div class="text-2xl font-bold text-purple-600">❌</div>
+                                <div class="text-sm text-gray-600">Đặt chỗ ưu tiên</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Membership Plans -->
+    <section id="plans" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Chọn Gói Thành Viên Phù Hợp</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Từ người đọc thường xuyên đến nghiên cứu viên chuyên nghiệp, chúng tôi có gói dịch vụ dành cho bạn
+                </p>
+            </div>
+            {% if current_rank == "basic" %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Basic Plan (Current) -->
+                <div class="membership-card bg-white rounded-2xl shadow-lg p-8 relative">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">📖</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Cơ Bản</h3>
+                        <div class="text-gray-600 mb-4">Gói hiện tại của bạn</div>
+                        <div class="text-4xl font-bold text-gray-900 mb-2">
+                            Miễn phí
+                        </div>
+                        <div class="text-gray-500">Mãi mãi</div>
+                    </div>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Mượn tối đa 10 cuốn sách</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Thời gian mượn: 14 ngày</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Truy cập thư viện cơ bản</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-cross mr-3">✗</span>
+                            <span class="text-gray-400">Gia hạn miễn phí</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-cross mr-3">✗</span>
+                            <span class="text-gray-400">Đặt chỗ ưu tiên</span>
+                        </li>
+                    </ul>
+                    
+                    <button class="w-full bg-gray-200 text-gray-600 py-3 px-6 rounded-xl font-semibold cursor-not-allowed">
+                        Gói hiện tại
+                    </button>
+                </div>
+
+                <!-- Premium Plan (Popular) -->
+                <div class="membership-card popular bg-white rounded-2xl shadow-lg p-8 relative">
+                    <div class="popular-badge">PHỔ BIẾN</div>
+                    
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl text-white">⭐</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Tiêu chuẩn </h3>
+                        <div class="text-blue-600 mb-4 font-medium">Được đề xuất</div>
+                        <div class="text-4xl font-bold price-highlight mb-2">
+                            200,000đ
+                        </div>
+                        <div class="text-gray-500">/ tháng</div>
+                    </div>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Mượn tối đa <strong>20 cuốn sách</strong></span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Thời gian mượn: <strong>21 ngày</strong></span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span><strong>3 lần gia hạn</strong> miễn phí</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Đặt chỗ ưu tiên</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Truy cập sách điện tử</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Hỗ trợ ưu tiên 24/7</span>
+                        </li>
+                    </ul>
+                    <form method="GET" action="{% url 'library:payment' %}">
+                        <input type="hidden" name="level" value="standard">
+                        <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-6 rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 transition-all">
+                            🚀 Nâng cấp ngay
+                        </button>
+                    </form>
+                    </a>
+                </div>
+
+                <!-- VIP Plan -->
+                <div class="membership-card bg-white rounded-2xl shadow-lg p-8 relative border-2 border-yellow-400">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl text-white">👑</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Cao cấp</h3>
+                        <div class="text-yellow-600 mb-4 font-medium">Trải nghiệm tối ưu</div>
+                        <div class="text-4xl font-bold text-yellow-600 mb-2">
+                            400,000đ
+                        </div>
+                        <div class="text-gray-500">/ tháng</div>
+                    </div>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span><strong>Không giới hạn</strong> số sách</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Thời gian mượn: <strong>30 ngày</strong></span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span><strong>5 lần gia hạn</strong> miễn phí</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Đặt chỗ ưu tiên cao nhất</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Toàn bộ thư viện điện tử</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Giao sách tận nhà</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Tư vấn sách cá nhân hóa</span>
+                        </li>
+                    </ul>
+                    <form method="GET"action="{% url 'library:payment' %}">
+                        <input type="hidden" name="level" value="premium">
+                        <button type="submit" class="w-full bg-gradient-to-r from-yellow-500 to-yellow-600 text-white py-3 px-6 rounded-xl font-semibold hover:from-yellow-600 hover:to-yellow-700 transition-all">
+                            🚀 Nâng cấp ngay
+                        </button>
+                    </form>
+                    </a>
+                </div>
+            </div>
+            {% elif current_rank == "standard" %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Basic Plan (Current) -->
+                <div class="membership-card bg-white rounded-2xl shadow-lg p-8 relative">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">📖</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Cơ Bản</h3>
+                        <div class="text-gray-600 mb-4"></div>
+                        <div class="text-4xl font-bold text-gray-900 mb-2">
+                            Miễn phí
+                        </div>
+                        <div class="text-gray-500">Mãi mãi</div>
+                    </div>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Mượn tối đa 10 cuốn sách</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Thời gian mượn: 14 ngày</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Truy cập thư viện cơ bản</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-cross mr-3">✗</span>
+                            <span class="text-gray-400">Gia hạn miễn phí</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-cross mr-3">✗</span>
+                            <span class="text-gray-400">Đặt chỗ ưu tiên</span>
+                        </li>
+                    </ul>
+                    
+                    <button class="w-full bg-gray-200 text-gray-600 py-3 px-6 rounded-xl font-semibold cursor-not-allowed">
+                        Gói cơ bản
+                    </button>
+                </div>
+
+                <!-- Premium Plan (Popular) -->
+                <div class="membership-card popular bg-white rounded-2xl shadow-lg p-8 relative">
+                    <div class="popular-badge">PHỔ BIẾN</div>
+                    
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl text-white">⭐</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Tiêu chuẩn </h3>
+                        <div class="text-blue-600 mb-4 font-medium">Được đề xuất</div>
+                        <div class="text-4xl font-bold price-highlight mb-2">
+                            200,000đ
+                        </div>
+                        <div class="text-gray-500">/ tháng</div>
+                    </div>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Mượn tối đa <strong>20 cuốn sách</strong></span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Thời gian mượn: <strong>21 ngày</strong></span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span><strong>3 lần gia hạn</strong> miễn phí</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Đặt chỗ ưu tiên</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Truy cập sách điện tử</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Hỗ trợ ưu tiên 24/7</span>
+                        </li>
+                    </ul>
+                    
+                    <button onclick="selectPlan('premium')" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-6 rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 transition-all">
+                        Gói hiện tại của bạn
+                    </button>
+                </div>
+
+                <!-- VIP Plan -->
+                <div class="membership-card bg-white rounded-2xl shadow-lg p-8 relative border-2 border-yellow-400">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl text-white">👑</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Cao cấp</h3>
+                        <div class="text-yellow-600 mb-4 font-medium">Trải nghiệm tối ưu</div>
+                        <div class="text-4xl font-bold text-yellow-600 mb-2">
+                            400,000đ
+                        </div>
+                        <div class="text-gray-500">/ tháng</div>
+                    </div>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span><strong>Không giới hạn</strong> số sách</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Thời gian mượn: <strong>30 ngày</strong></span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span><strong>5 lần gia hạn</strong>miễn phí</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Đặt chỗ ưu tiên cao nhất</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Toàn bộ thư viện điện tử</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Giao sách tận nhà</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Tư vấn sách cá nhân hóa</span>
+                        </li>
+                    </ul>
+                    <form method="GET" action="{% url 'library:payment' %}">
+                        <input type="hidden" name="level" value="premium">                   
+                        <button class="w-full bg-gradient-to-r from-yellow-500 to-yellow-600 text-white py-3 px-6 rounded-xl font-semibold hover:from-yellow-600 hover:to-yellow-700 transition-all">
+                            🚀 Nâng cấp ngay
+                        </button>
+                    </form>
+                    </a>
+                </div>
+            </div>
+            {% elif current_rank == "premium" %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Basic Plan (Current) -->
+                <div class="membership-card bg-white rounded-2xl shadow-lg p-8 relative">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">📖</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Cơ Bản</h3>
+                        <div class="text-gray-600 mb-4"></div>
+                        <div class="text-4xl font-bold text-gray-900 mb-2">
+                            Miễn phí
+                        </div>
+                        <div class="text-gray-500">Mãi mãi</div>
+                    </div>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Mượn tối đa 10 cuốn sách</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Thời gian mượn: 14 ngày</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Truy cập thư viện cơ bản</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-cross mr-3">✗</span>
+                            <span class="text-gray-400">Gia hạn miễn phí</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-cross mr-3">✗</span>
+                            <span class="text-gray-400">Đặt chỗ ưu tiên</span>
+                        </li>
+                    </ul>
+                    
+                    <button class="w-full bg-gray-200 text-gray-600 py-3 px-6 rounded-xl font-semibold cursor-not-allowed">
+                        Gói cơ bản
+                    </button>
+                </div>
+
+                <!-- Premium Plan (Popular) -->
+                <div class="membership-card popular bg-white rounded-2xl shadow-lg p-8 relative">
+                    <div class="popular-badge">PHỔ BIẾN</div>
+                    
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl text-white">⭐</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Tiêu chuẩn </h3>
+                        <div class="text-blue-600 mb-4 font-medium">Được đề xuất</div>
+                        <div class="text-4xl font-bold price-highlight mb-2">
+                            200,000đ
+                        </div>
+                        <div class="text-gray-500">/ tháng</div>
+                    </div>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Mượn tối đa <strong>20 cuốn sách</strong></span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Thời gian mượn: <strong>21 ngày</strong></span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span><strong>3 lần gia hạn</strong> miễn phí</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Đặt chỗ ưu tiên</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Truy cập sách điện tử</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Hỗ trợ ưu tiên 24/7</span>
+                        </li>
+                    </ul>
+                    
+                    <button onclick="selectPlan('premium')" class="w-full bg-gray-200 text-gray-600 py-3 px-6 rounded-xl font-semibold cursor-not-allowed">
+                        Gói tiêu chuẩn
+                    </button>
+                </div>
+
+                <!-- VIP Plan -->
+                <div class="membership-card bg-white rounded-2xl shadow-lg p-8 relative border-2 border-yellow-400">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl text-white">👑</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Cao cấp</h3>
+                        <div class="text-yellow-600 mb-4 font-medium">Trải nghiệm tối ưu</div>
+                        <div class="text-4xl font-bold text-yellow-600 mb-2">
+                            400,000đ
+                        </div>
+                        <div class="text-gray-500">/ tháng</div>
+                    </div>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span><strong>Không giới hạn</strong> số sách</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Thời gian mượn: <strong>30 ngày</strong></span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span><strong>5 lần gia hạn</strong>miễn phí</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Đặt chỗ ưu tiên cao nhất</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Toàn bộ thư viện điện tử</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Giao sách tận nhà</span>
+                        </li>
+                        <li class="benefit-item flex items-center p-2 rounded-lg">
+                            <span class="feature-check mr-3">✓</span>
+                            <span>Tư vấn sách cá nhân hóa</span>
+                        </li>
+                    </ul>
+                    
+                    <button class="w-full bg-gradient-to-r from-yellow-500 to-yellow-600 text-white py-3 px-6 rounded-xl font-semibold hover:from-yellow-600 hover:to-yellow-700 transition-all">
+                        Gói hiện tại của bạn
+                    </button>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Benefits Showcase -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Tại Sao Nên Nâng Cấp?</h2>
+                <p class="text-xl text-gray-600">Khám phá những lợi ích độc quyền dành cho thành viên cao cấp</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="text-center p-6">
+                    <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl">📚</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Mượn Nhiều Sách Hơn</h3>
+                    <p class="text-gray-600">Tăng giới hạn mượn sách từ 3 lên 8 cuốn hoặc không giới hạn với gói VIP</p>
+                </div>
+                
+                <div class="text-center p-6">
+                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl">⏰</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Thời Gian Linh Hoạt</h3>
+                    <p class="text-gray-600">Gia hạn miễn phí và thời gian mượn dài hơn để bạn đọc thoải mái</p>
+                </div>
+                
+                <div class="text-center p-6">
+                    <div class="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl">🎯</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Ưu Tiên Đặt Chỗ</h3>
+                    <p class="text-gray-600">Được ưu tiên khi đặt chỗ sách hot, không phải chờ đợi lâu</p>
+                </div>
+                
+                <div class="text-center p-6">
+                    <div class="w-20 h-20 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl">📱</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Sách Điện Tử</h3>
+                    <p class="text-gray-600">Truy cập thư viện sách điện tử phong phú, đọc mọi lúc mọi nơi</p>
+                </div>
+                
+                <div class="text-center p-6">
+                    <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl">🚚</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Giao Sách Tận Nhà</h3>
+                    <p class="text-gray-600">Dịch vụ giao sách tận nhà cho thành viên VIP, tiện lợi tối đa</p>
+                </div>
+                
+                <div class="text-center p-6">
+                    <div class="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl">💬</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Hỗ Trợ Ưu Tiên</h3>
+                    <p class="text-gray-600">Đội ngũ hỗ trợ 24/7 và tư vấn sách cá nhân hóa</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Khách Hàng Nói Gì?</h2>
+                <p class="text-xl text-gray-600">Trải nghiệm thực tế từ các thành viên cao cấp</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="testimonial-card rounded-2xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-white font-bold">AN</span>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900">Nguyễn Văn An</h4>
+                            <p class="text-sm text-gray-600">Thành viên Cao cấp</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">"Gói cao cấp thật sự đáng giá! Tôi có thể mượn nhiều sách hơn và gia hạn miễn phí rất tiện lợi."</p>
+                    <div class="flex text-yellow-400">⭐⭐⭐⭐⭐</div>
+                </div>
+                
+                <div class="testimonial-card rounded-2xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-white font-bold">LH</span>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900">Lê Thị Hương</h4>
+                            <p class="text-sm text-gray-600">Thành viên cao cấp</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">"Dịch vụ giao sách tận nhà của gói cao cấp tuyệt vời! Tôi tiết kiệm được rất nhiều thời gian."</p>
+                    <div class="flex text-yellow-400">⭐⭐⭐⭐⭐</div>
+                </div>
+                
+                <div class="testimonial-card rounded-2xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-white font-bold">MT</span>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900">Phạm Minh Tuấn</h4>
+                            <p class="text-sm text-gray-600">Thành viên Cao cấp</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">"Thư viện sách điện tử rất phong phú. Tôi có thể đọc sách mọi lúc mọi nơi trên điện thoại."</p>
+                    <div class="flex text-yellow-400">⭐⭐⭐⭐⭐</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Câu Hỏi Thường Gặp</h2>
+                <p class="text-xl text-gray-600">Giải đáp những thắc mắc phổ biến về nâng cấp thành viên</p>
+            </div>
+            
+            <div class="space-y-6">
+                <div class="border border-gray-200 rounded-lg">
+                    <button onclick="toggleFAQ(1)" class="w-full text-left p-6 focus:outline-none">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-900">Tôi có thể hủy gói thành viên bất cứ lúc nào không?</h3>
+                            <span id="faq-icon-1" class="text-gray-400">+</span>
+                        </div>
+                    </button>
+                    <div id="faq-content-1" class="hidden px-6 pb-6">
+                        <p class="text-gray-600">Có, bạn có thể hủy gói thành viên bất cứ lúc nào. Gói sẽ có hiệu lực đến hết chu kỳ thanh toán hiện tại và không tự động gia hạn.</p>
+                    </div>
+                </div>
+                
+                <div class="border border-gray-200 rounded-lg">
+                    <button onclick="toggleFAQ(2)" class="w-full text-left p-6 focus:outline-none">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-900">Có được hoàn tiền nếu không hài lòng không?</h3>
+                            <span id="faq-icon-2" class="text-gray-400">+</span>
+                        </div>
+                    </button>
+                    <div id="faq-content-2" class="hidden px-6 pb-6">
+                        <p class="text-gray-600">Chúng tôi có chính sách hoàn tiền 100% trong vòng 7 ngày đầu tiên nếu bạn không hài lòng với dịch vụ.</p>
+                    </div>
+                </div>
+                
+                <div class="border border-gray-200 rounded-lg">
+                    <button onclick="toggleFAQ(3)" class="w-full text-left p-6 focus:outline-none">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-900">Tôi có thể chuyển đổi giữa các gói không?</h3>
+                            <span id="faq-icon-3" class="text-gray-400">+</span>
+                        </div>
+                    </button>
+                    <div id="faq-content-3" class="hidden px-6 pb-6">
+                        <p class="text-gray-600">Có, bạn có thể nâng cấp hoặc hạ cấp gói bất cứ lúc nào. Phí sẽ được tính theo tỷ lệ thời gian sử dụng.</p>
+                    </div>
+                </div>
+                
+                <div class="border border-gray-200 rounded-lg">
+                    <button onclick="toggleFAQ(4)" class="w-full text-left p-6 focus:outline-none">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-900">Các phương thức thanh toán được hỗ trợ?</h3>
+                            <span id="faq-icon-4" class="text-gray-400">+</span>
+                        </div>
+                    </button>
+                    <div id="faq-content-4" class="hidden px-6 pb-6">
+                        <p class="text-gray-600">Chúng tôi hỗ trợ thanh toán qua thẻ tín dụng, thẻ ghi nợ, ví điện tử (MoMo, ZaloPay), và chuyển khoản ngân hàng.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Modal -->
+    <div id="comparisonModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 modal">
+        <div class="bg-white rounded-xl max-w-6xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">So Sánh Gói Thành Viên</h2>
+                    <button onclick="closeComparison()" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+                </div>
+                
+                <div class="comparison-table rounded-xl p-6">
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="border-b-2 border-gray-300">
+                                    <th class="text-left py-4 px-4 font-semibold text-gray-900">Tính năng</th>
+                                    <th class="text-center py-4 px-4 font-semibold text-gray-900">Cơ Bản</th>
+                                    <th class="text-center py-4 px-4 font-semibold text-blue-600">Tiêu chuẩn</th>
+                                    <th class="text-center py-4 px-4 font-semibold text-yellow-600">Cao cấp</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr>
+                                    <td class="py-4 px-4 font-medium">Số sách mượn tối đa</td>
+                                    <td class="py-4 px-4 text-center">10 cuốn</td>
+                                    <td class="py-4 px-4 text-center font-semibold text-blue-600">20 cuốn</td>
+                                    <td class="py-4 px-4 text-center font-semibold text-yellow-600">Không giới hạn</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-4 font-medium">Thời gian mượn</td>
+                                    <td class="py-4 px-4 text-center">14 ngày</td>
+                                    <td class="py-4 px-4 text-center font-semibold text-blue-600">21 ngày</td>
+                                    <td class="py-4 px-4 text-center font-semibold text-yellow-600">30 ngày</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-4 font-medium">Gia hạn miễn phí</td>
+                                    <td class="py-4 px-4 text-center text-red-500">✗</td>
+                                    <td class="py-4 px-4 text-center text-green-500 font-semibold">3 lần</td>
+                                    <td class="py-4 px-4 text-center text-green-500 font-semibold">Không giới hạn</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-4 font-medium">Đặt chỗ ưu tiên</td>
+                                    <td class="py-4 px-4 text-center text-red-500">✗</td>
+                                    <td class="py-4 px-4 text-center text-green-500 font-semibold">✓</td>
+                                    <td class="py-4 px-4 text-center text-green-500 font-semibold">✓ Cao nhất</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-4 font-medium">Sách điện tử</td>
+                                    <td class="py-4 px-4 text-center text-red-500">✗</td>
+                                    <td class="py-4 px-4 text-center text-green-500 font-semibold">✓</td>
+                                    <td class="py-4 px-4 text-center text-green-500 font-semibold">✓ Toàn bộ</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-4 font-medium">Giao sách tận nhà</td>
+                                    <td class="py-4 px-4 text-center text-red-500">✗</td>
+                                    <td class="py-4 px-4 text-center text-red-500">✗</td>
+                                    <td class="py-4 px-4 text-center text-green-500 font-semibold">✓</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-4 font-medium">Hỗ trợ khách hàng</td>
+                                    <td class="py-4 px-4 text-center">Cơ bản</td>
+                                    <td class="py-4 px-4 text-center font-semibold text-blue-600">Ưu tiên</td>
+                                    <td class="py-4 px-4 text-center font-semibold text-yellow-600">24/7</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-4 font-medium">Giá</td>
+                                    <td class="py-4 px-4 text-center font-bold">Miễn phí</td>
+                                    <td class="py-4 px-4 text-center font-bold text-blue-600">200,000đ/tháng</td>
+                                    <td class="py-4 px-4 text-center font-bold text-yellow-600">400,000đ/tháng</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="bg-gray-800 text-gray-300 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2024 Thư Viện Trung Tâm. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+
+    <script>
+        
+        // Scroll to plans section
+        function scrollToPlans() {
+            document.getElementById('plans').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Show comparison modal
+        function showComparison() {
+            document.getElementById('comparisonModal').classList.remove('hidden');
+        }
+        
+        function closeComparison() {
+            document.getElementById('comparisonModal').classList.add('hidden');
+        }       
+        // FAQ toggle
+        function toggleFAQ(index) {
+            const content = document.getElementById(`faq-content-${index}`);
+            const icon = document.getElementById(`faq-icon-${index}`);
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                content.classList.add('fade-in');
+                icon.textContent = '−';
+            } else {
+                content.classList.add('hidden');
+                content.classList.remove('fade-in');
+                icon.textContent = '+';
+            }
+        }
+        
+        // Close modals when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.add('hidden');
+            }
+        });
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9859a259020e714f',t:'MTc1ODk2MTc3NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
+{% endblock %}

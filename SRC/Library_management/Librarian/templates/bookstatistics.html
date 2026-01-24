@@ -1,0 +1,29 @@
+
+<div
+  id="kiemTraTinhTrang"
+  class="section bg-white rounded-xl shadow-lg p-6 mb-6 card-hover transition-all duration-300 hidden"
+>
+  <h2 class="text-2xl font-bold text-orange-600 mb-6 flex items-center">
+    📊 Kiểm Tra Tình Trạng Sách
+  </h2>
+
+  <div class="grid md:grid-cols-3 gap-6 mb-6">
+    <!-- Thống kê tổng quan -->
+ <div class="bg-blue-50 rounded-lg p-6 text-center shadow-md">
+  <div class="text-3xl font-bold text-blue-600">{{ total_books }}</div>
+  <p class="text-blue-800 font-semibold">Tổng Số Sách</p>
+</div>
+    <div class="bg-green-50 rounded-lg p-6 text-center">
+      <div class="text-3xl font-bold text-green-600">{{ total_borrowed }}</div>
+      <p class="text-green-800 font-semibold">Đang Được Mượn</p>
+    </div>
+    <div class="bg-red-50 rounded-lg p-6 text-center">
+      <div class="text-3xl font-bold text-red-600">{{records_ovedue.count}}</div>
+      <p class="text-red-800 font-semibold">Quá Hạn Trả</p>
+    </div>
+  </div>
+
+  <!-- Tìm kiếm sách -->
+  
+  </div>
+</div>

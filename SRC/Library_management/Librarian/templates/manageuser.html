@@ -1,0 +1,369 @@
+
+<!-- Quản Lý Người Dùng Section -->
+<div
+  id="quanLyNguoiDung"
+  class="section bg-white rounded-xl shadow-lg p-6 mb-6 card-hover transition-all duration-300 hidden"
+>
+  <h2 class="text-2xl font-bold text-purple-600 mb-6 flex items-center">
+    👥 Quản Lý Người Dùng
+  </h2>
+
+  <div class="grid md:grid-cols-2 gap-6">
+    <!-- Form thêm người dùng -->
+    <div class="bg-purple-50 rounded-lg p-6">
+      <h3 class="text-lg font-semibold text-purple-800 mb-4">
+        Thêm Người Dùng
+      </h3>
+      <form method="post" class="space-y-4">
+        {% csrf_token %}
+        <!-- username -->
+        <input
+          type="text"
+          name="username"
+          placeholder="Tên đăng nhập"
+          class="w-full px-4 py-2 border border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+          required
+        />
+
+        <!-- password -->
+        <input
+          type="password"
+          name="password"
+          placeholder="Mật khẩu"
+          class="w-full px-4 py-2 border border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+          required
+        />
+
+        <!-- name -->
+        <input
+          type="text"
+          name="name"
+          placeholder="Họ và tên"
+          class="w-full px-4 py-2 border border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+          required
+        />
+
+        <!-- occupation -->
+        <input
+          type="text"
+          name="occupation"
+          placeholder="Nghề nghiệp (VD: Sinh viên, Giảng viên)"
+          class="w-full px-4 py-2 border border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+        />
+
+        <!-- address -->
+        <input
+          type="text"
+          name="address"
+          placeholder="Địa chỉ"
+          class="w-full px-4 py-2 border border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+        />
+
+        <!-- date_of_birth -->
+        <input
+          type="date"
+          name="date_of_birth"
+          class="w-full px-4 py-2 border border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+          required
+        />
+
+        <!-- gender -->
+        <select
+          name="gender"
+          class="w-full px-4 py-2 border border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+          required
+        >
+          <option value="">Chọn giới tính</option>
+          <option value="male">Nam</option>
+          <option value="female">Nữ</option>
+          <option value="other">Khác</option>
+        </select>
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          class="w-full px-4 py-2 border rounded-lg"
+          required
+        />
+        <!-- phone -->
+        <input
+          type="tel"
+          name="phone"
+          placeholder="Số điện thoại"
+          class="w-full px-4 py-2 border border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+        />
+
+        <button
+          type="submit"
+          class="w-full bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition-colors duration-200 font-semibold"
+        >
+          ➕ Thêm Người Dùng
+        </button>
+      </form>
+    </div>
+
+    <!-- Danh sách người dùng -->
+    <div class="max-w-4xl mx-auto mt-8 space-y-4">
+      <h2 class="text-2xl font-bold text-purple-700 mb-6 border-b pb-2">
+        Danh sách người dùng
+      </h2>
+      {% if messages %}
+      <div id="messages-container" class="container mx-auto mt-4">
+        {% for message in messages %}
+        <div
+          class="p-4 mb-4 rounded-lg transition-opacity duration-500 {% if message.tags == 'success' %}bg-green-100 text-green-800 {% elif message.tags == 'error' %}bg-red-100 text-red-800 {% else %}bg-gray-100 text-gray-800{% endif %}"
+        >
+          {{ message }}
+        </div>
+        {% endfor %}
+      </div>
+
+      <script>
+        setTimeout(() => {
+          const container = document.getElementById("messages-container");
+          if (container) {
+            container.style.opacity = "0"; // làm mờ dần
+            setTimeout(() => container.remove(), 500); // xoá hẳn sau khi mờ
+          }
+        }, 3000); // 3 giây
+      </script>
+      {% endif %} {% for user in users %}
+      <div
+        class="bg-gradient-to-r from-purple-50 to-white p-5 rounded-xl shadow hover:shadow-md transition duration-200 border border-purple-100"
+      >
+        <div class="flex justify-between items-start">
+          <div>
+            <h4 class="text-lg font-semibold text-gray-800 mb-1">
+              {{ user.user.username }}
+              <span class="text-gray-500">– {{ user.get_full_name }}</span>
+            </h4>
+            <p class="text-sm text-gray-600">
+              📧 <span class="font-medium">{{ user.user.email }}</span>
+            </p>
+            <p class="text-sm text-gray-600 mt-1">
+              📞 {{ user.phone }}
+              <span class="mx-2">|</span>
+              Loại: {% if user.role == 'user' %}
+              <span class="font-medium text-blue-600">Sinh viên</span>
+              {% elif user.role == 'librarian' %}
+              <span class="font-medium text-green-600">Thủ thư</span>
+              {% else %}
+              <span class="font-medium">{{ user.role }}</span>
+              {% endif %}
+            </p>
+          </div>
+          <div class="flex space-x-2">
+        <a
+          href="{% url 'librarian:edit_user' user.id %}?section=quanLyNguoiDung&page={{ page_obj.number }}"
+          class="text-xs bg-yellow-500 text-white px-3 py-1 rounded-full hover:bg-yellow-600 transition"
+        >
+          ✏️ Sửa
+        </a>
+        <!-- Button Xóa Người Dùng -->
+        <button
+          type="button"
+          onclick="deleteUser({{ user.id }}, {{ page_obj.number }})"
+          class="text-xs bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600 transition"
+        >
+          🗑️ Xóa
+        </button>
+        
+
+<script>
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.startsWith(name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+function deleteUser(userId) {
+    Swal.fire({
+        title: "⚠️ Bạn có chắc chắn?",
+        text: "Người dùng sẽ bị xóa vĩnh viễn và không thể khôi phục!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "🗑️ Xóa",
+        cancelButtonText: "❌ Hủy",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch(`/librarian/api/users/${userId}/delete/`, {
+                method: "DELETE",
+                headers: {
+                    "X-CSRFToken": getCookie("csrftoken"), // dùng CSRF nếu bật
+                    "X-Requested-With": "XMLHttpRequest",
+                },
+            })
+            .then(response => {
+                if (!response.ok) throw new Error("Không thể xoá người dùng");
+                return response.json();
+            })
+            .then(data => {
+                Swal.fire({
+                    title: "Đã xóa!",
+                    text: data.message || "Người dùng đã được xóa thành công.",
+                    icon: "success",
+                    confirmButtonText: "OK",
+                }).then(() => {
+                    location.reload();
+                });
+            })
+            .catch(error => {
+                Swal.fire("Lỗi!", "Không thể xoá người dùng. Vui lòng thử lại!", "error");
+            });
+        }
+    });
+}
+</script>
+
+            </form>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <p class="text-sm text-gray-500 italic">Chưa có người dùng nào.</p>
+      {% endfor %}
+      {% if page_obj.has_other_pages %}
+        <div class="flex justify-center mt-6 space-x-2">
+          
+          {% if page_obj.has_previous %}
+            <a
+              href="?section=quanLyNguoiDung&page={{ page_obj.previous_page_number }}"
+              class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+            >
+              ⬅ Trước
+            </a>
+          {% endif %}
+      
+          {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+              <span class="px-3 py-1 bg-purple-500 text-white rounded">
+                {{ num }}
+              </span>
+            {% else %}
+              <a
+                href="?section=quanLyNguoiDung&page={{ num }}"
+                class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+              >
+                {{ num }}
+              </a>
+            {% endif %}
+          {% endfor %}
+      
+          {% if page_obj.has_next %}
+            <a
+              href="?section=quanLyNguoiDung&page={{ page_obj.next_page_number }}"
+              class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+            >
+              Sau ➡
+            </a>
+          {% endif %}
+          
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+<!-- Kiểm Tra Tình Trạng Section -->
+
+
+<!-- Modal Thông Tin Cá Nhân (Ẩn) -->
+<div
+  class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center"
+>
+  <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-md mx-4 fade-in">
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="text-xl font-bold text-blue-600">👤 Thông Tin Cá Nhân</h3>
+      <button class="text-gray-500 hover:text-gray-700 text-2xl">×</button>
+    </div>
+
+<form class="space-y-4">
+  <div>
+    <label class="block text-sm font-semibold text-gray-700 mb-2">Username</label>
+    <input
+      type="text"
+      value="{{ user.username }}"
+      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-100"
+      readonly
+    />
+  </div>
+
+  <div>
+    <label class="block text-sm font-semibold text-gray-700 mb-2">Họ và Tên</label>
+    <input
+      type="text"
+      value="{{ profile.name }}"
+      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-100"
+      readonly
+    />
+  </div>
+
+  <div>
+    <label class="block text-sm font-semibold text-gray-700 mb-2">Số điện thoại</label>
+    <input
+      type="text"
+      value="{{ profile.phone }}"
+      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-100"
+      readonly
+    />
+  </div>
+
+  <div>
+    <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+    <input
+      type="email"
+      value="{{ user.email }}"
+      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-100"
+      readonly
+    />
+  </div>
+</form>
+      <div class="flex space-x-3 pt-4">
+        <button
+          type="button"
+          class="flex-1 bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600 transition-colors font-semibold"
+        >
+          ❌ Hủy
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<script>
+  // Lấy các phần tử cần thiết
+  const profileBtn = document.querySelector(".bg-white\\/20.text-white.px-4.py-2.rounded-lg");
+  const modal = document.querySelector(".fixed.inset-0.bg-black.bg-opacity-50");
+  const closeBtn = modal.querySelector("button.text-gray-500"); // nút dấu ×
+  const cancelBtn = modal.querySelector("button.bg-gray-500"); // nút Hủy
+
+  // Khi bấm "👤 Hồ Sơ" => hiện modal
+  profileBtn.addEventListener("click", () => {
+    modal.classList.remove("hidden");
+  });
+
+  // Khi bấm dấu × hoặc nút "Hủy" => ẩn modal
+  [closeBtn, cancelBtn].forEach(btn => {
+    btn.addEventListener("click", () => {
+      modal.classList.add("hidden");
+    });
+  });
+
+  // Khi click ra ngoài modal => ẩn modal
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.classList.add("hidden");
+    }
+  });
+</script>
+
+

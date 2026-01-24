@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="max-w-6xl mx-auto p-8">
+  <h1 class="text-3xl font-bold mb-6 text-gray-800">📚 Sách bạn đã mượn</h1>
+
+  {% if messages %}
+    <div class="mb-4">
+      {% for message in messages %}
+        <div class="p-3 rounded-md text-sm 
+                    {% if message.tags == 'success' %}bg-green-100 text-green-700
+                    {% elif message.tags == 'error' %}bg-red-100 text-red-700
+                    {% else %}bg-gray-100 text-gray-700{% endif %}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% if borrowed_books %}
+    <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+      <table class="min-w-full text-left text-gray-700">
+        <thead class="bg-gray-100 text-sm uppercase font-semibold">
+          <tr>
+            <th class="px-6 py-3">Tên sách</th>
+            <th class="px-6 py-3">Tác giả</th>
+            <th class="px-6 py-3">Ngày mượn</th>
+            <th class="px-6 py-3">Hạn trả</th>
+            <th class="px-6 py-3">Trạng thái</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y">
+
+          {% for record in borrowed_books %}
+            <tr class="hover:bg-gray-50 {% if record.status == 'overdue' %}bg-red-50{% endif %}">
+              <td class="px-6 py-4 font-medium">{{ record.book.title }}</td>
+              <td class="px-6 py-4">{{ record.book.author }}</td>
+              <td class="px-6 py-4">{{ record.borrow_date|date:"d/m/Y" }}</td>
+              <td class="px-6 py-4">{{ record.due_date|date:"d/m/Y" }}</td>
+              <td class="px-6 py-4 space-y-1">
+
+                {% if record.status == "borrowed" %}
+                  <div class="flex items-center justify-between">
+                    <p class="text-sm text-blue-700 font-semibold flex items-center space-x-2">
+                      <svg class="w-4 h-4 text-blue-500 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M5 13l4 4L19 7"></path>
+                      </svg>
+                      <span>Đang mượn</span>
+                    </p>
+
+                    <form method="post" action="{% url 'library:extend_book' record.record_id %}">
+                      {% csrf_token %}
+                      <button type="submit" 
+                              class="bg-blue-100 text-blue-700 px-3 py-1 rounded-md text-xs font-semibold hover:bg-blue-200 transition">
+                        Gia hạn
+                      </button>
+                    </form>
+                  </div>
+
+                  <p class="text-xs text-gray-600 flex items-center space-x-1">
+                    <svg class="w-3 h-3 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>Hạn trả: {{ record.due_date|date:"d/m/Y" }}</span>
+                  </p>
+
+                {% elif record.status == "RETURNED" %}
+                  <p class="text-sm text-green-700 font-semibold flex items-center space-x-2">
+                    <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <span>Đã trả</span>
+                  </p>
+                  <p class="text-xs text-gray-500 mt-1">
+                    Ngày trả: {{ record.return_date|date:"d/m/Y" }}
+                  </p>
+
+                {% elif record.status == "overdue" %}
+                  <div class="flex items-center justify-between">
+                    <p class="text-sm text-red-700 font-bold flex items-center space-x-2 animate-bounce">
+                      <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      </svg>
+                      <span>Quá hạn {{ record.late_days }} ngày!</span>
+                    </p>
+                    <form method="post" action="{% url 'library:extend_book' record.record_id %}">
+                      {% csrf_token %}
+                      <button type="submit" 
+                              class="bg-red-100 text-red-700 px-3 py-1 rounded-md text-xs font-semibold hover:bg-red-200 transition">
+                        Gia hạn
+                      </button>
+                    </form>
+                  </div>
+
+                  <p class="text-xs text-gray-600 mt-1 flex items-center space-x-1">
+                    <svg class="w-3 h-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>Hạn trả: {{ record.due_date|date:"d/m/Y" }}</span>
+                  </p>
+                {% endif %}
+
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p class="text-gray-500 mt-6">Bạn chưa mượn quyển sách nào.</p>
+  {% endif %}
+</div>
+
+{% endblock %}
