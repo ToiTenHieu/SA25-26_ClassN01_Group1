@@ -351,16 +351,34 @@ from .models import Review # Cần import Model Review
 
 def about(request):
     return render(request, 'library/about.html')
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from django.utils import timezone
+from .models import BorrowRecord
+
 @login_required
 def borrowed_books(request):
-    # Lấy user hiện tại
     user_profile = request.user.userprofile
-    borrowed_books = BorrowRecord.objects.filter(user=user_profile).select_related('book')
+    today = timezone.now().date()
 
-    context = {
-        'borrowed_books': borrowed_books,
-    }
-    return render(request, 'library/borrowed_books.html', context)
+    # 🔥 LẤY TẤT CẢ SÁCH ĐÃ MƯỢN
+    records = BorrowRecord.objects.filter(user=user_profile)
+
+    # 🔥 TỰ ĐỘNG ĐỔI TRẠNG THÁI SANG QUÁ HẠN
+    for record in records:
+        if record.status == "borrowed" and record.due_date < today:
+            record.status = "overdue"
+            record.save(update_fields=["status"])
+
+    # LẤY LẠI DATA SAU KHI CẬP NHẬT
+    borrowed_books = BorrowRecord.objects.filter(
+        user=user_profile
+    ).select_related("book")
+
+    return render(request, "library/borrowed_books.html", {
+        "borrowed_books": borrowed_books
+    })
+
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
 
