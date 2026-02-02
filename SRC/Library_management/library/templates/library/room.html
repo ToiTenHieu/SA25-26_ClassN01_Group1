@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudySpace - Đặt Chỗ Không Gian Học Tập</title>
+    <title>StudySpace - Book Your Study Space</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -137,15 +137,15 @@
                     </div>
                     <div>
                         <h1 class="text-xl font-bold text-gray-900">StudySpace</h1>
-                        <p class="text-xs text-gray-500">Đặt chỗ học tập thông minh</p>
+                        <p class="text-xs text-gray-500">Smart Study Space Booking</p>
                     </div>
                 </div>
                 
                 <nav class="hidden md:flex space-x-8">
-                    <a href="#" class="text-blue-600 font-medium">Trang chủ</a>
-                    <a href="#spaces" class="text-gray-700 hover:text-blue-600 font-medium">Không gian</a>
-                    <a href="#booking" class="text-gray-700 hover:text-blue-600 font-medium">Đặt chỗ</a>
-                    <a href="#mybookings" class="text-gray-700 hover:text-blue-600 font-medium">Lịch của tôi</a>
+                    <a href="#" class="text-blue-600 font-medium">Home</a>
+                    <a href="#spaces" class="text-gray-700 hover:text-blue-600 font-medium">Spaces</a>
+                    <a href="#booking" class="text-gray-700 hover:text-blue-600 font-medium">Booking</a>
+                    <a href="#mybookings" class="text-gray-700 hover:text-blue-600 font-medium">My Bookings</a>
                 </nav>
                 
                 <div class="flex items-center space-x-4">
@@ -168,23 +168,23 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center mb-12">
                 <h1 class="text-4xl md:text-6xl font-bold mb-6">
-                    Không Gian Học Tập
-                    <span class="block text-yellow-300">Lý Tưởng</span>
+                    Study Space
+                    <span class="block text-yellow-300">Ideal for You</span>
                 </h1>
                 <p class="text-xl md:text-2xl mb-8 opacity-90">
-                    Đặt chỗ nhanh chóng - Học tập hiệu quả - Môi trường yên tĩnh
+                    Quick booking - Effective learning - Quiet environment
                 </p>
                 
                 <!-- Quick Booking -->
                 <div class="max-w-4xl mx-auto bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl p-6">
-                    <h3 class="text-xl font-semibold mb-4">Đặt chỗ nhanh</h3>
+                    <h3 class="text-xl font-semibold mb-4">Quick Booking</h3>
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div>
-                            <label class="block text-sm font-medium mb-2">Ngày</label>
+                            <label class="block text-sm font-medium mb-2">Date</label>
                             <input type="date" id="quickDate" class="w-full px-3 py-2 rounded-lg text-gray-900" value="2024-12-20">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium mb-2">Giờ bắt đầu</label>
+                            <label class="block text-sm font-medium mb-2">Start Time</label>
                             <select id="quickStartTime" class="w-full px-3 py-2 rounded-lg text-gray-900">
                                 <option value="08:00">08:00</option>
                                 <option value="09:00">09:00</option>
@@ -195,17 +195,17 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium mb-2">Thời lượng</label>
+                            <label class="block text-sm font-medium mb-2">Duration</label>
                             <select id="quickDuration" class="w-full px-3 py-2 rounded-lg text-gray-900">
-                                <option value="1">1 giờ</option>
-                                <option value="2">2 giờ</option>
-                                <option value="3">3 giờ</option>
-                                <option value="4">4 giờ</option>
+                                <option value="1">1 hour</option>
+                                <option value="2">2 hours</option>
+                                <option value="3">3 hours</option>
+                                <option value="4">4 hours</option>
                             </select>
                         </div>
                         <div class="flex items-end">
                             <button onclick="quickSearch()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium">
-                                🔍 Tìm chỗ trống
+                                🔍 Find Available
                             </button>
                         </div>
                     </div>
@@ -216,19 +216,19 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
                 <div class="text-center">
                     <div class="text-3xl font-bold">150+</div>
-                    <div class="text-sm opacity-80">Chỗ ngồi</div>
+                    <div class="text-sm opacity-80">Seats</div>
                 </div>
                 <div class="text-center">
                     <div class="text-3xl font-bold">24/7</div>
-                    <div class="text-sm opacity-80">Mở cửa</div>
+                    <div class="text-sm opacity-80">Open</div>
                 </div>
                 <div class="text-center">
                     <div class="text-3xl font-bold">5K+</div>
-                    <div class="text-sm opacity-80">Lượt đặt/tháng</div>
+                    <div class="text-sm opacity-80">Bookings/Month</div>
                 </div>
                 <div class="text-center">
                     <div class="text-3xl font-bold">4.9★</div>
-                    <div class="text-sm opacity-80">Đánh giá</div>
+                    <div class="text-sm opacity-80">Rating</div>
                 </div>
             </div>
         </div>
@@ -238,18 +238,18 @@
     <section id="spaces" class="py-16 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Không Gian Học Tập</h2>
-                <p class="text-gray-600">Chọn không gian phù hợp với nhu cầu học tập của bạn</p>
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Study Spaces</h2>
+                <p class="text-gray-600">Choose the space that fits your study needs</p>
             </div>
             
             <!-- Filter Tabs -->
             <div class="flex justify-center mb-8">
                 <div class="bg-gray-100 rounded-lg p-1 flex space-x-1">
-                    <button onclick="filterSpaces('all')" class="filter-tab active px-4 py-2 rounded-md font-medium transition-colors">Tất cả</button>
-                    <button onclick="filterSpaces('individual')" class="filter-tab px-4 py-2 rounded-md font-medium transition-colors">Cá nhân</button>
-                    <button onclick="filterSpaces('group')" class="filter-tab px-4 py-2 rounded-md font-medium transition-colors">Nhóm</button>
-                    <button onclick="filterSpaces('silent')" class="filter-tab px-4 py-2 rounded-md font-medium transition-colors">Yên tĩnh</button>
-                    <button onclick="filterSpaces('discussion')" class="filter-tab px-4 py-2 rounded-md font-medium transition-colors">Thảo luận</button>
+                    <button onclick="filterSpaces('all')" class="filter-tab active px-4 py-2 rounded-md font-medium transition-colors">All</button>
+                    <button onclick="filterSpaces('individual')" class="filter-tab px-4 py-2 rounded-md font-medium transition-colors">Individual</button>
+                    <button onclick="filterSpaces('group')" class="filter-tab px-4 py-2 rounded-md font-medium transition-colors">Group</button>
+                    <button onclick="filterSpaces('silent')" class="filter-tab px-4 py-2 rounded-md font-medium transition-colors">Silent</button>
+                    <button onclick="filterSpaces('discussion')" class="filter-tab px-4 py-2 rounded-md font-medium transition-colors">Discussion</button>
                 </div>
             </div>
             
@@ -261,44 +261,44 @@
                         <div class="h-48 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
                             <div class="text-white text-center">
                                 <div class="text-4xl mb-2">🪑</div>
-                                <div class="font-bold text-lg">Phòng Cá Nhân</div>
+                                <div class="font-bold text-lg">Study Room</div>
                             </div>
                         </div>
                         <div class="absolute top-4 right-4">
                             <span class="status-available text-white px-3 py-1 rounded-full text-sm font-medium">
-                                ✓ Có sẵn
+                                ✓ Available
                             </span>
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="font-bold text-lg text-gray-900 mb-2">Phòng Học Cá Nhân A1</h3>
-                        <p class="text-gray-600 text-sm mb-4">Không gian riêng tư, yên tĩnh, phù hợp cho việc tập trung cao độ</p>
+                        <h3 class="font-bold text-lg text-gray-900 mb-2">Personal Study Room A1</h3>
+                        <p class="text-gray-600 text-sm mb-4">Private space, quiet and focused for deep concentration</p>
                         
                         <div class="space-y-2 mb-4">
                             <div class="flex items-center text-sm text-gray-600">
                                 <span class="mr-2">👤</span>
-                                <span>1 người</span>
+                                <span>1 person</span>
                             </div>
                             <div class="flex items-center text-sm text-gray-600">
                                 <span class="mr-2">🔌</span>
-                                <span>Ổ cắm điện, WiFi</span>
+                                <span>Power outlet, WiFi</span>
                             </div>
                             <div class="flex items-center text-sm text-gray-600">
                                 <span class="mr-2">🌡️</span>
-                                <span>Điều hòa không khí</span>
+                                <span>Air conditioning</span>
                             </div>
                             <div class="flex items-center text-sm text-gray-600">
                                 <span class="mr-2">💰</span>
-                                <span class="font-semibold text-blue-600">15,000đ/giờ</span>
+                                <span class="font-semibold text-blue-600">15,000đ/hour</span>
                             </div>
                         </div>
                         
                         <div class="flex gap-2">
                             <button onclick="viewSpace('A1')" class="flex-1 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors text-sm">
-                                👁️ Xem chi tiết
+                                👁️ View Details
                             </button>
                             <button onclick="bookSpace('A1', 'individual')" class="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors text-sm">
-                                📅 Đặt chỗ
+                                📅 Book Now
                             </button>
                         </div>
                     </div>
@@ -310,40 +310,40 @@
                         <div class="h-48 bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
                             <div class="text-white text-center">
                                 <div class="text-4xl mb-2">👥</div>
-                                <div class="font-bold text-lg">Phòng Nhóm</div>
+                                <div class="font-bold text-lg">Group Room</div>
                             </div>
                         </div>
                         <div class="absolute top-4 right-4">
                             <span class="status-occupied text-white px-3 py-1 rounded-full text-sm font-medium">
-                                ⏰ Đang sử dụng
+                                ⏰ In Use
                             </span>
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="font-bold text-lg text-gray-900 mb-2">Phòng Nhóm B2</h3>
-                        <p class="text-gray-600 text-sm mb-4">Không gian rộng rãi cho nhóm học tập, có bảng trắng và máy chiếu</p>
+                        <h3 class="font-bold text-lg text-gray-900 mb-2">Group Study Room B2</h3>
+                        <p class="text-gray-600 text-sm mb-4">Spacious room for group study, equipped with whiteboard and projector</p>
                         
                         <div class="space-y-2 mb-4">
                             <div class="flex items-center text-sm text-gray-600">
                                 <span class="mr-2">👥</span>
-                                <span>4-8 người</span>
+                                <span>4-8 people</span>
                             </div>
                             <div class="flex items-center text-sm text-gray-600">
                                 <span class="mr-2">📺</span>
-                                <span>TV, bảng trắng</span>
+                                <span>TV, whiteboard</span>
                             </div>
                             <div class="flex items-center text-sm text-gray-600">
                                 <span class="mr-2">🔊</span>
-                                <span>Cho phép thảo luận</span>
+                                <span>Discussion allowed</span>
                             </div>
                             <div class="flex items-center text-sm text-gray-600">
                                 <span class="mr-2">💰</span>
-                                <span class="font-semibold text-green-600">50,000đ/giờ</span>
+                                <span class="font-semibold text-green-600">50,000đ/hour</span>
                             </div>
                         </div>
                         
                         <div class="mb-4">
-                            <div class="text-sm text-gray-600 mb-1">Có sẵn lúc: <strong>16:00</strong></div>
+                            <div class="text-sm text-gray-600 mb-1">Available at: <strong>16:00</strong></div>
                             <div class="w-full bg-gray-200 rounded-full h-2">
                                 <div class="bg-red-500 h-2 rounded-full" style="width: 75%"></div>
                             </div>
@@ -351,10 +351,10 @@
                         
                         <div class="flex gap-2">
                             <button onclick="viewSpace('B2')" class="flex-1 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors text-sm">
-                                👁️ Xem chi tiết
+                                👁️ View Details
                             </button>
                             <button onclick="bookSpace('B2', 'group')" class="flex-1 bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-orange-700 transition-colors text-sm">
-                                ⏰ Đặt trước
+                                ⏰ Reserve Now
                             </button>
                         </div>
                     </div>
@@ -366,40 +366,40 @@
                         <div class="h-48 bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center">
                             <div class="text-white text-center">
                                 <div class="text-4xl mb-2">🤫</div>
-                                <div class="font-bold text-lg">Khu Yên Tĩnh</div>
+                                <div class="font-bold text-lg">Silent Zone</div>
                             </div>
                         </div>
                         <div class="absolute top-4 right-4">
                             <span class="status-available text-white px-3 py-1 rounded-full text-sm font-medium">
-                                ✓ Có sẵn
+                                ✓ Available
                             </span>
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="font-bold text-lg text-gray-900 mb-2">Khu Yên Tĩnh C1</h3>
-                        <p class="text-gray-600 text-sm mb-4">Không gian tuyệt đối yên tĩnh, cấm nói chuyện và gọi điện</p>
+                        <h3 class="font-bold text-lg text-gray-900 mb-2">Silent Zone C1</h3>
+                        <p class="text-gray-600 text-sm mb-4">Absolutely quiet space, no talking or phone calls allowed</p>
                         
                         <div class="space-y-2 mb-4">
                             <div class="flex items-center text-sm text-gray-600">
                                 <span class="mr-2">👤</span>
-                                <span>20 chỗ ngồi</span>
+                                <span>20 seats</span>
                             </div>
                             <div class="flex items-center text-sm text-gray-600">
                                 <span class="mr-2">🔇</span>
-                                <span>Tuyệt đối yên tĩnh</span>
+                                <span>Absolutely quiet</span>
                             </div>
                             <div class="flex items-center text-sm text-gray-600">
                                 <span class="mr-2">📚</span>
-                                <span>Kệ sách tham khảo</span>
+                                <span>Reference books</span>
                             </div>
                             <div class="flex items-center text-sm text-gray-600">
                                 <span class="mr-2">💰</span>
-                                <span class="font-semibold text-purple-600">10,000đ/giờ</span>
+                                <span class="font-semibold text-purple-600">10,000đ/hour</span>
                             </div>
                         </div>
                         
                         <div class="mb-4">
-                            <div class="text-sm text-gray-600 mb-1">Tình trạng: <strong>12/20 chỗ</strong></div>
+                            <div class="text-sm text-gray-600 mb-1">Status: <strong>12/20 seats</strong></div>
                             <div class="w-full bg-gray-200 rounded-full h-2">
                                 <div class="bg-purple-500 h-2 rounded-full" style="width: 60%"></div>
                             </div>
@@ -407,10 +407,10 @@
                         
                         <div class="flex gap-2">
                             <button onclick="viewSpace('C1')" class="flex-1 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors text-sm">
-                                👁️ Xem chi tiết
+                                👁️ View Details
                             </button>
                             <button onclick="bookSpace('C1', 'silent')" class="flex-1 bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition-colors text-sm">
-                                📅 Đặt chỗ
+                                📅 Book Now
                             </button>
                         </div>
                     </div>
@@ -422,40 +422,40 @@
                         <div class="h-48 bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center">
                             <div class="text-white text-center">
                                 <div class="text-4xl mb-2">💬</div>
-                                <div class="font-bold text-lg">Khu Thảo Luận</div>
+                                <div class="font-bold text-lg">Discussion Area </div>
                             </div>
                         </div>
                         <div class="absolute top-4 right-4">
                             <span class="status-reserved text-white px-3 py-1 rounded-full text-sm font-medium">
-                                📅 Đã đặt
+                                📅 Booked
                             </span>
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="font-bold text-lg text-gray-900 mb-2">Khu Thảo Luận D1</h3>
-                        <p class="text-gray-600 text-sm mb-4">Không gian mở cho thảo luận nhóm, học tập tương tác</p>
+                        <h3 class="font-bold text-lg text-gray-900 mb-2">Discussion Area D1</h3>
+                        <p class="text-gray-600 text-sm mb-4">Open space for group discussions and interactive learning</p>
                         
                         <div class="space-y-2 mb-4">
                             <div class="flex items-center text-sm text-gray-600">
                                 <span class="mr-2">👥</span>
-                                <span>15 chỗ ngồi</span>
+                                <span>15 seats</span>
                             </div>
                             <div class="flex items-center text-sm text-gray-600">
                                 <span class="mr-2">🗣️</span>
-                                <span>Cho phép nói chuyện</span>
+                                <span>Allows conversation</span>
                             </div>
                             <div class="flex items-center text-sm text-gray-600">
                                 <span class="mr-2">☕</span>
-                                <span>Gần khu ăn uống</span>
+                                <span>Near food area</span>
                             </div>
                             <div class="flex items-center text-sm text-gray-600">
                                 <span class="mr-2">💰</span>
-                                <span class="font-semibold text-orange-600">8,000đ/giờ</span>
+                                <span class="font-semibold text-orange-600">8,000đ/hour </span>
                             </div>
                         </div>
                         
                         <div class="mb-4">
-                            <div class="text-sm text-gray-600 mb-1">Có sẵn lúc: <strong>18:00</strong></div>
+                            <div class="text-sm text-gray-600 mb-1">Available at: <strong>18:00</strong></div>
                             <div class="w-full bg-gray-200 rounded-full h-2">
                                 <div class="bg-orange-500 h-2 rounded-full" style="width: 90%"></div>
                             </div>
@@ -463,10 +463,10 @@
                         
                         <div class="flex gap-2">
                             <button onclick="viewSpace('D1')" class="flex-1 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors text-sm">
-                                👁️ Xem chi tiết
+                                👁️ View Details
                             </button>
                             <button onclick="bookSpace('D1', 'discussion')" class="flex-1 bg-yellow-600 text-white py-2 px-4 rounded-lg hover:bg-yellow-700 transition-colors text-sm">
-                                ⏰ Đặt trước
+                                ⏰ Book Now
                             </button>
                         </div>
                     </div>
@@ -478,44 +478,44 @@
                         <div class="h-48 bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center">
                             <div class="text-white text-center">
                                 <div class="text-4xl mb-2">⭐</div>
-                                <div class="font-bold text-lg">Phòng VIP</div>
+                                <div class="font-bold text-lg"> VIP</div>
                             </div>
                         </div>
                         <div class="absolute top-4 right-4">
                             <span class="status-available text-white px-3 py-1 rounded-full text-sm font-medium">
-                                ✓ Có sẵn
+                                ✓ Available
                             </span>
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="font-bold text-lg text-gray-900 mb-2">Phòng VIP E1</h3>
-                        <p class="text-gray-600 text-sm mb-4">Phòng cao cấp với đầy đủ tiện nghi, view đẹp, không gian sang trọng</p>
+                        <h3 class="font-bold text-lg text-gray-900 mb-2">VIP Room E1</h3>
+                        <p class="text-gray-600 text-sm mb-4">Vip room with full amenities, city view, and luxurious space</p>
                         
                         <div class="space-y-2 mb-4">
                             <div class="flex items-center text-sm text-gray-600">
                                 <span class="mr-2">👤</span>
-                                <span>1-2 người</span>
+                                <span>1-2 people</span>
                             </div>
                             <div class="flex items-center text-sm text-gray-600">
                                 <span class="mr-2">🖥️</span>
-                                <span>Màn hình 4K, ghế massage</span>
+                                <span>4K screen, massage chair</span>
                             </div>
                             <div class="flex items-center text-sm text-gray-600">
                                 <span class="mr-2">🌆</span>
-                                <span>View thành phố</span>
+                                <span>City view</span>
                             </div>
                             <div class="flex items-center text-sm text-gray-600">
                                 <span class="mr-2">💰</span>
-                                <span class="font-semibold text-indigo-600">35,000đ/giờ</span>
+                                <span class="font-semibold text-indigo-600">35,000đ/hour</span>
                             </div>
                         </div>
                         
                         <div class="flex gap-2">
                             <button onclick="viewSpace('E1')" class="flex-1 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors text-sm">
-                                👁️ Xem chi tiết
+                                👁️ View Details
                             </button>
                             <button onclick="bookSpace('E1', 'premium')" class="flex-1 bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors text-sm">
-                                ⭐ Đặt VIP
+                                ⭐ Book VIP
                             </button>
                         </div>
                     </div>
@@ -527,23 +527,23 @@
                         <div class="h-48 bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center">
                             <div class="text-white text-center">
                                 <div class="text-4xl mb-2">💻</div>
-                                <div class="font-bold text-lg">Phòng Máy</div>
+                                <div class="font-bold text-lg">Computer Lab</div>
                             </div>
                         </div>
                         <div class="absolute top-4 right-4">
                             <span class="status-available text-white px-3 py-1 rounded-full text-sm font-medium">
-                                ✓ Có sẵn
+                                ✓ Available    
                             </span>
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="font-bold text-lg text-gray-900 mb-2">Phòng Máy Tính F1</h3>
-                        <p class="text-gray-600 text-sm mb-4">Máy tính hiện đại, phần mềm đầy đủ cho lập trình và thiết kế</p>
+                        <h3 class="font-bold text-lg text-gray-900 mb-2">Computer Lab F1</h3>
+                        <p class="text-gray-600 text-sm mb-4">Modern computers with full software for programming and design</p>
                         
                         <div class="space-y-2 mb-4">
                             <div class="flex items-center text-sm text-gray-600">
                                 <span class="mr-2">💻</span>
-                                <span>30 máy tính</span>
+                                <span>30 computers</span>
                             </div>
                             <div class="flex items-center text-sm text-gray-600">
                                 <span class="mr-2">⚡</span>
@@ -551,16 +551,16 @@
                             </div>
                             <div class="flex items-center text-sm text-gray-600">
                                 <span class="mr-2">🛠️</span>
-                                <span>Phần mềm chuyên nghiệp</span>
+                                <span>Professional software</span>
                             </div>
                             <div class="flex items-center text-sm text-gray-600">
                                 <span class="mr-2">💰</span>
-                                <span class="font-semibold text-teal-600">20,000đ/giờ</span>
+                                <span class="font-semibold text-teal-600">20,000đ/hour</span>
                             </div>
                         </div>
                         
                         <div class="mb-4">
-                            <div class="text-sm text-gray-600 mb-1">Tình trạng: <strong>25/30 máy</strong></div>
+                            <div class="text-sm text-gray-600 mb-1">Status  : <strong>25/30 computers</strong></div>
                             <div class="w-full bg-gray-200 rounded-full h-2">
                                 <div class="bg-teal-500 h-2 rounded-full" style="width: 83%"></div>
                             </div>
@@ -568,7 +568,7 @@
                         
                         <div class="flex gap-2">
                             <button onclick="viewSpace('F1')" class="flex-1 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors text-sm">
-                                👁️ Xem chi tiết
+                                👁️ View Details
                             </button>
                             <button onclick="bookSpace('F1', 'computer')" class="flex-1 bg-teal-600 text-white py-2 px-4 rounded-lg hover:bg-teal-700 transition-colors text-sm">
                                 💻 Đặt máy
@@ -946,7 +946,7 @@
             
             // Simulate booking confirmation
             setTimeout(() => {
-                alert(`✅ Xác nhận đặt chỗ thành công!\n\n📍 ${spaces[currentSpace].name}\n📅 ${selectedDate.toLocaleDateString('vi-VN')}\n⏰ ${selectedTime} (${selectedDuration} giờ)\n💰 ${(spacePrice * selectedDuration).toLocaleString()}đ\n🎫 Mã đặt chỗ: #${bookingCode}\n\n📱 Bạn sẽ nhận được SMS xác nhận trong vài phút tới.`);
+                alert(`✅ Booking confirmed successfully!\n\n📍 ${spaces[currentSpace].name}\n📅 ${selectedDate.toLocaleDateString('en-US')}\n⏰ ${selectedTime} (${selectedDuration} hours)\n💰 ${(spacePrice * selectedDuration).toLocaleString()}\n🎫 Booking Code: #${bookingCode}\n\n📱 You will receive SMS confirmation within minutes.`);
             }, 1000);
         }
         
@@ -976,7 +976,7 @@
         
         // Show notifications panel
         function showNotifications() {
-            alert(`🔔 Thông báo:\n\n• Đặt chỗ #SP2024001 sẽ bắt đầu trong 30 phút\n• Phòng A1 đã được dọn dẹp xong\n• Khuyến mãi 20% cho đặt chỗ cuối tuần`);
+            alert(`🔔 Notification:\n\n• Booking #SP2024001 starts in 30 minutes\n• Room A1 has been cleaned\n• 20% discount for weekend bookings`);
         }
         
         // Initialize page

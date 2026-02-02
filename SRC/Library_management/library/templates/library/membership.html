@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Đăng nhập{% endblock %}
+{% block title %}Membership Plans{% endblock %}
 
 {% block extra_css %}
 
@@ -103,18 +103,18 @@
         <section class="bg-gradient-to-br from-indigo-600 via-purple-600 to-blue-700 text-white py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 class="text-4xl md:text-6xl font-bold mb-6">
-                Nâng Cấp Trải Nghiệm
-                <span class="block text-yellow-300">Thư Viện Của Bạn</span>
+                Upgrade Your Experience
+                <span class="block text-yellow-300">With Our Library</span>
             </h1>
             <p class="text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto">
-                Mở khóa những đặc quyền độc quyền, mượn nhiều sách hơn và tận hưởng dịch vụ cao cấp
+                Unlock exclusive privileges, borrow more books, and enjoy premium service
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <button onclick="scrollToPlans()" class="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-indigo-600 transition-colors">
-                    🚀 Khám phá gói dịch vụ
+                    🚀 Explore Plans
                 </button>
                 <button onclick="showComparison()" class="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-indigo-600 transition-colors">
-                    📊 So sánh gói dịch vụ
+                    📊 Compare Plans
                 </button>
             </div>
         </div>
@@ -126,30 +126,30 @@
             <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8">
                 <div class="flex flex-col lg:flex-row items-center justify-between">
                     <div class="mb-6 lg:mb-0">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-2">Tình trạng thành viên hiện tại</h2>
-                        <p class="text-gray-600">Bạn đang sử dụng gói Thành viên {{ profile.get_membership_level_display }}</p>
+                        <h2 class="text-2xl font-bold text-gray-900 mb-2">Your Current Membership</h2>
+                        <p class="text-gray-600">You are currently using the {{ profile.get_membership_level_display }} membership plan</p>
                     </div>
                     
                     <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 w-full lg:w-auto">
                         <div class="text-center">
                             <div class="text-2xl font-bold text-indigo-600">{{ privileges.max_books }}</div>
-                            <div class="text-sm text-gray-600">Sách đang mượn</div>
+                            <div class="text-sm text-gray-600">Books Borrowed</div>
                         </div>
                         <div class="text-center">
                             <div class="text-2xl font-bold text-green-600">{{ privileges.max_days }}</div>
-                            <div class="text-sm text-gray-600">Ngày mượn tối đa</div>
+                            <div class="text-sm text-gray-600">Max Days</div>
                         </div>
                         <div class="text-center">
                             <div class="text-2xl font-bold text-yellow-600">{{ privileges.free_extend }}</div>
-                            <div class="text-sm text-gray-600">Gia hạn miễn phí</div>
+                            <div class="text-sm text-gray-600">Free Renewals</div>
                         </div>
                         <div class="text-center">
                             {% if privileges.priority %}
                                 <div class="text-2xl font-bold text-purple-600">✅</div>
-                                <div class="text-sm text-gray-600">Đặt chỗ ưu tiên</div>
+                                <div class="text-sm text-gray-600">Priority Booking</div>
                             {% else %}
                                 <div class="text-2xl font-bold text-purple-600">❌</div>
-                                <div class="text-sm text-gray-600">Đặt chỗ ưu tiên</div>
+                                <div class="text-sm text-gray-600">Priority Booking</div>
                             {% endif %}
                         </div>
                     </div>
@@ -162,9 +162,9 @@
     <section id="plans" class="py-16 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Chọn Gói Thành Viên Phù Hợp</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Choose Your Membership Plan</h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Từ người đọc thường xuyên đến nghiên cứu viên chuyên nghiệp, chúng tôi có gói dịch vụ dành cho bạn
+                    From casual readers to professional researchers, we have the perfect plan for you
                 </p>
             </div>
             {% if current_rank == "basic" %}
@@ -175,88 +175,88 @@
                         <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                             <span class="text-2xl">📖</span>
                         </div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Cơ Bản</h3>
-                        <div class="text-gray-600 mb-4">Gói hiện tại của bạn</div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Basic</h3>
+                        <div class="text-gray-600 mb-4">Your current plan</div>
                         <div class="text-4xl font-bold text-gray-900 mb-2">
-                            Miễn phí
+                            Free
                         </div>
-                        <div class="text-gray-500">Mãi mãi</div>
+                        <div class="text-gray-500">Forever</div>
                     </div>
                     
                     <ul class="space-y-4 mb-8">
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Mượn tối đa 10 cuốn sách</span>
+                            <span>Borrow up to 10 books</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Thời gian mượn: 14 ngày</span>
+                            <span>Borrowing period: 14 days</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Truy cập thư viện cơ bản</span>
+                            <span>Basic library access</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-cross mr-3">✗</span>
-                            <span class="text-gray-400">Gia hạn miễn phí</span>
+                            <span class="text-gray-400">Free renewals</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-cross mr-3">✗</span>
-                            <span class="text-gray-400">Đặt chỗ ưu tiên</span>
+                            <span class="text-gray-400">Priority Booking</span>
                         </li>
                     </ul>
                     
                     <button class="w-full bg-gray-200 text-gray-600 py-3 px-6 rounded-xl font-semibold cursor-not-allowed">
-                        Gói hiện tại
+                        Current Plan
                     </button>
                 </div>
 
                 <!-- Premium Plan (Popular) -->
                 <div class="membership-card popular bg-white rounded-2xl shadow-lg p-8 relative">
-                    <div class="popular-badge">PHỔ BIẾN</div>
+                    <div class="popular-badge">Popular</div>
                     
                     <div class="text-center mb-6">
                         <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                             <span class="text-2xl text-white">⭐</span>
                         </div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Tiêu chuẩn </h3>
-                        <div class="text-blue-600 mb-4 font-medium">Được đề xuất</div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Standard</h3>
+                        <div class="text-blue-600 mb-4 font-medium">Recommended</div>
                         <div class="text-4xl font-bold price-highlight mb-2">
                             200,000đ
                         </div>
-                        <div class="text-gray-500">/ tháng</div>
+                        <div class="text-gray-500">/ month</div>
                     </div>
                     
                     <ul class="space-y-4 mb-8">
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Mượn tối đa <strong>20 cuốn sách</strong></span>
+                            <span>Borrow up to <strong>20 books</strong></span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Thời gian mượn: <strong>21 ngày</strong></span>
+                            <span>Borrowing period: <strong>21 days</strong></span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span><strong>3 lần gia hạn</strong> miễn phí</span>
+                            <span><strong>3 free renewals</strong></span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Đặt chỗ ưu tiên</span>
+                            <span>Priority Booking</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Truy cập sách điện tử</span>
+                            <span>Access to e-books</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Hỗ trợ ưu tiên 24/7</span>
+                            <span>Priority support 24/7</span>
                         </li>
                     </ul>
                     <form method="GET" action="{% url 'library:payment' %}">
                         <input type="hidden" name="level" value="standard">
                         <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-6 rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 transition-all">
-                            🚀 Nâng cấp ngay
+                            🚀 Upgrade Now
                         </button>
                     </form>
                     </a>
@@ -268,48 +268,48 @@
                         <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center mx-auto mb-4">
                             <span class="text-2xl text-white">👑</span>
                         </div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Cao cấp</h3>
-                        <div class="text-yellow-600 mb-4 font-medium">Trải nghiệm tối ưu</div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Premium</h3>
+                        <div class="text-yellow-600 mb-4 font-medium">Best experience</div>
                         <div class="text-4xl font-bold text-yellow-600 mb-2">
                             400,000đ
                         </div>
-                        <div class="text-gray-500">/ tháng</div>
+                        <div class="text-gray-500">/ month</div>
                     </div>
                     
                     <ul class="space-y-4 mb-8">
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span><strong>Không giới hạn</strong> số sách</span>
+                            <span><strong>Unlimited</strong> number of books</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Thời gian mượn: <strong>30 ngày</strong></span>
+                            <span>Borrowing period: <strong>30 days</strong></span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span><strong>5 lần gia hạn</strong> miễn phí</span>
+                            <span><strong>5 times free renewal</strong></span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Đặt chỗ ưu tiên cao nhất</span>
+                            <span>Priority booking at the top</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Toàn bộ thư viện điện tử</span>
+                            <span>Full access to digital library</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Giao sách tận nhà</span>
+                            <span>Home delivery of books</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Tư vấn sách cá nhân hóa</span>
+                            <span>Personalized book recommendations</span>
                         </li>
                     </ul>
                     <form method="GET"action="{% url 'library:payment' %}">
                         <input type="hidden" name="level" value="premium">
                         <button type="submit" class="w-full bg-gradient-to-r from-yellow-500 to-yellow-600 text-white py-3 px-6 rounded-xl font-semibold hover:from-yellow-600 hover:to-yellow-700 transition-all">
-                            🚀 Nâng cấp ngay
+                            🚀 Upgrade now
                         </button>
                     </form>
                     </a>
@@ -323,87 +323,87 @@
                         <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                             <span class="text-2xl">📖</span>
                         </div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Cơ Bản</h3>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Basic</h3>
                         <div class="text-gray-600 mb-4"></div>
                         <div class="text-4xl font-bold text-gray-900 mb-2">
-                            Miễn phí
+                            Free
                         </div>
-                        <div class="text-gray-500">Mãi mãi</div>
+                        <div class="text-gray-500">Forever</div>
                     </div>
                     
                     <ul class="space-y-4 mb-8">
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Mượn tối đa 10 cuốn sách</span>
+                            <span>Maximum 10 books to borrow</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Thời gian mượn: 14 ngày</span>
+                            <span>Borrowing period: 14 days</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Truy cập thư viện cơ bản</span>
+                            <span>Basic library access</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-cross mr-3">✗</span>
-                            <span class="text-gray-400">Gia hạn miễn phí</span>
+                            <span class="text-gray-400">Free renewal</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-cross mr-3">✗</span>
-                            <span class="text-gray-400">Đặt chỗ ưu tiên</span>
+                            <span class="text-gray-400">Priority booking</span>
                         </li>
                     </ul>
                     
                     <button class="w-full bg-gray-200 text-gray-600 py-3 px-6 rounded-xl font-semibold cursor-not-allowed">
-                        Gói cơ bản
+                        Basic Plan
                     </button>
                 </div>
 
                 <!-- Premium Plan (Popular) -->
                 <div class="membership-card popular bg-white rounded-2xl shadow-lg p-8 relative">
-                    <div class="popular-badge">PHỔ BIẾN</div>
+                    <div class="popular-badge">Popular</div>
                     
                     <div class="text-center mb-6">
                         <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                             <span class="text-2xl text-white">⭐</span>
                         </div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Tiêu chuẩn </h3>
-                        <div class="text-blue-600 mb-4 font-medium">Được đề xuất</div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Standard</h3>
+                        <div class="text-blue-600 mb-4 font-medium">Recommended</div>
                         <div class="text-4xl font-bold price-highlight mb-2">
                             200,000đ
                         </div>
-                        <div class="text-gray-500">/ tháng</div>
+                        <div class="text-gray-500">/ month</div>
                     </div>
                     
                     <ul class="space-y-4 mb-8">
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Mượn tối đa <strong>20 cuốn sách</strong></span>
+                            <span>Borrow up to <strong>20 books</strong></span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Thời gian mượn: <strong>21 ngày</strong></span>
+                            <span>Borrowing period: <strong>21 days</strong></span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span><strong>3 lần gia hạn</strong> miễn phí</span>
+                            <span><strong>3 times free renewal</strong></span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Đặt chỗ ưu tiên</span>
+                            <span>Priority booking</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Truy cập sách điện tử</span>
+                            <span>Access to e-books</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Hỗ trợ ưu tiên 24/7</span>
+                            <span>24/7 priority support</span>
                         </li>
                     </ul>
                     
                     <button onclick="selectPlan('premium')" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-6 rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 transition-all">
-                        Gói hiện tại của bạn
+                        Your Current Plan
                     </button>
                 </div>
 
@@ -413,48 +413,48 @@
                         <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center mx-auto mb-4">
                             <span class="text-2xl text-white">👑</span>
                         </div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Cao cấp</h3>
-                        <div class="text-yellow-600 mb-4 font-medium">Trải nghiệm tối ưu</div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Premium</h3>
+                        <div class="text-yellow-600 mb-4 font-medium">Optimized experience</div>
                         <div class="text-4xl font-bold text-yellow-600 mb-2">
                             400,000đ
                         </div>
-                        <div class="text-gray-500">/ tháng</div>
+                        <div class="text-gray-500">/ month</div>
                     </div>
                     
                     <ul class="space-y-4 mb-8">
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span><strong>Không giới hạn</strong> số sách</span>
+                            <span><strong>Unlimited</strong> number of books</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Thời gian mượn: <strong>30 ngày</strong></span>
+                            <span>Borrowing period: <strong>30 days</strong></span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span><strong>5 lần gia hạn</strong>miễn phí</span>
+                            <span><strong>5 times free renewal</strong></span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Đặt chỗ ưu tiên cao nhất</span>
+                            <span>Priority booking at the top</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Toàn bộ thư viện điện tử</span>
+                            <span>Full access to digital library</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Giao sách tận nhà</span>
+                            <span>Home delivery of books</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Tư vấn sách cá nhân hóa</span>
+                            <span>Personalized book recommendations</span>
                         </li>
                     </ul>
                     <form method="GET" action="{% url 'library:payment' %}">
                         <input type="hidden" name="level" value="premium">                   
                         <button class="w-full bg-gradient-to-r from-yellow-500 to-yellow-600 text-white py-3 px-6 rounded-xl font-semibold hover:from-yellow-600 hover:to-yellow-700 transition-all">
-                            🚀 Nâng cấp ngay
+                            🚀 Upgrade Now
                         </button>
                     </form>
                     </a>
@@ -468,87 +468,87 @@
                         <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                             <span class="text-2xl">📖</span>
                         </div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Cơ Bản</h3>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Basic</h3>
                         <div class="text-gray-600 mb-4"></div>
                         <div class="text-4xl font-bold text-gray-900 mb-2">
-                            Miễn phí
+                            Free
                         </div>
-                        <div class="text-gray-500">Mãi mãi</div>
+                        <div class="text-gray-500">Forever</div>
                     </div>
                     
                     <ul class="space-y-4 mb-8">
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Mượn tối đa 10 cuốn sách</span>
+                            <span>Maximum 10 books borrowed</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Thời gian mượn: 14 ngày</span>
+                            <span>Borrowing period: 14 days</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Truy cập thư viện cơ bản</span>
+                            <span>Basic library access</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-cross mr-3">✗</span>
-                            <span class="text-gray-400">Gia hạn miễn phí</span>
+                            <span class="text-gray-400">Free renewals</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-cross mr-3">✗</span>
-                            <span class="text-gray-400">Đặt chỗ ưu tiên</span>
+                            <span class="text-gray-400">Priority booking</span>
                         </li>
                     </ul>
                     
                     <button class="w-full bg-gray-200 text-gray-600 py-3 px-6 rounded-xl font-semibold cursor-not-allowed">
-                        Gói cơ bản
+                        Basic Plan
                     </button>
                 </div>
 
                 <!-- Premium Plan (Popular) -->
                 <div class="membership-card popular bg-white rounded-2xl shadow-lg p-8 relative">
-                    <div class="popular-badge">PHỔ BIẾN</div>
+                    <div class="popular-badge">Popular</div>
                     
                     <div class="text-center mb-6">
                         <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                             <span class="text-2xl text-white">⭐</span>
                         </div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Tiêu chuẩn </h3>
-                        <div class="text-blue-600 mb-4 font-medium">Được đề xuất</div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Standard</h3>
+                        <div class="text-blue-600 mb-4 font-medium">Recommended</div>
                         <div class="text-4xl font-bold price-highlight mb-2">
                             200,000đ
                         </div>
-                        <div class="text-gray-500">/ tháng</div>
+                        <div class="text-gray-500">/ month</div>
                     </div>
                     
                     <ul class="space-y-4 mb-8">
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Mượn tối đa <strong>20 cuốn sách</strong></span>
+                            <span>Borrow up to <strong>20 books</strong></span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Thời gian mượn: <strong>21 ngày</strong></span>
+                            <span>Borrowing period: <strong>21 days</strong></span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span><strong>3 lần gia hạn</strong> miễn phí</span>
+                            <span><strong>3 </strong> free renewals</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Đặt chỗ ưu tiên</span>
+                            <span>Priority booking</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Truy cập sách điện tử</span>
+                            <span>Access to e-books</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Hỗ trợ ưu tiên 24/7</span>
+                            <span>24/7 priority support</span>
                         </li>
                     </ul>
                     
                     <button onclick="selectPlan('premium')" class="w-full bg-gray-200 text-gray-600 py-3 px-6 rounded-xl font-semibold cursor-not-allowed">
-                        Gói tiêu chuẩn
+                        Standard
                     </button>
                 </div>
 
@@ -558,47 +558,47 @@
                         <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center mx-auto mb-4">
                             <span class="text-2xl text-white">👑</span>
                         </div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Cao cấp</h3>
-                        <div class="text-yellow-600 mb-4 font-medium">Trải nghiệm tối ưu</div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Premium</h3>
+                        <div class="text-yellow-600 mb-4 font-medium">Optimized experience</div>
                         <div class="text-4xl font-bold text-yellow-600 mb-2">
                             400,000đ
                         </div>
-                        <div class="text-gray-500">/ tháng</div>
+                        <div class="text-gray-500">/ month</div>
                     </div>
                     
                     <ul class="space-y-4 mb-8">
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span><strong>Không giới hạn</strong> số sách</span>
+                            <span><strong>Unlimited</strong> number of books</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Thời gian mượn: <strong>30 ngày</strong></span>
+                            <span>Borrowing period: <strong>30 days</strong></span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span><strong>5 lần gia hạn</strong>miễn phí</span>
+                            <span><strong>5 times free renewal</strong></span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Đặt chỗ ưu tiên cao nhất</span>
+                            <span>Priority booking at the top   </span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Toàn bộ thư viện điện tử</span>
+                            <span>Access to entire digital library</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Giao sách tận nhà</span>
+                            <span>Home delivery of books</span>
                         </li>
                         <li class="benefit-item flex items-center p-2 rounded-lg">
                             <span class="feature-check mr-3">✓</span>
-                            <span>Tư vấn sách cá nhân hóa</span>
+                            <span>Personalized book recommendations</span>
                         </li>
                     </ul>
                     
                     <button class="w-full bg-gradient-to-r from-yellow-500 to-yellow-600 text-white py-3 px-6 rounded-xl font-semibold hover:from-yellow-600 hover:to-yellow-700 transition-all">
-                        Gói hiện tại của bạn
+                        Current Package
                     </button>
                 </div>
             </div>
@@ -610,8 +610,8 @@
     <section class="py-16 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Tại Sao Nên Nâng Cấp?</h2>
-                <p class="text-xl text-gray-600">Khám phá những lợi ích độc quyền dành cho thành viên cao cấp</p>
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Why Upgrade?</h2>
+                <p class="text-xl text-gray-600">Discover exclusive benefits for premium members</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -619,48 +619,48 @@
                     <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                         <span class="text-3xl">📚</span>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Mượn Nhiều Sách Hơn</h3>
-                    <p class="text-gray-600">Tăng giới hạn mượn sách từ 3 lên 8 cuốn hoặc không giới hạn với gói VIP</p>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Borrow More Books</h3>
+                    <p class="text-gray-600">Increase your borrowing limit from 3 to 8 books or unlimited with Premium</p>
                 </div>
                 
                 <div class="text-center p-6">
                     <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                         <span class="text-3xl">⏰</span>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Thời Gian Linh Hoạt</h3>
-                    <p class="text-gray-600">Gia hạn miễn phí và thời gian mượn dài hơn để bạn đọc thoải mái</p>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Flexible Time</h3>
+                    <p class="text-gray-600">Free renewals and longer borrowing periods so you can read comfortably</p>
                 </div>
                 
                 <div class="text-center p-6">
                     <div class="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                         <span class="text-3xl">🎯</span>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Ưu Tiên Đặt Chỗ</h3>
-                    <p class="text-gray-600">Được ưu tiên khi đặt chỗ sách hot, không phải chờ đợi lâu</p>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Priority Reservations</h3>
+                    <p class="text-gray-600">Priority when booking popular books, no more long waits</p>
                 </div>
                 
                 <div class="text-center p-6">
                     <div class="w-20 h-20 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
                         <span class="text-3xl">📱</span>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Sách Điện Tử</h3>
-                    <p class="text-gray-600">Truy cập thư viện sách điện tử phong phú, đọc mọi lúc mọi nơi</p>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Digital Books</h3>
+                    <p class="text-gray-600">Access our rich digital library, read anytime, anywhere</p>
                 </div>
                 
                 <div class="text-center p-6">
                     <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
                         <span class="text-3xl">🚚</span>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Giao Sách Tận Nhà</h3>
-                    <p class="text-gray-600">Dịch vụ giao sách tận nhà cho thành viên VIP, tiện lợi tối đa</p>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Book Delivery</h3>
+                    <p class="text-gray-600">Home delivery service for Premium members, maximum convenience</p>
                 </div>
                 
                 <div class="text-center p-6">
                     <div class="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
                         <span class="text-3xl">💬</span>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Hỗ Trợ Ưu Tiên</h3>
-                    <p class="text-gray-600">Đội ngũ hỗ trợ 24/7 và tư vấn sách cá nhân hóa</p>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Priority Support</h3>
+                    <p class="text-gray-600">24/7 support team and personalized book recommendations</p>
                 </div>
             </div>
         </div>
@@ -670,8 +670,8 @@
     <section class="py-16 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Khách Hàng Nói Gì?</h2>
-                <p class="text-xl text-gray-600">Trải nghiệm thực tế từ các thành viên cao cấp</p>
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">What Customers Say</h2>
+                <p class="text-xl text-gray-600">Real experiences from premium members</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -685,7 +685,7 @@
                             <p class="text-sm text-gray-600">Thành viên Cao cấp</p>
                         </div>
                     </div>
-                    <p class="text-gray-700 mb-4">"Gói cao cấp thật sự đáng giá! Tôi có thể mượn nhiều sách hơn và gia hạn miễn phí rất tiện lợi."</p>
+                    <p class="text-gray-700 mb-4">"The premium plan is really worth it! I can borrow more books and free renewals are very convenient."</p>
                     <div class="flex text-yellow-400">⭐⭐⭐⭐⭐</div>
                 </div>
                 
@@ -699,7 +699,7 @@
                             <p class="text-sm text-gray-600">Thành viên cao cấp</p>
                         </div>
                     </div>
-                    <p class="text-gray-700 mb-4">"Dịch vụ giao sách tận nhà của gói cao cấp tuyệt vời! Tôi tiết kiệm được rất nhiều thời gian."</p>
+                    <p class="text-gray-700 mb-4">"The book delivery service of the premium plan is wonderful! I save a lot of time."</p>
                     <div class="flex text-yellow-400">⭐⭐⭐⭐⭐</div>
                 </div>
                 
@@ -713,7 +713,7 @@
                             <p class="text-sm text-gray-600">Thành viên Cao cấp</p>
                         </div>
                     </div>
-                    <p class="text-gray-700 mb-4">"Thư viện sách điện tử rất phong phú. Tôi có thể đọc sách mọi lúc mọi nơi trên điện thoại."</p>
+                    <p class="text-gray-700 mb-4">"The digital library is very rich. I can read books anytime, anywhere on my phone."</p>
                     <div class="flex text-yellow-400">⭐⭐⭐⭐⭐</div>
                 </div>
             </div>
@@ -724,56 +724,56 @@
     <section class="py-16 bg-white">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Câu Hỏi Thường Gặp</h2>
-                <p class="text-xl text-gray-600">Giải đáp những thắc mắc phổ biến về nâng cấp thành viên</p>
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+                <p class="text-xl text-gray-600">Answers to common questions about membership upgrade</p>
             </div>
             
             <div class="space-y-6">
                 <div class="border border-gray-200 rounded-lg">
                     <button onclick="toggleFAQ(1)" class="w-full text-left p-6 focus:outline-none">
                         <div class="flex justify-between items-center">
-                            <h3 class="text-lg font-semibold text-gray-900">Tôi có thể hủy gói thành viên bất cứ lúc nào không?</h3>
+                            <h3 class="text-lg font-semibold text-gray-900">Can I cancel my membership at any time?</h3>
                             <span id="faq-icon-1" class="text-gray-400">+</span>
                         </div>
                     </button>
                     <div id="faq-content-1" class="hidden px-6 pb-6">
-                        <p class="text-gray-600">Có, bạn có thể hủy gói thành viên bất cứ lúc nào. Gói sẽ có hiệu lực đến hết chu kỳ thanh toán hiện tại và không tự động gia hạn.</p>
+                        <p class="text-gray-600">Yes, you can cancel your membership anytime. Your plan will remain active until the end of your current billing period and won't automatically renew.</p>
                     </div>
                 </div>
                 
                 <div class="border border-gray-200 rounded-lg">
                     <button onclick="toggleFAQ(2)" class="w-full text-left p-6 focus:outline-none">
                         <div class="flex justify-between items-center">
-                            <h3 class="text-lg font-semibold text-gray-900">Có được hoàn tiền nếu không hài lòng không?</h3>
+                            <h3 class="text-lg font-semibold text-gray-900">Can I get a refund if I'm not satisfied?</h3>
                             <span id="faq-icon-2" class="text-gray-400">+</span>
                         </div>
                     </button>
                     <div id="faq-content-2" class="hidden px-6 pb-6">
-                        <p class="text-gray-600">Chúng tôi có chính sách hoàn tiền 100% trong vòng 7 ngày đầu tiên nếu bạn không hài lòng với dịch vụ.</p>
+                        <p class="text-gray-600">Yes, we offer a 100% refund policy within the first 7 days if you're not satisfied with our service.</p>
                     </div>
                 </div>
                 
                 <div class="border border-gray-200 rounded-lg">
                     <button onclick="toggleFAQ(3)" class="w-full text-left p-6 focus:outline-none">
                         <div class="flex justify-between items-center">
-                            <h3 class="text-lg font-semibold text-gray-900">Tôi có thể chuyển đổi giữa các gói không?</h3>
+                            <h3 class="text-lg font-semibold text-gray-900">Can I switch between different plans?</h3>
                             <span id="faq-icon-3" class="text-gray-400">+</span>
                         </div>
                     </button>
                     <div id="faq-content-3" class="hidden px-6 pb-6">
-                        <p class="text-gray-600">Có, bạn có thể nâng cấp hoặc hạ cấp gói bất cứ lúc nào. Phí sẽ được tính theo tỷ lệ thời gian sử dụng.</p>
+                        <p class="text-gray-600">Yes, you can upgrade or downgrade your plan anytime. Fees will be calculated based on your usage time ratio.</p>
                     </div>
                 </div>
                 
                 <div class="border border-gray-200 rounded-lg">
                     <button onclick="toggleFAQ(4)" class="w-full text-left p-6 focus:outline-none">
                         <div class="flex justify-between items-center">
-                            <h3 class="text-lg font-semibold text-gray-900">Các phương thức thanh toán được hỗ trợ?</h3>
+                            <h3 class="text-lg font-semibold text-gray-900">What payment methods are supported?</h3>
                             <span id="faq-icon-4" class="text-gray-400">+</span>
                         </div>
                     </button>
                     <div id="faq-content-4" class="hidden px-6 pb-6">
-                        <p class="text-gray-600">Chúng tôi hỗ trợ thanh toán qua thẻ tín dụng, thẻ ghi nợ, ví điện tử (MoMo, ZaloPay), và chuyển khoản ngân hàng.</p>
+                        <p class="text-gray-600">We support credit card, debit card, digital wallets (MoMo, ZaloPay), and bank transfers as payment methods.</p>
                     </div>
                 </div>
             </div>
@@ -785,7 +785,7 @@
         <div class="bg-white rounded-xl max-w-6xl w-full mx-4 max-h-[90vh] overflow-y-auto">
             <div class="p-6">
                 <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-2xl font-bold text-gray-900">So Sánh Gói Thành Viên</h2>
+                    <h2 class="text-2xl font-bold text-gray-900">Compare Membership Plans</h2>
                     <button onclick="closeComparison()" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
                 </div>
                 
@@ -794,60 +794,60 @@
                         <table class="w-full">
                             <thead>
                                 <tr class="border-b-2 border-gray-300">
-                                    <th class="text-left py-4 px-4 font-semibold text-gray-900">Tính năng</th>
-                                    <th class="text-center py-4 px-4 font-semibold text-gray-900">Cơ Bản</th>
-                                    <th class="text-center py-4 px-4 font-semibold text-blue-600">Tiêu chuẩn</th>
-                                    <th class="text-center py-4 px-4 font-semibold text-yellow-600">Cao cấp</th>
+                                    <th class="text-left py-4 px-4 font-semibold text-gray-900">Features</th>
+                                    <th class="text-center py-4 px-4 font-semibold text-gray-900">Basic</th>
+                                    <th class="text-center py-4 px-4 font-semibold text-blue-600">Standard</th>
+                                    <th class="text-center py-4 px-4 font-semibold text-yellow-600">Premium</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200">
                                 <tr>
-                                    <td class="py-4 px-4 font-medium">Số sách mượn tối đa</td>
-                                    <td class="py-4 px-4 text-center">10 cuốn</td>
-                                    <td class="py-4 px-4 text-center font-semibold text-blue-600">20 cuốn</td>
-                                    <td class="py-4 px-4 text-center font-semibold text-yellow-600">Không giới hạn</td>
+                                    <td class="py-4 px-4 font-medium">Maximum Books to Borrow</td>
+                                    <td class="py-4 px-4 text-center">10 books</td>
+                                    <td class="py-4 px-4 text-center font-semibold text-blue-600">20 books</td>
+                                    <td class="py-4 px-4 text-center font-semibold text-yellow-600">Unlimited</td>
                                 </tr>
                                 <tr>
-                                    <td class="py-4 px-4 font-medium">Thời gian mượn</td>
-                                    <td class="py-4 px-4 text-center">14 ngày</td>
-                                    <td class="py-4 px-4 text-center font-semibold text-blue-600">21 ngày</td>
-                                    <td class="py-4 px-4 text-center font-semibold text-yellow-600">30 ngày</td>
+                                    <td class="py-4 px-4 font-medium">Borrowing Duration</td>
+                                    <td class="py-4 px-4 text-center">14 days</td>
+                                    <td class="py-4 px-4 text-center font-semibold text-blue-600">21 days</td>
+                                    <td class="py-4 px-4 text-center font-semibold text-yellow-600">30 days</td>
                                 </tr>
                                 <tr>
-                                    <td class="py-4 px-4 font-medium">Gia hạn miễn phí</td>
+                                    <td class="py-4 px-4 font-medium">Free Renewals</td>
                                     <td class="py-4 px-4 text-center text-red-500">✗</td>
-                                    <td class="py-4 px-4 text-center text-green-500 font-semibold">3 lần</td>
-                                    <td class="py-4 px-4 text-center text-green-500 font-semibold">Không giới hạn</td>
+                                    <td class="py-4 px-4 text-center text-green-500 font-semibold">3 times</td>
+                                    <td class="py-4 px-4 text-center text-green-500 font-semibold">Unlimited</td>
                                 </tr>
                                 <tr>
-                                    <td class="py-4 px-4 font-medium">Đặt chỗ ưu tiên</td>
-                                    <td class="py-4 px-4 text-center text-red-500">✗</td>
-                                    <td class="py-4 px-4 text-center text-green-500 font-semibold">✓</td>
-                                    <td class="py-4 px-4 text-center text-green-500 font-semibold">✓ Cao nhất</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-4 px-4 font-medium">Sách điện tử</td>
+                                    <td class="py-4 px-4 font-medium">Priority Reservations</td>
                                     <td class="py-4 px-4 text-center text-red-500">✗</td>
                                     <td class="py-4 px-4 text-center text-green-500 font-semibold">✓</td>
-                                    <td class="py-4 px-4 text-center text-green-500 font-semibold">✓ Toàn bộ</td>
+                                    <td class="py-4 px-4 text-center text-green-500 font-semibold">✓ Highest</td>
                                 </tr>
                                 <tr>
-                                    <td class="py-4 px-4 font-medium">Giao sách tận nhà</td>
+                                    <td class="py-4 px-4 font-medium">Digital Books</td>
+                                    <td class="py-4 px-4 text-center text-red-500">✗</td>
+                                    <td class="py-4 px-4 text-center text-green-500 font-semibold">✓</td>
+                                    <td class="py-4 px-4 text-center text-green-500 font-semibold">✓ Full Access</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-4 font-medium">Home Delivery</td>
                                     <td class="py-4 px-4 text-center text-red-500">✗</td>
                                     <td class="py-4 px-4 text-center text-red-500">✗</td>
                                     <td class="py-4 px-4 text-center text-green-500 font-semibold">✓</td>
                                 </tr>
                                 <tr>
-                                    <td class="py-4 px-4 font-medium">Hỗ trợ khách hàng</td>
-                                    <td class="py-4 px-4 text-center">Cơ bản</td>
-                                    <td class="py-4 px-4 text-center font-semibold text-blue-600">Ưu tiên</td>
+                                    <td class="py-4 px-4 font-medium">Customer Support</td>
+                                    <td class="py-4 px-4 text-center">Basic</td>
+                                    <td class="py-4 px-4 text-center font-semibold text-blue-600">Priority</td>
                                     <td class="py-4 px-4 text-center font-semibold text-yellow-600">24/7</td>
                                 </tr>
                                 <tr>
-                                    <td class="py-4 px-4 font-medium">Giá</td>
-                                    <td class="py-4 px-4 text-center font-bold">Miễn phí</td>
-                                    <td class="py-4 px-4 text-center font-bold text-blue-600">200,000đ/tháng</td>
-                                    <td class="py-4 px-4 text-center font-bold text-yellow-600">400,000đ/tháng</td>
+                                    <td class="py-4 px-4 font-medium">Price</td>
+                                    <td class="py-4 px-4 text-center font-bold">Free</td>
+                                    <td class="py-4 px-4 text-center font-bold text-blue-600">$11.99/month</td>
+                                    <td class="py-4 px-4 text-center font-bold text-yellow-600">$19.99/month</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -856,11 +856,7 @@
             </div>
         </div>
     </div>
-    <footer class="bg-gray-800 text-gray-300 py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p>&copy; 2024 Thư Viện Trung Tâm. Tất cả quyền được bảo lưu.</p>
-        </div>
-    </footer>
+
 
     <script>
         

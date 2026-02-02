@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Thư viện{% endblock %}
+{% block title %}Library{% endblock %}
 
 {% block extra_css%}
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -20,7 +20,7 @@
     <!-- Hero Section -->
     <section class="hero-gradient text-white py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-4xl md:text-5xl font-bold mb-4">Dịch Vụ Thư Viện</h2>
+            <h2 class=\"text-4xl md:text-5xl font-bold mb-4\">Library Services</h2>
             <p class="text-xl opacity-90 max-w-3xl mx-auto mb-8">
                 Chúng tôi cung cấp đa dạng dịch vụ chất lượng cao để hỗ trợ việc học tập, nghiên cứu và phát triển tri thức của bạn
             </p>
@@ -44,8 +44,8 @@
     <section class="py-16 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <h3 class="text-3xl font-bold text-gray-900 mb-4">Dịch vụ chính</h3>
-                <p class="text-gray-600 max-w-2xl mx-auto">Khám phá các dịch vụ đa dạng được thiết kế để đáp ứng mọi nhu cầu học tập và nghiên cứu</p>
+                <h3 class="text-3xl font-bold text-gray-900 mb-4">Core Services</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">Discover diverse services designed to meet all learning and research needs</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -53,16 +53,16 @@
                     <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
                         <span class="text-white text-2xl">📖</span>
                     </div>
-                    <h4 class="text-xl font-semibold text-center mb-4">Mượn sách truyền thống</h4>
+                    <h4 class="text-xl font-semibold text-center mb-4">Traditional Book Borrowing</h4>
                     <ul class="space-y-2 text-gray-600 mb-6">
-                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Mượn tại chỗ và về nhà</li>
-                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Thời hạn mượn linh hoạt</li>
-                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Gia hạn online</li>
-                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Đặt trước sách</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Borrow on-site and take home</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Flexible borrowing periods</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Online renewal</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Reserve books</li>
                     </ul>
                     <a href="{% url 'library:about' %}">
                         <button class="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition-colors">
-                            Tìm hiểu thêm
+                            Learn More
                         </button>
                     </a>
                 </div>
@@ -71,16 +71,16 @@
                     <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-6">
                         <span class="text-white text-2xl">💻</span>
                     </div>
-                    <h4 class="text-xl font-semibold text-center mb-4">Thư viện số</h4>
+                    <h4 class="text-xl font-semibold text-center mb-4">Digital Library</h4>
                     <ul class="space-y-2 text-gray-600 mb-6">
-                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>10,000+ e-book</li>
-                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Tạp chí điện tử</li>
-                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Cơ sở dữ liệu học thuật</li>
-                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Truy cập 24/7</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>10,000+ e-books</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Digital journals</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Academic databases</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>24/7 Access</li>
                     </ul>
                     <a href="{% url 'ebook_reader:digital' %}">
                         <button class="w-full bg-purple-500 text-white py-3 rounded-lg hover:bg-purple-600 transition-colors">
-                            Truy cập ngay
+                            Access Now
                         </button>
                     </a>
                 </div>
@@ -89,15 +89,15 @@
                     <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
                         <span class="text-white text-2xl">🎓</span>
                     </div>
-                    <h4 class="text-xl font-semibold text-center mb-4">Hỗ trợ nghiên cứu</h4>
+                    <h4 class="text-xl font-semibold text-center mb-4">Research Support</h4>
                     <ul class="space-y-2 text-gray-600 mb-6">
-                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Tư vấn chuyên môn</li>
-                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Hướng dẫn trích dẫn</li>
-                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Tìm kiếm tài liệu</li>
-                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Đào tạo kỹ năng</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Professional consultation</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Citation guidance</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Document search</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Skill training</li>
                     </ul>
                     <button class="w-full bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition-colors">
-                        Sắp ra mắt
+                        Coming Soon
                     </button>
                 </div>
 
@@ -121,15 +121,15 @@
                     <div class="w-16 h-16 bg-pink-500 rounded-full flex items-center justify-center mx-auto mb-6">
                         <span class="text-white text-2xl">🎨</span>
                     </div>
-                    <h4 class="text-xl font-semibold text-center mb-4">Sự kiện & Hoạt động</h4>
+                    <h4 class="text-xl font-semibold text-center mb-4">Events & Activities</h4>
                     <ul class="space-y-2 text-gray-600 mb-6">
-                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Hội thảo khoa học</li>
-                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Câu lạc bộ đọc sách</li>
-                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Triển lãm</li>
-                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Khóa học kỹ năng</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Scientific Seminars</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Book Club</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Exhibitions</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Skill Workshops</li>
                     </ul>
                     <button class="w-full bg-pink-500 text-white py-3 rounded-lg hover:bg-pink-600 transition-colors">
-                        Sắp ra mắt
+                        Coming Soon
                     </button>
                 </div>
 
@@ -137,15 +137,15 @@
                     <div class="w-16 h-16 bg-teal-500 rounded-full flex items-center justify-center mx-auto mb-6">
                         <span class="text-white text-2xl">🖨️</span>
                     </div>
-                    <h4 class="text-xl font-semibold text-center mb-4">Dịch vụ kỹ thuật</h4>
+                    <h4 class="text-xl font-semibold text-center mb-4">Technical Services</h4>
                     <ul class="space-y-2 text-gray-600 mb-6">
-                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>In ấn, photocopy</li>
-                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Scan tài liệu</li>
-                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Máy tính công cộng</li>
-                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Hỗ trợ kỹ thuật</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Printing, Photocopying</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Document Scanning</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Public Computers</li>
+                        <li class="flex items-center"><span class="text-green-500 mr-2">✓</span>Technical Support</li>
                     </ul>
                     <button class="w-full bg-teal-500 text-white py-3 rounded-lg hover:bg-teal-600 transition-colors">
-                        Dịch vụ tại thư viện
+                        Library Services
                     </button>
                 </div>
             </div>
@@ -157,68 +157,68 @@
 <section class="py-16 bg-white">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <h3 class="text-3xl font-bold text-gray-900 mb-4">Câu hỏi thường gặp</h3>
-                <p class="text-gray-600">Tìm câu trả lời cho những thắc mắc phổ biến</p>
+                <h3 class="text-3xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h3>
+                <p class="text-gray-600">Find answers to common questions</p>
             </div>
 
             <div class="space-y-4">
                 <div class="faq-item bg-gray-50 rounded-lg">
                     <button onclick="toggleFAQ(1)" class="w-full text-left p-6 focus:outline-none">
                         <div class="flex justify-between items-center">
-                            <h4 class="text-lg font-semibold text-gray-900">Làm thế nào để đăng ký thành viên thư viện?</h4>
+                            <h4 class="text-lg font-semibold text-gray-900">How do I register as a library member?</h4>
                             <span id="faq-icon-1" class="text-2xl text-gray-400">+</span>
                         </div>
                     </button>
                     <div id="faq-content-1" class="hidden px-6 pb-6">
-                        <p class="text-gray-600">Bạn có thể đăng ký trực tiếp tại quầy thủ thư hoặc online qua website. Cần mang theo CMND/CCCD và ảnh 3x4. Sinh viên cần thêm thẻ sinh viên còn hiệu lực.</p>
+                        <p class="text-gray-600">You can register directly at the library counter or online via website. You need to bring ID/passport and a 3x4 photo. Students need to bring a valid student ID card.</p>
                     </div>
                 </div>
 
                 <div class="faq-item bg-gray-50 rounded-lg">
                     <button onclick="toggleFAQ(2)" class="w-full text-left p-6 focus:outline-none">
                         <div class="flex justify-between items-center">
-                            <h4 class="text-lg font-semibold text-gray-900">Thời gian mở cửa của thư viện?</h4>
+                            <h4 class="text-lg font-semibold text-gray-900">What are the library hours?</h4>
                             <span id="faq-icon-2" class="text-2xl text-gray-400">+</span>
                         </div>
                     </button>
                     <div id="faq-content-2" class="hidden px-6 pb-6">
-                        <p class="text-gray-600">Thư viện mở cửa từ 7:00 - 22:00 hàng ngày, kể cả cuối tuần. Dịch vụ thư viện số có thể truy cập 24/7. Một số dịch vụ đặc biệt có thể có giờ hoạt động khác.</p>
+                        <p class="text-gray-600">Library is open 7:00 AM - 10:00 PM daily, including weekends. Digital library services can be accessed 24/7. Some special services may have different hours.</p>
                     </div>
                 </div>
 
                 <div class="faq-item bg-gray-50 rounded-lg">
                     <button onclick="toggleFAQ(3)" class="w-full text-left p-6 focus:outline-none">
                         <div class="flex justify-between items-center">
-                            <h4 class="text-lg font-semibold text-gray-900">Có thể gia hạn sách online không?</h4>
+                            <h4 class="text-lg font-semibold text-gray-900">Can I renew books online?</h4>
                             <span id="faq-icon-3" class="text-2xl text-gray-400">+</span>
                         </div>
                     </button>
                     <div id="faq-content-3" class="hidden px-6 pb-6">
-                        <p class="text-gray-600">Có, bạn có thể gia hạn sách qua website hoặc app di động. Mỗi cuốn sách có thể gia hạn tối đa 2 lần, với điều kiện không có người khác đặt trước.</p>
+                        <p class="text-gray-600">Yes, you can renew books through the website or mobile app. Each book can be renewed maximum 2 times, provided no one else has reserved it.</p>
                     </div>
                 </div>
 
                 <div class="faq-item bg-gray-50 rounded-lg">
                     <button onclick="toggleFAQ(4)" class="w-full text-left p-6 focus:outline-none">
                         <div class="flex justify-between items-center">
-                            <h4 class="text-lg font-semibold text-gray-900">Phí phạt khi trả sách muộn?</h4>
+                            <h4 class="text-lg font-semibold text-gray-900">What is the late fee for overdue books?</h4>
                             <span id="faq-icon-4" class="text-2xl text-gray-400">+</span>
                         </div>
                     </button>
                     <div id="faq-content-4" class="hidden px-6 pb-6">
-                        <p class="text-gray-600">Phí phạt là 2,000₫/ngày/cuốn cho sách thường và 5,000₫/ngày/cuốn cho sách tham khảo. Sau 30 ngày quá hạn, bạn sẽ phải bồi thường theo giá sách.</p>
+                        <p class="text-gray-600">Late fee is 2,000₫/day/book for regular books and 5,000₫/day/book for reference books. After 30 days overdue, you must pay the book's replacement cost.</p>
                     </div>
                 </div>
 
                 <div class="faq-item bg-gray-50 rounded-lg">
                     <button onclick="toggleFAQ(5)" class="w-full text-left p-6 focus:outline-none">
                         <div class="flex justify-between items-center">
-                            <h4 class="text-lg font-semibold text-gray-900">Làm thế nào để đặt phòng học nhóm?</h4>
+                            <h4 class="text-lg font-semibold text-gray-900">How do I book a group study room?</h4>
                             <span id="faq-icon-5" class="text-2xl text-gray-400">+</span>
                         </div>
                     </button>
                     <div id="faq-content-5" class="hidden px-6 pb-6">
-                        <p class="text-gray-600">Bạn có thể đặt phòng qua hệ thống online hoặc tại quầy thông tin. Cần đặt trước ít nhất 2 giờ. Thành viên Tiêu chuẩn và Cao cấp được ưu tiên và miễn phí.</p>
+                        <p class="text-gray-600">You can book a room through the online system or at the information desk. Booking must be made at least 2 hours in advance. Standard and Premium members get priority and free bookings.</p>
                     </div>
                 </div>
             </div>

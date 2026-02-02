@@ -12,7 +12,7 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
       </svg>
-      Quay lại Danh sách sách
+      Back to Book List
     </a>
 
     <!-- MAIN CARD -->
@@ -30,7 +30,7 @@
             {{ book.title }}
           </h1>
           <p class="text-lg text-gray-600 mt-2 italic">
-            Tác giả:
+            Author:
             <span class="font-semibold text-indigo-700">{{ book.author }}</span>
           </p>
         </div>
@@ -41,29 +41,29 @@
         <!-- Basic info -->
         <div class="space-y-4 text-gray-700">
           <h2 class="text-2xl font-bold text-indigo-700 border-b-2 border-indigo-100 pb-2 mb-4">
-            📘 Thông tin cơ bản
+            📘 Basic Information
           </h2>
 
           <div class="space-y-3">
             <div class="flex justify-between border-b pb-2">
-              <span class="font-medium">🏷️ Thể loại:</span>
+              <span class="font-medium">🏷️ Category:</span>
               <span class="text-gray-900 font-semibold">{{ book.category|default:"—" }}</span>
             </div>
 
             <div class="flex justify-between border-b pb-2">
-              <span class="font-medium">📅 Năm XB:</span>
+              <span class="font-medium">📅 Published Year:</span>
               <span class="font-semibold text-gray-900">{{ book.year|default:"—" }}</span>
             </div>
 
             <div class="flex justify-between border-b pb-2">
-              <span class="font-medium">📦 Tồn kho:</span>
+              <span class="font-medium">📦 In Stock:</span>
               <span class="font-extrabold text-2xl {% if book.quantity > 0 %}text-green-600{% else %}text-red-600{% endif %}">
-                {{ book.quantity }} cuốn
+                {{ book.quantity }} copies
               </span>
             </div>
 
             <div class="flex justify-between border-b pb-2">
-              <span class="font-medium">🔗 Mã sách:</span>
+              <span class="font-medium">🔗 Book ID:</span>
               <span class="font-semibold text-gray-800">{{ book.book_id }}</span>
             </div>
           </div>
@@ -71,9 +71,9 @@
 
         <!-- Description -->
         <div>
-          <h2 class="text-2xl font-bold text-indigo-600 border-b pb-2 mb-4">Mô tả</h2>
+          <h2 class="text-2xl font-bold text-indigo-600 border-b pb-2 mb-4">Description</h2>
           <div class="text-gray-700 leading-relaxed max-h-64 overflow-y-auto bg-gray-50 rounded-lg shadow-inner px-3 py-2 mt-2">
-            {{ book.description|default:"Sách này hiện chưa có mô tả chi tiết."|striptags|linebreaksbr }}
+            {{ book.description|default:"This book currently has no detailed description."|striptags|linebreaksbr }}
           </div>
         </div>
       </div>
@@ -87,7 +87,7 @@
                  disabled:opacity-50 disabled:cursor-not-allowed"
           {% if book.quantity == 0 %}disabled{% endif %}
         >
-          <span class="relative z-10">📚 Mượn Sách Ngay</span>
+          <span class="relative z-10">📚 Borrow Book Now</span>
           <div class="absolute inset-0 rounded-xl opacity-0 hover:opacity-100 transition
                       bg-gradient-to-r from-orange-400 to-yellow-500 blur-lg"></div>
         </button>
@@ -96,17 +96,17 @@
       <!-- REVIEWS -->
       <div class="mt-12 bg-white p-8 rounded-2xl shadow-2xl border-t-4 border-yellow-500">
         <h2 class="text-3xl font-extrabold text-gray-900 border-b-2 border-yellow-100 pb-3 mb-6 flex items-center gap-3">
-          <span>⭐️ Đánh Giá Chung:</span>
+          <span>⭐️ Overall Rating:</span>
           <span class="text-yellow-600">
-            {% if avg_rating %}{{ avg_rating|floatformat:1 }} / 5.0{% else %}Chưa có{% endif %}
+            {% if avg_rating %}{{ avg_rating|floatformat:1 }} / 5.0{% else %}No ratings{% endif %}
           </span>
-          <span class="text-gray-500 text-base">({{ reviews|length }} lượt đánh giá)</span>
+          <span class="text-gray-500 text-base">({{ reviews|length }} reviews)</span>
         </h2>
 
         <!-- Review form -->
         <div class="bg-yellow-50 p-6 rounded-xl shadow-inner mb-8">
           <h3 class="text-xl font-bold text-yellow-700 mb-4">
-            {% if user_review %}Sửa Đánh Giá Của Bạn{% else %}Gửi Đánh Giá{% endif %}
+            {% if user_review %}Edit Your Review{% else %}Submit Review{% endif %}
           </h3>
 
           {% if request.user.is_authenticated %}
@@ -114,7 +114,7 @@
               {% csrf_token %}
 
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Số Sao:</label>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Rating:</label>
                 <select name="rating" required
                         class="w-full md:w-1/2 px-3 py-2 border border-gray-300 rounded-lg shadow-sm
                                focus:ring-yellow-500 focus:border-yellow-500">
@@ -127,7 +127,7 @@
               </div>
 
               <div>
-                <label for="comment" class="block text-sm font-medium text-gray-700">Bình luận:</label>
+                <label for="comment" class="block text-sm font-medium text-gray-700">Comment:</label>
                 <textarea name="comment" id="comment" rows="4"
                           class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm
                                  focus:ring-yellow-500 focus:border-yellow-500 p-3"
@@ -137,18 +137,18 @@
               <button type="submit"
                       class="bg-yellow-600 text-white px-6 py-2 rounded-lg font-semibold
                              hover:bg-yellow-700 transition duration-200 shadow-md">
-                {% if user_review %}Cập Nhật Đánh Giá{% else %}Gửi Đánh Giá{% endif %}
+                {% if user_review %}Update Review{% else %}Submit Review{% endif %}
               </button>
             </form>
           {% else %}
             <p class="text-lg text-red-600">
-              Vui lòng <a href="{% url 'account:login' %}" class="font-bold underline">đăng nhập</a> để gửi đánh giá.
+              Please <a href="{% url 'account:login' %}" class="font-bold underline">login</a> to submit a review.
             </p>
           {% endif %}
         </div>
 
         <!-- Other reviews -->
-        <h3 class="text-2xl font-bold text-gray-800 mb-4">Các đánh giá khác</h3>
+        <h3 class="text-2xl font-bold text-gray-800 mb-4">Other Reviews</h3>
 
         <div class="space-y-6">
           {% for review in reviews %}
@@ -157,7 +157,7 @@
                 <p class="font-bold text-lg text-gray-900">
                   👤 {{ review.user.username }}
                   {% if review.user == request.user %}
-                    <span class="text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full ml-2">Bạn</span>
+                    <span class="text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full ml-2">You</span>
                   {% endif %}
                 </p>
                 <div class="text-yellow-500 font-extrabold text-xl">
@@ -166,16 +166,16 @@
               </div>
 
               <p class="text-gray-700 italic border-l-4 border-gray-200 pl-3">
-                "{{ review.comment|default:"— Không có bình luận —" }}"
+                "{{ review.comment|default:"— No comment —" }}"
               </p>
 
               <p class="text-xs text-gray-500 mt-2 text-right">
-                Ngày: {{ review.created_at|date:"d/m/Y H:i" }}
+                Date: {{ review.created_at|date:"d/m/Y H:i" }}
               </p>
             </div>
           {% empty %}
             <p class="text-gray-500 italic py-5 text-center border-dashed border-2 border-gray-300 rounded-lg">
-              Chưa có đánh giá nào cho cuốn sách này. Hãy là người đầu tiên!
+              No reviews yet for this book. Be the first!
             </p>
           {% endfor %}
         </div>
@@ -186,9 +186,9 @@
         <div class="mt-12 bg-white p-8 rounded-2xl shadow-2xl border-t-4 border-indigo-500">
           <div class="flex items-end justify-between mb-6">
             <div>
-              <h2 class="text-3xl font-extrabold text-gray-900">📚 Sách tương tự</h2>
+              <h2 class="text-3xl font-extrabold text-gray-900">📚 Similar Books</h2>
               <p class="text-gray-600 mt-1">
-                Cùng thể loại:
+                Same category:
                 <span class="font-semibold text-indigo-700">{{ book.category }}</span>
               </p>
             </div>
@@ -208,7 +208,7 @@
                   <h3 class="font-bold text-gray-900 text-lg leading-snug line-clamp-2 group-hover:text-indigo-700 transition">
                     {{ b.title }}
                   </h3>
-                  <p class="text-gray-600 mt-1 line-clamp-1">Tác giả: {{ b.author }}</p>
+                  <p class="text-gray-600 mt-1 line-clamp-1">Author: {{ b.author }}</p>
 
                   <div class="mt-4 flex items-center justify-between">
                     <span class="text-xs px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 font-semibold">
@@ -217,11 +217,11 @@
 
                     {% if b.quantity > 0 %}
                       <span class="text-xs px-3 py-1 rounded-full bg-green-50 text-green-700 font-semibold">
-                        Có sẵn
+                        Available
                       </span>
                     {% else %}
                       <span class="text-xs px-3 py-1 rounded-full bg-red-50 text-red-700 font-semibold">
-                        Hết
+                        Out of Stock
                       </span>
                     {% endif %}
                   </div>
@@ -240,7 +240,7 @@
 <div id="borrowModal"
      class="fixed inset-0 bg-black/50 flex justify-center items-center hidden z-50">
   <div class="bg-white rounded-2xl p-6 w-[400px] shadow-2xl">
-    <h2 class="text-2xl font-bold text-center mb-4 text-orange-600">Mượn sách 📚</h2>
+    <h2 class="text-2xl font-bold text-center mb-4 text-orange-600">Borrow Book 📚</h2>
 
     <div class="mb-4">
       <p id="bookTitle" class="font-semibold text-lg"></p>
@@ -251,21 +251,21 @@
       {% csrf_token %}
 
       <div>
-        <label class="block font-medium">Ngày mượn:</label>
+        <label class="block font-medium">Borrow Date:</label>
         <input type="date" id="borrowDate"
                class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-400"
                required />
       </div>
 
       <div>
-        <label class="block font-medium">Ngày trả:</label>
+        <label class="block font-medium">Return Date:</label>
         <input type="date" id="returnDate"
                class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-400"
                required />
       </div>
 
       <div>
-        <label class="block text-gray-700 font-semibold">Số lượng:</label>
+        <label class="block text-gray-700 font-semibold">Quantity:</label>
         <input type="number" id="quantity" name="quantity" value="1" readonly
                class="w-full px-3 py-2 border rounded-lg bg-gray-100 text-gray-600 cursor-not-allowed" />
       </div>
@@ -273,12 +273,12 @@
       <div class="flex justify-end space-x-3 mt-4">
         <button type="button" onclick="closeBorrowModal()"
                 class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-lg">
-          Hủy
+          Cancel
         </button>
 
         <button type="submit"
                 class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all">
-          Xác nhận
+          Confirm
         </button>
       </div>
     </form>
@@ -293,7 +293,7 @@
 
   function openBorrowModal(id, title, author) {
     selectedBookId = id;
-    document.getElementById("bookTitle").textContent = `Tên sách: ${title}`;
+    document.getElementById("bookTitle").textContent = `Book Title: ${title}`;
     document.getElementById("bookAuthor").textContent = `Tác giả: ${author}`;
 
     const today = new Date();
@@ -349,8 +349,8 @@
       if (data.success) {
         Swal.fire({
           icon: "success",
-          title: "Mượn sách thành công!",
-          text: "Hệ thống đã ghi nhận yêu cầu của bạn.",
+          title: "Borrow book successfully!",
+          text: "Your request has been recorded.",
           showConfirmButton: false,
           timer: 2000,
           timerProgressBar: true
@@ -361,16 +361,16 @@
       } else {
         Swal.fire({
           icon: "error",
-          title: "Lỗi!",
-          text: data.message || "Không thể mượn sách, vui lòng thử lại.",
+          title: "Error!",
+          text: data.message || "Cannot borrow book, please try again.",
           confirmButtonColor: "#d33",
         });
       }
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Lỗi kết nối!",
-        text: "Không thể kết nối tới máy chủ. Vui lòng thử lại sau.",
+        title: "Connection Error!",
+        text: "Cannot connect to server. Please try again later.",
         confirmButtonColor: "#d33",
       });
     }

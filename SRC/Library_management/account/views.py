@@ -28,11 +28,11 @@ def register(request):
         confirm_password = request.POST.get("confirm_password")
 
         if password != confirm_password:
-            messages.error(request, "Mật khẩu nhập lại không khớp!")
+            messages.error(request, "Passwords do not match!")
             return redirect("/account/register/")
 
         if User.objects.filter(username=username).exists():
-            messages.error(request, "Tên đăng nhập đã tồn tại!")
+            messages.error(request, "Username already exists!")
             return redirect("/account/register/")
 
         user = User.objects.create_user(username=username, email=email, password=password)
@@ -47,7 +47,7 @@ def register(request):
             address=address
         )
 
-        messages.success(request, "Đăng ký thành công! Hãy đăng nhập.")
+        messages.success(request, "Registration successful. Please log in.")
         return redirect("/account/login/")
     else:
         return render(request, "account/register.html")
@@ -61,7 +61,7 @@ def login_view(request):
             try:
                 profile = UserProfile.objects.get(user=user)
             except UserProfile.DoesNotExist:
-                messages.error(request, "Không tìm thấy thông tin người dùng.")
+                messages.error(request, "No user profile found.")
                 return redirect('account:login')
             if user.is_superuser:
                 return redirect('/admin/')
@@ -70,7 +70,7 @@ def login_view(request):
             else:
                 return redirect('library:home')
         else:
-            messages.error(request, "Tên đăng nhập hoặc mật khẩu không đúng.")
+            messages.error(request, "Username or password is incorrect.")
     else:
         form = AuthenticationForm()
 
@@ -79,7 +79,7 @@ def login_view(request):
 
 def logout_view(request):
     auth_logout(request)
-    messages.info(request, "Bạn đã đăng xuất.")
+    messages.info(request, "You have been logged out.")
     return redirect("account:login")
 
 
@@ -96,10 +96,10 @@ def profile(request):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-            messages.success(request, "Cập nhật thông tin thành công!")
+            messages.success(request, "Profile updated successfully!")
             return redirect("account:profile")
         else:
-            messages.error(request, "Có lỗi xảy ra, vui lòng kiểm tra lại các trường thông tin.")
+            messages.error(request, "There was an error updating your profile. Please check the form fields.")
     else:
         user_form = UserForm(instance=user)
         profile_form = ChangeUserProfileForm(instance=profile)
@@ -120,10 +120,10 @@ def change_password(request):
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
-            messages.success(request, 'Mật khẩu đã được thay đổi thành công.')
+            messages.success(request, 'Password changed successfully.')
             return redirect('library:home')
         else:
-            messages.error(request, 'Vui lòng kiểm tra lại thông tin.')
+            messages.error(request, 'Please check your information.')
     else:
         form = PasswordChangeForm(user=request.user)
     return render(request, 'account/change-password.html', {'form': form})

@@ -31,8 +31,8 @@ class UserProfile(models.Model):
     )
     membership_level= models.CharField(max_length=15, choices=Membership_Choices, default='basic')
 
-    membership_upgrade_date = models.DateField(blank=True, null=True, verbose_name="Ngày nâng cấp")
-    membership_expiry_date = models.DateField(blank=True, null=True, verbose_name="Ngày hết hạn")
+    membership_upgrade_date = models.DateField(blank=True, null=True, verbose_name="Date of Upgrade")
+    membership_expiry_date = models.DateField(blank=True, null=True, verbose_name="Expiry Date")
     
     # STATE Factory
     def get_membership_state(self):

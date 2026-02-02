@@ -81,23 +81,23 @@ WSGI_APPLICATION = 'Library_management.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Django',      # Tên database bạn sẽ tạo
-        'USER': 'root',          # User đăng nhập MySQL
-        'PASSWORD': 'hieukk2906',    # Mật khẩu MySQL
-        'HOST': '127.0.0.1',     # Nếu chạy trên máy local
-        'PORT': '3306',          # Port mặc định của MySQL
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'Django',      # Tên database bạn sẽ tạo
+#         'USER': 'root',          # User đăng nhập MySQL
+#         'PASSWORD': 'hieukk2906',    # Mật khẩu MySQL
+#         'HOST': '127.0.0.1',     # Nếu chạy trên máy local
+#         'PORT': '3306',          # Port mặc định của MySQL
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

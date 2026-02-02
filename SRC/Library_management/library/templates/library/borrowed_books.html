@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="max-w-6xl mx-auto p-8">
-  <h1 class="text-3xl font-bold mb-6 text-gray-800">📚 Sách bạn đã mượn</h1>
+  <h1 class="text-3xl font-bold mb-6 text-gray-800">📚 Books You Borrowed</h1>
 
   {% if messages %}
     <div class="mb-4">
@@ -23,11 +23,11 @@
       <table class="min-w-full text-left text-gray-700">
         <thead class="bg-gray-100 text-sm uppercase font-semibold">
           <tr>
-            <th class="px-6 py-3">Tên sách</th>
-            <th class="px-6 py-3">Tác giả</th>
-            <th class="px-6 py-3">Ngày mượn</th>
-            <th class="px-6 py-3">Hạn trả</th>
-            <th class="px-6 py-3">Trạng thái</th>
+            <th class="px-6 py-3">Book Title</th>
+            <th class="px-6 py-3">Author</th>
+            <th class="px-6 py-3">Borrow Date</th>
+            <th class="px-6 py-3">Due Date</th>
+            <th class="px-6 py-3">Status</th>
           </tr>
         </thead>
         <tbody class="divide-y">
@@ -47,14 +47,14 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                               d="M5 13l4 4L19 7"></path>
                       </svg>
-                      <span>Đang mượn</span>
+                      <span>Borrowing</span>
                     </p>
 
                     <form method="post" action="{% url 'library:extend_book' record.record_id %}">
                       {% csrf_token %}
                       <button type="submit" 
                               class="bg-blue-100 text-blue-700 px-3 py-1 rounded-md text-xs font-semibold hover:bg-blue-200 transition">
-                        Gia hạn
+                        Extend
                       </button>
                     </form>
                   </div>
@@ -64,7 +64,7 @@
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    <span>Hạn trả: {{ record.due_date|date:"d/m/Y" }}</span>
+                    <span>Due Date: {{ record.due_date|date:"d/m/Y" }}</span>
                   </p>
 
                 {% elif record.status == "RETURNED" %}
@@ -73,10 +73,10 @@
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M5 13l4 4L19 7"></path>
                     </svg>
-                    <span>Đã trả</span>
+                    <span>Returned</span>
                   </p>
                   <p class="text-xs text-gray-500 mt-1">
-                    Ngày trả: {{ record.return_date|date:"d/m/Y" }}
+                    Return Date: {{ record.return_date|date:"d/m/Y" }}
                   </p>
 
                 {% elif record.status == "overdue" %}
@@ -86,13 +86,13 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                               d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                       </svg>
-                      <span>Quá hạn {{ record.late_days }} ngày!</span>
+                      <span>Overdue {{ record.late_days }} days!</span>
                     </p>
                     <form method="post" action="{% url 'library:extend_book' record.record_id %}">
                       {% csrf_token %}
                       <button type="submit" 
                               class="bg-red-100 text-red-700 px-3 py-1 rounded-md text-xs font-semibold hover:bg-red-200 transition">
-                        Gia hạn
+                        Extend
                       </button>
                     </form>
                   </div>
@@ -102,7 +102,7 @@
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    <span>Hạn trả: {{ record.due_date|date:"d/m/Y" }}</span>
+                    <span>Due Date: {{ record.due_date|date:"d/m/Y" }}</span>
                   </p>
                 {% endif %}
 
@@ -113,7 +113,7 @@
       </table>
     </div>
   {% else %}
-    <p class="text-gray-500 mt-6">Bạn chưa mượn quyển sách nào.</p>
+    <p class="text-gray-500 mt-6">You haven't borrowed any books yet.</p>
   {% endif %}
 </div>
 

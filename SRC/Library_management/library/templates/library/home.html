@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Thư viện{% endblock %}
+{% block title %}Library{% endblock %}
 
 {% block extra_css %}
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -26,10 +26,10 @@
 
     <div class="relative max-w-7xl mx-auto px-6 text-center">
       <h2 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
-        Khám phá thế giới tri thức
+        Explore the World of Knowledge
       </h2>
       <p class="text-lg md:text-2xl mb-10 text-indigo-100">
-        Hơn <span class="font-semibold text-white">50,000+</span> đầu sách và tài liệu số đang chờ bạn!
+        More than <span class="font-semibold text-white">50,000+</span> books and digital materials await you!
       </p>
 
       <!-- SEARCH + AUTOCOMPLETE -->
@@ -41,7 +41,7 @@
         type="text" 
         name="q"
         id="searchInput"
-        placeholder="🔍 Tìm kiếm sách, tác giả hoặc chủ đề..."
+        placeholder="🔍 Search books, authors, or topics..."
         class="flex-1 px-6 py-4 bg-transparent text-white placeholder-gray-200 focus:outline-none"
         autocomplete="off"
         required
@@ -50,7 +50,7 @@
         type="submit"
         class="bg-white text-indigo-700 font-semibold px-8 py-3 rounded-full hover:bg-indigo-100 transition-all duration-300"
       >
-        Tìm kiếm
+        Search
       </button>
     </form>
   </div>
@@ -78,32 +78,32 @@
 
     <div class="relative max-w-7xl mx-auto px-6 sm:px-8">
       <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">
-        Những con số ấn tượng 🌟
+        Impressive Numbers 🌟
       </h2>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-center">
         <div class="p-8 bg-white/80 backdrop-blur-md rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
           <div class="flex justify-center mb-4 text-indigo-600 text-5xl">📚</div>
           <div class="text-4xl font-extrabold text-indigo-700 mb-2 counter" data-target="50000">50,000+</div>
-          <div class="text-gray-600 font-medium">Đầu sách</div>
+          <div class="text-gray-600 font-medium">Books</div>
         </div>
 
         <div class="p-8 bg-white/80 backdrop-blur-md rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
           <div class="flex justify-center mb-4 text-indigo-600 text-5xl">👥</div>
           <div class="text-4xl font-extrabold text-indigo-700 mb-2 counter" data-target="15000">15,000+</div>
-          <div class="text-gray-600 font-medium">Thành viên</div>
+          <div class="text-gray-600 font-medium">Members</div>
         </div>
 
         <div class="p-8 bg-white/80 backdrop-blur-md rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
           <div class="flex justify-center mb-4 text-indigo-600 text-5xl">🌐</div>
           <div class="text-4xl font-extrabold text-indigo-700 mb-2">24/7</div>
-          <div class="text-gray-600 font-medium">Truy cập online</div>
+          <div class="text-gray-600 font-medium">Online Access</div>
         </div>
 
         <div class="p-8 bg-white/80 backdrop-blur-md rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
           <div class="flex justify-center mb-4 text-indigo-600 text-5xl">🎉</div>
           <div class="text-4xl font-extrabold text-indigo-700 mb-2 counter" data-target="100">100+</div>
-          <div class="text-gray-600 font-medium">Sự kiện/năm</div>
+          <div class="text-gray-600 font-medium">Events/Year</div>
         </div>
       </div>
     </div>
@@ -115,10 +115,10 @@
 
       <div class="text-center mb-16">
         <h3 class="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">
-          📚 Danh Mục Sách Nổi Bật
+          📚 Featured Book Categories
         </h3>
         <p class="text-gray-600 text-lg max-w-2xl mx-auto">
-          Khám phá những cuốn sách được yêu thích và đánh giá cao nhất tại thư viện của chúng tôi.
+          Discover the most loved and highly-rated books at our library.
         </p>
       </div>
 
@@ -126,43 +126,43 @@
       <div class="mb-10 flex flex-col items-center">
         <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center justify-center">
           <span class="w-9 h-9 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center mr-3 text-white">🏷️</span>
-          Lọc Theo Thể Loại
+          Filter by Category
         </h3>
 
         <div class="flex flex-wrap justify-center gap-3">
           <button type="button" data-category="all" onclick="filterBooks('all')"
             class="filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold border border-gray-200 shadow-sm hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white transition-all duration-300">
-            ✨ Tất Cả
+            ✨ All
           </button>
 
           <button type="button" data-category="cong-nghe" onclick="filterBooks('cong-nghe')"
             class="filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold border border-gray-200 shadow-sm hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white transition-all duration-300">
-            💻 Công Nghệ
+            💻 Technology
           </button>
 
           <button type="button" data-category="toan-hoc" onclick="filterBooks('toan-hoc')"
             class="filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold border border-gray-200 shadow-sm hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white transition-all duration-300">
-            🔢 Toán Học
+            🔢 Mathematics
           </button>
 
           <button type="button" data-category="ngoai-ngu" onclick="filterBooks('ngoai-ngu')"
             class="filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold border border-gray-200 shadow-sm hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white transition-all duration-300">
-            🌍 Ngoại Ngữ
+            🌍 Foreign Languages
           </button>
 
           <button type="button" data-category="van-hoc" onclick="filterBooks('van-hoc')"
             class="filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold border border-gray-200 shadow-sm hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white transition-all duration-300">
-            📖 Văn Học
+            📖 Literature
           </button>
 
           <button type="button" data-category="khoa-hoc" onclick="filterBooks('khoa-hoc')"
             class="filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold border border-gray-200 shadow-sm hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white transition-all duration-300">
-            🔬 Khoa Học
+            🔬 Science
           </button>
 
           <button type="button" data-category="kinh-te" onclick="filterBooks('kinh-te')"
             class="filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold border border-gray-200 shadow-sm hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white transition-all duration-300">
-            💰 Kinh Tế
+            💰 Economics
           </button>
         </div>
       </div>
@@ -179,7 +179,7 @@
   <section class="max-w-7xl mx-auto py-10 px-6 space-y-16">
     <div>
       <h2 class="text-3xl font-extrabold text-gray-900 mb-6 flex items-center gap-2">
-        ⭐ Sách được đánh giá cao nhất
+        ⭐ Top Rated Books
       </h2>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
@@ -188,8 +188,8 @@
           <div class="p-5 flex flex-col justify-between h-full">
             <div>
               <h3 class="font-bold text-lg mb-2 text-gray-800 line-clamp-2">{{ book.title }}</h3>
-              <p class="text-gray-600 text-sm mb-1">Tác giả: {{ book.author }}</p>
-              <p class="text-gray-500 text-sm mb-2">Năm: {{ book.year }}</p>
+              <p class="text-gray-600 text-sm mb-1">Author: {{ book.author }}</p>
+              <p class="text-gray-500 text-sm mb-2">Year: {{ book.year }}</p>
               <p class="text-yellow-500 font-semibold mt-2 text-sm flex items-center gap-1">
                 <span>⭐</span> {{ book.avg_rating|default:"0.0" }}
               </p>
@@ -198,7 +198,7 @@
             <div class="mt-4 flex justify-center">
               <a href="{% url 'library:book_detail_view' book.book_id %}"
                  class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-xl font-semibold text-sm shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 ease-in-out">
-                📘 Chi tiết
+                📘 Details
               </a>
             </div>
           </div>
@@ -213,7 +213,7 @@
 
     <div>
       <h2 class="text-3xl font-extrabold text-gray-900 mb-6 flex items-center gap-2">
-        🆕 Sách mới xuất bản
+        🆕 Newly Published Books
       </h2>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
@@ -222,8 +222,8 @@
           <div class="p-5 flex flex-col justify-between h-full">
             <div>
               <h3 class="font-bold text-lg mb-2 text-gray-800 line-clamp-2">{{ book.title }}</h3>
-              <p class="text-gray-600 text-sm mb-1">Tác giả: {{ book.author }}</p>
-              <p class="text-gray-500 text-sm mb-2">Năm: {{ book.year }}</p>
+              <p class="text-gray-600 text-sm mb-1">Author: {{ book.author }}</p>
+              <p class="text-gray-500 text-sm mb-2">Year: {{ book.year }}</p>
               <p class="text-yellow-500 font-semibold mt-2 text-sm flex items-center gap-1">
                 <span>⭐</span> {{ book.avg_rating|default:"0.0" }}
               </p>
@@ -232,7 +232,7 @@
             <div class="mt-4 flex justify-center">
               <a href="{% url 'library:book_detail_view' book.book_id %}"
                  class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-2 rounded-xl font-semibold text-sm shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 ease-in-out">
-                📘 Chi tiết
+                📘 Details
               </a>
             </div>
           </div>
@@ -253,10 +253,10 @@
     <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
       <div class="text-center mb-16">
         <h3 class="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">
-          🌟 Dịch Vụ Thư Viện
+          🌟 Library Services
         </h3>
         <p class="text-gray-600 max-w-2xl mx-auto text-lg">
-          Chúng tôi cung cấp đa dạng dịch vụ hỗ trợ học tập và nghiên cứu — nhanh chóng, hiện đại, tiện lợi.
+          We provide a diverse range of services to support learning and research — fast, modern, and convenient.
         </p>
       </div>
 
@@ -267,10 +267,10 @@
             <span class="text-3xl text-white">📖</span>
           </div>
           <h4 class="text-2xl font-semibold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors">
-            Mượn Sách
+            Borrow Books
           </h4>
           <p class="text-gray-600 leading-relaxed">
-            Mượn sách tại chỗ hoặc mang về với thời hạn linh hoạt và quy trình đơn giản.
+            Borrow books on-site or take them home with flexible terms and simple process.
           </p>
         </a>
 
@@ -280,10 +280,10 @@
             <span class="text-3xl text-white">💻</span>
           </div>
           <h4 class="text-2xl font-semibold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors">
-            Thư Viện Số
+            Digital Library
           </h4>
           <p class="text-gray-600 leading-relaxed">
-            Truy cập hàng nghìn tài liệu số, e-book và bài nghiên cứu chất lượng cao, mọi lúc mọi nơi.
+            Access thousands of digital documents, e-books, and high-quality research materials, anytime, anywhere.
           </p>
         </a>
 
@@ -293,10 +293,10 @@
             <span class="text-3xl text-white">🎓</span>
           </div>
           <h4 class="text-2xl font-semibold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors">
-            Hỗ Trợ Nghiên Cứu
+            Research Support
           </h4>
           <p class="text-gray-600 leading-relaxed">
-            Được tư vấn và hướng dẫn nghiên cứu bởi các chuyên gia và giảng viên nhiều kinh nghiệm.
+            Get consulted and guided in your research by experienced experts and lecturers.
           </p>
         </a>
       </div>

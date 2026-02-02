@@ -4,7 +4,7 @@
 >
   <h2 class="text-3xl font-extrabold text-green-700 mb-8 flex items-center space-x-3">
     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 15m15.356-2H20v-5m-9 9l3 3m-3-3l-3 3m-3-3h.01"></path></svg>
-    <span>Quản Lý Mượn/Trả Sách</span>
+    <span> Manage Borrowing/Returning Books</span>
   </h2>
 
   <div class="flex mb-8 bg-gray-100 p-1 rounded-xl shadow-inner">
@@ -13,14 +13,14 @@
       id="tabDangMuon"
       class="borrow-tab flex-1 px-6 py-3 text-center text-base font-semibold text-white-700  hover:text-green-600 rounded-xl transition-all duration-300"
     >
-      📋 Đang Mượn
+      📋 Borrowed
     </button>
     <button
       onclick="showBorrowTab('lichSu', this)"
       id="tabLichSu"
       class="borrow-tab flex-1 px-6 py-3 text-center text-base font-semibold text-white-700  hover:text-green-600 rounded-xl transition-all duration-300"
     >
-      📚 Lịch Sử
+      📚 History
     </button>
   </div>
 
@@ -28,10 +28,10 @@
     <div class="flex justify-between items-center pb-4 border-b-2 border-green-100 mb-6">
       <h3 class="text-xl font-bold text-gray-800 flex items-center space-x-2">
         <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-        <span>Sách Đang Được Mượn</span>
+        <span>Borrowed Books</span>
       </h3>
       <div class="text-base text-gray-600">
-        Tổng số phiếu: <span class="font-extrabold text-green-600 text-2xl ml-1">{{ total }}</span>
+        Total records: <span class="font-extrabold text-green-600 text-2xl ml-1">{{ total }}</span>
       </div>
     </div>
 
@@ -54,18 +54,18 @@
               <div class="flex items-center space-x-6 pt-2">
                 <p class="text-xs text-gray-500 flex items-center space-x-1">
                   <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                  <span>Mượn: {{ record.borrow_date }}</span>
+                  <span>Borrow: {{ record.borrow_date }}</span>
                 </p>
                 
                 {% if record.status == "overdue" %}
                   <p class="text-sm text-red-700 font-bold flex items-center space-x-1 animate-bounce">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    <span>Hạn trả: {{ record.due_date }} (QUÁ HẠN NẶNG)</span>
+                    <span>deadline: {{ record.due_date }} (Severely overdue)</span>
                   </p>
                 {% else %}
                   <p class="text-sm text-gray-600 flex items-center space-x-1">
                     <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    <span>Hạn trả: {{ record.due_date }}</span>
+                    <span>deadline: {{ record.due_date }}</span>
                   </p>
                 {% endif %}
               </div>
@@ -74,22 +74,22 @@
             <div class="flex flex-col space-y-2 ml-4 flex-shrink-0 items-end">
               {% if record.status == "overdue" %}
                 <span class="text-xs font-bold bg-red-600 text-white px-3 py-1 rounded-full text-center shadow-lg border border-red-800">
-                  🚨 Quá hạn
+                  🚨 overdue
                 </span>
               {% endif %}
 <button 
-    onclick="returnBook({{ record.record_id }})"  /* THAY ĐỔI Ở ĐÂY: Thêm hàm gọi JS với ID */
+    onclick="returnBook({{ record.record_id }})" 
     class="text-sm font-semibold bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md hover:shadow-lg transform hover:scale-[1.05]"
   >
-    ✅ Trả Sách
+    ✅ Return Book
   </button>
             </div>
           </div>
         </div>
       {% empty %}
         <div class="text-center py-10 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
-          <p class="text-gray-500 text-lg font-medium">🎉 Xin chúc mừng! Không có sách nào đang được mượn.</p>
-          <p class="text-sm text-gray-400 mt-2">Dữ liệu về sách đang mượn của thư viện hiện trống.</p>
+          <p class="text-gray-500 text-lg font-medium">🎉 Don't have any borrowed books!</p>
+          <p class="text-sm text-gray-400 mt-2">Data about borrowed books is currently empty.</p>
         </div>
       {% endfor %}
     </div>
@@ -103,10 +103,10 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
           d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253"></path>
       </svg>
-      <span>Lịch Sử Giao Dịch</span>
+      <span>Transaction History</span>
     </h3>
     <div class="text-base text-gray-600">
-      Tổng giao dịch:
+      Total transactions:
       <span class="font-extrabold text-green-600 text-2xl ml-1">{{ total_history }}</span>
     </div>
   </div>
@@ -133,10 +133,10 @@
               👤 <span class="font-semibold">{{ record.user.user_id }} - {{ record.user.name }}</span>
             </p>
             <p class="text-xs text-gray-500 pt-1">
-              📅 Mượn: {{ record.borrow_date|date:"d/m/Y" }} |
-              Hạn trả: {{ record.due_date|date:"d/m/Y" }}
+              📅 Borrowed: {{ record.borrow_date|date:"d/m/Y" }} |
+              Deadline: {{ record.due_date|date:"d/m/Y" }}
               {% if record.return_date %}
-                | Trả: {{ record.return_date|date:"d/m/Y" }}
+                | Returned: {{ record.return_date|date:"d/m/Y" }}
               {% endif %}
             </p>
           </div>
@@ -144,26 +144,26 @@
           {% if record.status == 'RETURNED' %}
             {% if record.is_returned_late %}
               <span class="text-xs font-bold bg-red-500 text-white px-3 py-1 rounded-full shadow-lg animate-pulse">
-                ⚠️ Trả muộn {{ record.late_days }} ngày
+                ⚠️ Return  {{ record.late_days }} day(s) late
               </span>
             {% else %}
               <span class="text-xs font-bold bg-green-100 text-green-700 px-3 py-1 rounded-full border border-green-500 shadow-sm">
-                ✅ Đã trả đúng hạn
+                ✅ Returned on time
               </span>
             {% endif %}
           {% elif record.status == 'borrowed' %}
             <span class="text-xs font-bold bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full border border-yellow-400 shadow-sm">
-              🕓 Đang mượn
+              🕓 Borrowed
             </span>
           {% elif record.status == 'overdue' %}
             <span class="text-xs font-bold bg-red-500 text-white px-3 py-1 rounded-full shadow-lg animate-pulse">
-              ⚠️ Quá hạn trả
+              ⚠️ Overdue
             </span>
           {% endif %}
         </div>
       </div>
     {% empty %}
-      <p class="text-center text-gray-500">📖 Chưa có lịch sử mượn sách nào.</p>
+      <p class="text-center text-gray-500">📖 No borrowing history yet.</p>
     {% endfor %}
   </div>
 </div>
@@ -183,7 +183,7 @@
           >
             <span class="text-white text-xl">📚</span>
           </div>
-          <h3 class="text-2xl font-bold text-white">Thêm Sách Mới</h3>
+          <h3 class="text-2xl font-bold text-white">Add New Book</h3>
         </div>
         <button
           onclick="closeAddBookModal()"
@@ -200,12 +200,12 @@
           <label
             class="block text-sm font-bold text-gray-700 mb-3 flex items-center"
           >
-            <span class="mr-2">📖</span> Tên Sách
+            <span class="mr-2">📖</span> Book Title
           </label>
           <input
             type="text"
             name="bookName"
-            placeholder="Nhập tên sách..."
+            placeholder="Enter book title..."
             class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300"
             required
           />
@@ -215,12 +215,12 @@
           <label
             class="block text-sm font-bold text-gray-700 mb-3 flex items-center"
           >
-            <span class="mr-2">👤</span> Tác Giả
+            <span class="mr-2">👤</span> Author
           </label>
           <input
             type="text"
             name="author"
-            placeholder="Nhập tên tác giả..."
+            placeholder="Enter author name..."
             class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300"
             required
           />
@@ -232,20 +232,20 @@
           <label
             class="block text-sm font-bold text-gray-700 mb-3 flex items-center"
           >
-            <span class="mr-2">🏷️</span> Thể Loại
+            <span class="mr-2">🏷️</span> Category
           </label>
           <select
             name="category"
             class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300"
             required
           >
-            <option value="">Chọn thể loại...</option>
-            <option value="cong-nghe">💻 Công Nghệ</option>
-            <option value="toan-hoc">🔢 Toán Học</option>
-            <option value="ngoai-ngu">🌍 Ngoại Ngữ</option>
-            <option value="van-hoc">📖 Văn Học</option>
-            <option value="khoa-hoc">🔬 Khoa Học</option>
-            <option value="kinh-te">💰 Kinh Tế</option>
+            <option value="">Choose category...</option>
+            <option value="cong-nghe">💻 Technology</option>
+            <option value="toan-hoc">🔢 Mathematics</option>
+            <option value="ngoai-ngu">🌍 Foreign Languages</option>
+            <option value="van-hoc">📖 Literature</option>
+            <option value="khoa-hoc">🔬 Science</option>
+            <option value="kinh-te">💰 Economics</option>
           </select>
         </div>
 
@@ -253,12 +253,12 @@
           <label
             class="block text-sm font-bold text-gray-700 mb-3 flex items-center"
           >
-            <span class="mr-2">📦</span> Số Lượng
+            <span class="mr-2">📦</span> Quantity
           </label>
           <input
             type="number"
             name="quantity"
-            placeholder="Nhập số lượng..."
+            placeholder="Enter quantity..."
             min="0"
             class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300"
             required
@@ -270,12 +270,12 @@
         <label
           class="block text-sm font-bold text-gray-700 mb-3 flex items-center"
         >
-          <span class="mr-2">📅</span> Năm Xuất Bản
+          <span class="mr-2">📅</span> Publish Year
         </label>
         <input
           type="number"
           name="publishYear"
-          placeholder="Nhập năm xuất bản..."
+          placeholder="Enter publish year..."
           min="1900"
           max="2024"
           class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300"
@@ -287,11 +287,11 @@
         <label
           class="block text-sm font-bold text-gray-700 mb-3 flex items-center"
         >
-          <span class="mr-2">📝</span> Mô Tả (Tùy chọn)
+          <span class="mr-2">📝</span> Description (Optional)
         </label>
         <textarea
           name="description"
-          placeholder="Nhập mô tả ngắn về sách..."
+          placeholder="Enter a short description of the book..."
           rows="4"
           class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 resize-none"
         ></textarea>
@@ -302,14 +302,14 @@
           type="submit"
           class="flex-1 btn-primary text-white py-4 px-6 rounded-xl font-bold text-lg shadow-lg"
         >
-          ➕ Thêm Sách
+          ➕ Add Book
         </button>
         <button
           type="button"
           onclick="closeAddBookModal()"
           class="flex-1 bg-gradient-to-r from-gray-500 to-gray-600 text-white py-4 px-6 rounded-xl hover:shadow-lg transition-all duration-300 font-bold text-lg"
         >
-          ❌ Hủy
+          ❌ Cancel
         </button>
       </div>
     </form>
@@ -355,14 +355,14 @@
 async function returnBook(recordId) {
   // Hộp xác nhận
   const result = await Swal.fire({
-    title: 'Xác nhận trả sách?',
-    text: `Bạn có chắc chắn muốn xác nhận trả sách cho người dùng ?`,
+    title: 'Confirm returning book?',
+    text: `Are you sure you want to confirm returning the book for user ?`,
     icon: 'question',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: 'Có, trả sách!',
-    cancelButtonText: 'Hủy'
+    confirmButtonText: 'Yes, return book!',
+    cancelButtonText: 'Cancel'
   });
 
   if (!result.isConfirmed) {
@@ -372,7 +372,7 @@ async function returnBook(recordId) {
   // Lấy CSRF token
   const csrfElement = document.querySelector('[name=csrfmiddlewaretoken]');
   if (!csrfElement) {
-    Swal.fire('Lỗi!', 'Không tìm thấy CSRF token. Vui lòng kiểm tra template.', 'error');
+    Swal.fire('Error!', 'No CSRF token found. Please check the template.', 'error');
     return;
   }
   const csrfToken = csrfElement.value;
@@ -389,8 +389,8 @@ async function returnBook(recordId) {
 
     if (response.ok) {
       await Swal.fire({
-        title: 'Thành công!',
-        text: 'Đã xác nhận trả sách thành công.',
+        title: 'Success!',
+        text: 'Successfully confirmed book return.',
         icon: 'success',
         timer: 2000,
         showConfirmButton: false
@@ -403,17 +403,17 @@ async function returnBook(recordId) {
     const contentType = response.headers.get('content-type');
     if (contentType && contentType.includes('application/json')) {
       const errorData = await response.json();
-      Swal.fire('Lỗi!', errorData.error || response.statusText, 'error');
+      Swal.fire('Error!', errorData.error || response.statusText, 'error');
     } else {
-      let errorMessage = `Lỗi HTTP ${response.status} xảy ra.`;
-      if (response.status === 404) errorMessage = 'Không tìm thấy API.';
-      else if (response.status === 403) errorMessage = 'CSRF Token không hợp lệ.';
-      Swal.fire('Lỗi!', errorMessage, 'error');
+      let errorMessage = `HTTP Error ${response.status} occurred.`;
+      if (response.status === 404) errorMessage = 'API not found.';
+      else if (response.status === 403) errorMessage = 'Invalid CSRF Token.';
+      Swal.fire('Error!', errorMessage, 'error');
     }
 
   } catch (error) {
-    console.error('Lỗi mạng hoặc JS:', error);
-    Swal.fire('Lỗi kết nối!', 'Không thể kết nối tới server Django.', 'error');
+    console.error('Network error or JS:', error);
+    Swal.fire('Error!', 'Failed to connect to Django server.', 'error');
   }
 }
 </script>

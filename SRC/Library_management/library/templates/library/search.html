@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-{% block title %}Kết quả tìm kiếm{% endblock %}
+{% block title %}Search Results{% endblock %}
 
 {% block content %}
 <div class="max-w-5xl mx-auto mt-10 bg-white p-6 rounded-lg shadow">
   <h2 class="text-2xl font-bold mb-4">
-    Kết quả cho: "<span class="text-indigo-600">{{ query }}</span>"
+    Results for: "<span class="text-indigo-600">{{ query }}</span>"
   </h2>
 
   {% if results %}
@@ -18,14 +18,14 @@
           {% else %}
             <span class="text-lg font-semibold text-gray-400">{{ book.title }}</span>
           {% endif %}
-          <p class="text-gray-600 text-sm">Tác giả: {{ book.author }}</p>
+          <p class="text-gray-600 text-sm">Author: {{ book.author }}</p>
           <p class="text-gray-500 text-sm">{{ book.category }}</p>
         </li>
       {% endfor %}
 
     </ul>
   {% else %}
-    <p class="text-gray-500">Không tìm thấy kết quả nào phù hợp.</p>
+    <p class="text-gray-500">No matching results found.</p>
   {% endif %}
 </div>
 {% endblock %}

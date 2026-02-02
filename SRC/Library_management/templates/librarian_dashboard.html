@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hệ Thống Quản Lý Thư Viện</title>
+    <title>Library Management System</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -202,11 +202,11 @@
     </style>
   </head>
   <body class="min-h-screen gradient-bg">
-    <!-- Header với hiệu ứng glass -->
+    <!-- Header with glass effect -->
  <header class="glass-effect border-b border-white/20">
   <div class="container mx-auto px-6 py-6">
     <div class="flex items-start justify-between gap-6">
-      <!-- Logo + tên (TRÁI) -->
+      <!-- Logo + name (LEFT) -->
       <div class="flex items-center space-x-4">
         <div class="relative">
           <div
@@ -222,14 +222,14 @@
           </div>
         </div>
         <div>
-          <h1 class="text-3xl font-bold text-white text-shadow">Thư Viện Số</h1>
-          <p class="text-white/80 font-medium">Hệ thống quản lý hiện đại</p>
+          <h1 class="text-3xl font-bold text-white text-shadow">Library</h1>
+          <p class="text-white/80 font-medium">Modern Library Management System</p>
         </div>
       </div>
 
-      <!-- CỤM PHẢI: 2 nút mail + thông tin user -->
+      <!-- Right group: 2 mail buttons + user info -->
       <div class="flex flex-col items-end gap-4 w-full sm:w-auto">
-        <!-- 2 nút mail (BÊN PHẢI) -->
+        <!-- 2 mail buttons (RIGHT) -->
         <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
           <button
             onclick="sendDueReminder()"
@@ -242,7 +242,7 @@
                    transition-all duration-300"
           >
             <span class="text-lg">📧</span>
-            <span>Nhắc hạn trả</span>
+            <span>Send Due Reminder</span>
             <span class="opacity-80 group-hover:opacity-100 transition">→</span>
           </button>
 
@@ -257,16 +257,16 @@
                    transition-all duration-300"
           >
             <span class="text-lg">⏰</span>
-            <span>Mail quá hạn</span>
+            <span>Send Overdue Mail</span>
             <span class="opacity-80 group-hover:opacity-100 transition">→</span>
           </button>
         </div>
 
-        <!-- Thông tin người dùng -->
+        <!-- User information -->
         <div class="text-right w-full sm:w-auto">
           <div class="bg-white/10 rounded-2xl p-4 backdrop-blur-sm border border-white/10">
             <p class="text-white/90 font-semibold">
-              👋 Xin chào,
+              👋 Hello,
               <span class="text-yellow-300">
                 {{ request.user.name|default:request.user.username }}
               </span>
@@ -291,14 +291,14 @@
               setInterval(updateTime, 1000);
             </script>
 
-            <!-- Hai nút nằm cạnh nhau -->
+            <!-- Two buttons side by side -->
             <div class="flex justify-end gap-3 mt-3">
               <button
                 class="bg-white/15 text-white px-4 py-2 rounded-xl
                        hover:bg-white/25 transition-all duration-300
                        text-sm font-medium"
               >
-                👤 Hồ Sơ
+                👤 Profile
               </button>
 
               <form method="POST" action="{% url 'account:logout' %}">
@@ -311,21 +311,21 @@
                          hover:shadow-lg transform hover:scale-105
                          transition-all duration-300 text-sm font-medium"
                 >
-                  🚪 Đăng Xuất
+                  🚪 Logout
                 </button>
               </form>
             </div>
           </div>
         </div>
       </div>
-      <!-- /CỤM PHẢI -->
+      <!-- /Right group -->
     </div>
   </div>
 </header>
 
 
     <div class="container mx-auto px-6 py-8">
-      <!-- Navigation Menu với hiệu ứng đẹp -->
+      <!-- Navigation Menu with smooth effects -->
       <div
         class="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl mb-8 overflow-hidden border border-white/20"
       >
@@ -337,7 +337,7 @@
           >
             <div class="flex flex-col items-center space-y-2">
               <span class="text-2xl">📚</span>
-              <span>Quản Lý Sách</span>
+              <span>Book Management</span>
             </div>
           </a>
 
@@ -348,7 +348,7 @@
           >
             <div class="flex flex-col items-center space-y-2">
               <span class="text-2xl">🔄</span>
-              <span>Mượn/Trả Sách</span>
+              <span>Borrow/Return Books</span>
             </div>
           </a>
 
@@ -359,7 +359,7 @@
           >
             <div class="flex flex-col items-center space-y-2">
               <span class="text-2xl">👥</span>
-              <span>Người Dùng</span>
+              <span>Users</span>
             </div>
           </a>
 
@@ -370,13 +370,13 @@
           >
             <div class="flex flex-col items-center space-y-2">
               <span class="text-2xl">📊</span>
-              <span>Thống Kê</span>
+              <span>Statistics</span>
             </div>
           </a>
         </div>
       </div>
 
-      <!-- Quản Lý Sách Section -->
+      <!-- Book Management Section -->
       {% block content %} {% endblock %}
 
       <!-- Notification Toast -->
@@ -396,21 +396,21 @@
       </div>
 
       <script>
-        // Chuyển đổi giữa các section với hiệu ứng đẹp
+        // Switch between sections with smooth effects
         function showSection(sectionName, buttonElement) {
-          // Ẩn tất cả sections
+          // Hide all sections
           document.querySelectorAll(".section").forEach((section) => {
             section.classList.add("hidden");
           });
 
-          // Hiển thị section được chọn
+          // Show selected section
           const targetSection = document.getElementById(sectionName);
           if (targetSection) {
             targetSection.classList.remove("hidden");
             targetSection.classList.add("fade-in-up");
           }
 
-          // Cập nhật active state cho navigation buttons
+          // Update active state for navigation buttons
           document.querySelectorAll(".nav-item").forEach((btn) => {
             btn.classList.remove(
               "bg-gradient-to-r",
@@ -427,7 +427,7 @@
             btn.classList.add("text-gray-700");
           });
 
-          // Thêm active state cho button được click
+          // Add active state to button being clicked
           if (buttonElement) {
             buttonElement.classList.remove("text-gray-700");
             if (sectionName === "quanLySach") {
@@ -461,18 +461,18 @@
             }
           }
 
-          // 👉 Cập nhật URL mà không reload
+          // Update URL without reloading
           const newUrl = window.location.pathname + "?section=" + sectionName;
           history.pushState(null, "", newUrl);
         }
 
-        // Mở modal thêm sách
+        // Open add book modal
         function openAddBookModal() {
           document.getElementById("addBookModal").classList.remove("hidden");
           document.body.style.overflow = "hidden";
         }
 
-        // Đóng modal thêm sách
+        // Close add book modal
         function closeAddBookModal() {
           document.getElementById("addBookModal").classList.add("hidden");
           document.body.style.overflow = "auto";
@@ -480,7 +480,7 @@
           document.querySelector("#addBookModal form").reset();
         }
 
-        // Thêm sách mới với hiệu ứng đẹp
+        // Add new book with smooth effects
         async function addNewBook(event) {
           event.preventDefault();
 
@@ -512,20 +512,20 @@
             const result = await response.json();
 
             if (response.ok) {
-              showNotification("📚 Thêm sách mới thành công!");
+              showNotification("📚 New book added successfully!");
               closeAddBookModal();
               form.reset();
-              // 👉 Nếu muốn thì sau khi thêm thành công gọi hàm loadBooks() để load lại danh sách từ DB
+              // 👉 If you want, after successfully adding a book, call loadBooks() to reload the list from DB
             } else {
-              showNotification("❌ Lỗi: " + result.error);
+              showNotification("❌ Error: " + result.error);
             }
           } catch (error) {
-            console.error("Lỗi:", error);
-            showNotification("⚠️ Không thể kết nối server!");
+            console.error("Error:", error);
+            showNotification("⚠️ Cannot connect to server!");
           }
         }
 
-        // Hàm lấy CSRF token trong Django
+        // Get CSRF token from Django cookies
         function getCookie(name) {
           let cookieValue = null;
           if (document.cookie && document.cookie !== "") {
@@ -550,17 +550,17 @@
             "fixed top-5 right-5 bg-green-500 text-white px-4 py-2 rounded shadow-lg animate-fade-in";
           document.body.appendChild(notif);
 
-          // Tự động ẩn sau 3 giây
+          // Auto-hide after 3 seconds
           setTimeout(() => {
             notif.remove();
           }, 3000);
         }
-        // Lọc sách theo thể loại với hiệu ứng đẹp
+        // Filter books by category with smooth effects
         function filterBooks(category) {
           const bookItems = document.querySelectorAll(".book-item");
           const filterButtons = document.querySelectorAll(".filter-btn");
 
-          // Reset trạng thái nút
+          // Reset button state
           filterButtons.forEach((btn) => {
             btn.classList.remove(
               "bg-gradient-to-r",
@@ -576,7 +576,7 @@
             );
           });
 
-          // Active nút vừa click
+          // Active clicked button
           const activeButton = Array.from(filterButtons).find((btn) =>
             btn.getAttribute("onclick")?.includes(category)
           );
@@ -595,7 +595,7 @@
             );
           }
 
-          // Lọc sách
+          // Filter books
           let visibleCount = 0;
           bookItems.forEach((item, index) => {
             if (category === "all" || item.dataset.category === category) {
@@ -607,7 +607,7 @@
             }
           });
 
-          // Cập nhật số lượng
+          // Update quantity
           document.getElementById("bookCount").textContent = visibleCount;
         }
         async function loadBookCount() {
@@ -616,8 +616,8 @@
     const data = await response.json();
     document.getElementById("bookCount").textContent = data.count;
   } catch (error) {
-    console.error("Lỗi khi tải tổng số sách:", error);
-    document.getElementById("bookCount").textContent = "⚠️ Lỗi";
+    console.error("Error loading total book count:", error);
+    document.getElementById("bookCount").textContent = "⚠️ Error";
   }
 }
 window.onload = function () {
@@ -631,22 +631,22 @@ window.onload = function () {
     showSection("quanLySach", document.querySelector(".nav-item"));
   }
 
-  // 👉 Gọi API đếm tổng sách
+  // Call API to count total books
   loadBookCount();
 };
 
 
         function showBorrowTab(tabName, buttonElement) {
-          // Ẩn tất cả borrow content
+          // Hide all borrow content
           document.querySelectorAll(".borrow-content").forEach((content) => {
             content.classList.add("hidden");
           });
 
-          // Hiển thị tab được chọn
+          // Show selected tab
           document.getElementById(tabName).classList.remove("hidden");
           document.getElementById(tabName).classList.add("fade-in");
 
-          // Cập nhật active state cho borrow tab buttons
+          // Update active state for borrow tab buttons
           document.querySelectorAll(".borrow-tab").forEach((btn) => {
             btn.classList.remove("bg-green-500", "text-white");
             btn.classList.add("text-gray-600");
@@ -660,18 +660,18 @@ window.onload = function () {
         }
         window.onload = function () {
           const params = new URLSearchParams(window.location.search);
-          const section = params.get("section") || "quanLySach"; // mặc định mở quản lý sách
+          const section = params.get("section") || "quanLySach"; // default open book management
 
-          // Tìm đúng nút tương ứng (dùng nav-item, không phải nav-btn)
+          // Find correct button (use nav-item, not nav-btn)
           const button = document.querySelector(
             `.nav-item[onclick*="${section}"]`
           );
 
-          // Gọi showSection để hiển thị
+          // Call showSection to display
           if (button) {
             showSection(section, button);
           } else {
-            // fallback nếu không có button (tránh lỗi)
+            // fallback if no button found (prevent error)
             showSection("quanLySach", document.querySelector(".nav-item"));
           }
         };
@@ -688,7 +688,7 @@ window.onload = function () {
         });
       </script>
 <script>
-  // Nếu bạn đã có getCookie() ở chỗ khác thì bỏ phần này đi
+  // If you already have getCookie() elsewhere, remove this part
   function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== "") {
@@ -708,8 +708,8 @@ window.onload = function () {
     url,
     title,
     text,
-    confirmText = "📧 Gửi",
-    loadingText = "Đang gửi...",
+    confirmText = "📧 Send",
+    loadingText = "Sending...",
   }) {
     const confirm = await Swal.fire({
       title,
@@ -717,7 +717,7 @@ window.onload = function () {
       icon: "question",
       showCancelButton: true,
       confirmButtonText: confirmText,
-      cancelButtonText: "Hủy",
+      cancelButtonText: "Cancel",
       reverseButtons: true,
       focusCancel: true,
     });
@@ -738,44 +738,44 @@ window.onload = function () {
         },
       });
 
-      // Nếu server trả lỗi 403/500…
+      // If server returns error 403/500...
       if (!response.ok) {
-        Swal.fire("Lỗi!", `Server trả về lỗi (${response.status})`, "error");
+        Swal.fire("Error!", `Server returned error (${response.status})`, "error");
         return;
       }
 
       const data = await response.json();
-      const isSuccess = data.success === true || data.ok === true; // hỗ trợ cả 2 kiểu JSON
+      const isSuccess = data.success === true || data.ok === true; // support both JSON types
 
       if (isSuccess) {
-        Swal.fire("Thành công!", data.message || "Đã gửi mail!", "success");
+        Swal.fire("Success!", data.message || "Mail sent!", "success");
       } else {
-        Swal.fire("Lỗi!", data.message || "Không thể gửi mail", "error");
+        Swal.fire("Error!", data.message || "Cannot send mail", "error");
       }
     } catch (error) {
-      Swal.fire("Lỗi!", "Không kết nối được server", "error");
+      Swal.fire("Error!", "Cannot connect to server", "error");
     }
   }
 
-  // ✅ Nhắc hạn (còn 1 ngày đến hạn)
+  // ✅ Due Reminder (within 1 day of return date)
   async function sendDueReminder() {
     return postWithSwal({
       url: "/librarian/send-due-reminder/",
-      title: "Gửi mail nhắc hạn?",
-      text: "Mail sẽ gửi cho người còn 1 ngày đến hạn trả sách.",
-      confirmText: "📧 Gửi nhắc hạn",
-      loadingText: "Đang gửi mail nhắc hạn...",
+      title: "Send due reminder email?",
+      text: "Email will be sent to users within 1 day of return date.",
+      confirmText: "📧 Send Due Reminder",
+      loadingText: "Sending due reminder email...",
     });
   }
 
-  // ✅ Quá hạn
+  // ✅ Overdue Reminder
   async function sendOverdueMail() {
     return postWithSwal({
       url: "/librarian/send-overdue-reminder/",
-      title: "Gửi mail cho người quá hạn?",
-      text: "Mail sẽ gửi cho tất cả người đang quá hạn trả sách.",
-      confirmText: "⏰ Gửi mail quá hạn",
-      loadingText: "Đang gửi mail quá hạn...",
+      title: "Send email to overdue users?",
+      text: "Email will be sent to all users who are overdue in returning books.",
+      confirmText: "⏰ Send Overdue Reminder",
+      loadingText: "Sending overdue reminder email...",
     });
   }
 </script>

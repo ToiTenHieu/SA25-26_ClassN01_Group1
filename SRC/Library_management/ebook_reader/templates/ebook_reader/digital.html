@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Thư viện{% endblock %}
+{% block title %}Digital Library{% endblock %}
 
 {% block extra_css%}
         body {
@@ -169,11 +169,12 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center mb-12">
                 <h1 class="text-4xl md:text-6xl font-bold mb-6">
-                    Khám Phá Thế Giới
-                    <span class="block text-yellow-300">Tri Thức Số</span>
+                    Explore the World of Books
+                </h1>
+                    <span class="block text-yellow-300">digital intellectuals</span>
                 </h1>
                 <p class="text-xl md:text-2xl mb-8 opacity-90">
-                    Hơn 100,000 cuốn sách điện tử, tài liệu nghiên cứu và nội dung đa phương tiện
+                    More than 100,000 eBooks available at your fingertips.
                 </p>
                 
                 <!-- Search Bar -->
@@ -182,7 +183,7 @@
                         <div class="flex-1 relative">
                             <input type="text" 
                                    id="searchInput"
-                                   placeholder="Tìm kiếm sách, tác giả, chủ đề..." 
+                                   placeholder="Search books, authors, topics..." 
                                    class="search-bar w-full px-6 py-4 rounded-xl text-gray-900 placeholder-gray-500"
                                    oninput="performSearch()">
                             <div class="absolute right-4 top-1/2 transform -translate-y-1/2">
@@ -197,19 +198,19 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
                 <div class="text-center">
                     <div class="text-3xl font-bold">100K+</div>
-                    <div class="text-sm opacity-80">Cuốn sách</div>
+                    <div class="text-sm opacity-80">Books</div>
                 </div>
                 <div class="text-center">
                     <div class="text-3xl font-bold">50K+</div>
-                    <div class="text-sm opacity-80">Người dùng</div>
+                    <div class="text-sm opacity-80">Users</div>
                 </div>
                 <div class="text-center">
                     <div class="text-3xl font-bold">1M+</div>
-                    <div class="text-sm opacity-80">Lượt đọc</div>
+                    <div class="text-sm opacity-80">Reads</div>
                 </div>
                 <div class="text-center">
                     <div class="text-3xl font-bold">24/7</div>
-                    <div class="text-sm opacity-80">Truy cập</div>
+                    <div class="text-sm opacity-80">Access</div>
                 </div>
             </div>
         </div>
@@ -219,8 +220,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center mb-8">
                 <div>
-                    <h2 class="text-3xl font-bold text-gray-900">Sách Nổi Bật</h2>
-                    <p class="text-gray-600 mt-2">Được cập nhật hàng ngày</p>
+                    <h2 class="text-3xl font-bold text-gray-900">Featured Books</h2>
+                    <p class="text-gray-600 mt-2">Updated daily</p>
                 </div>
                 
                 
@@ -245,20 +246,20 @@
 
         <div class="p-5 flex flex-col justify-between flex-1">
           <p class="text-gray-600 text-sm mb-4">
-            ✍️ Tác giả: <span class="font-medium text-gray-800">{{ ebook.book.author }}</span>
+            ✍️ Author: <span class="font-medium text-gray-800">{{ ebook.book.author }}</span>
           </p>
             <p class="text-gray-600 text-sm mb-4">
-            Thể loại: <span class="font-medium text-gray-800">{{ ebook.book.category }}</span>
+            Category: <span class="font-medium text-gray-800">{{ ebook.book.category }}</span>
           </p>
 
           <a href="{% url 'ebook_reader:read_ebook' ebook.id %}"
              class="block text-center bg-blue-600 text-white py-2.5 rounded-lg font-medium hover:bg-blue-700 transition">
-             📖 Đọc ngay
+             📖 Read Now
           </a>
         </div>
       </div>
       {% empty %}
-      <p class="text-center text-gray-500 col-span-full">Hiện chưa có ebook nào được đăng tải.</p>
+      <p class="text-center text-gray-500 col-span-full">No ebooks available yet.</p>
       {% endfor %}
     </div>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98b4301b655e3d96',t:'MTc1OTkxMTMwMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>

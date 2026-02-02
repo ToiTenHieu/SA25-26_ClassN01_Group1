@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Đăng nhập{% endblock %}
+{% block title %}Payment{% endblock %}
 
 {% block extra_css %}        body {
             box-sizing: border-box;
@@ -148,7 +148,7 @@
                         <div class="step-indicator completed w-10 h-10 rounded-full flex items-center justify-center font-bold">
                             ✓
                         </div>
-                        <span class="ml-2 text-sm font-medium text-gray-900">Chọn gói</span>
+                        <span class="ml-2 text-sm font-medium text-gray-900">Choose Plan</span>
                     </div>
                     
                     <div class="w-16 h-1 bg-green-500"></div>
@@ -157,7 +157,7 @@
                         <div class="step-indicator active w-10 h-10 rounded-full flex items-center justify-center font-bold">
                             2
                         </div>
-                        <span class="ml-2 text-sm font-medium text-gray-900">Thanh toán</span>
+                        <span class="ml-2 text-sm font-medium text-gray-900">Payment</span>
                     </div>
                     
                     <div class="w-16 h-1 bg-gray-200"></div>
@@ -166,7 +166,7 @@
                         <div class="step-indicator w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold">
                             3
                         </div>
-                        <span class="ml-2 text-sm font-medium text-gray-600">Hoàn thành</span>
+                        <span class="ml-2 text-sm font-medium text-gray-600">Complete</span>
                     </div>
                 </div>
             </div>
@@ -178,11 +178,11 @@
             <!-- Payment Form -->
             <div class="lg:col-span-2">
                 <div class="bg-white rounded-2xl shadow-lg p-8">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Thông tin thanh toán</h2>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Payment Information</h2>
                     
                     <!-- Payment Methods -->
                     <div class="mb-8">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Chọn phương thức thanh toán</h3>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Select Payment Method</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="payment-method bg-white rounded-xl p-4 selected" onclick="selectPaymentMethod('card')">
                                 <div class="flex items-center">
@@ -190,7 +190,7 @@
                                         <span class="text-white text-xs font-bold">💳</span>
                                     </div>
                                     <div>
-                                        <div class="font-medium text-gray-900">Thẻ tín dụng</div>
+                                        <div class="font-medium text-gray-900">Credit Card</div>
                                         <div class="text-sm text-gray-500">Visa, Mastercard, JCB</div>
                                     </div>
                                 </div>
@@ -202,8 +202,8 @@
                                         <span class="text-white text-xs font-bold">M</span>
                                     </div>
                                     <div>
-                                        <div class="font-medium text-gray-900">Ví MoMo</div>
-                                        <div class="text-sm text-gray-500">Quét mã QR</div>
+                                        <div class="font-medium text-gray-900">MoMo Wallet</div>
+                                        <div class="text-sm text-gray-500">Scan QR Code</div>
                                     </div>
                                 </div>
                             </div>
@@ -215,7 +215,7 @@
                                     </div>
                                     <div>
                                         <div class="font-medium text-gray-900">ZaloPay</div>
-                                        <div class="text-sm text-gray-500">Ví điện tử</div>
+                                        <div class="text-sm text-gray-500">E-Wallet</div>
                                     </div>
                                 </div>
                             </div>
@@ -226,7 +226,7 @@
                                         <span class="text-white text-xs font-bold">🏦</span>
                                     </div>
                                     <div>
-                                        <div class="font-medium text-gray-900">Chuyển khoản</div>
+                                        <div class="font-medium text-gray-900">Bank Transfer</div>
                                         <div class="text-sm text-gray-500">Internet Banking</div>
                                     </div>
                                 </div>
@@ -236,10 +236,10 @@
                     
                     <!-- Card Payment Form -->
                     <div id="cardForm" class="fade-in">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Thông tin thẻ</h3>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Card Information</h3>
                         <form onsubmit="processPayment(event)" class="space-y-6">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Số thẻ *</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Card Number *</label>
                                 <input type="text" 
                                        placeholder="1234 5678 9012 3456" 
                                        maxlength="19"
@@ -250,7 +250,7 @@
                             
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Ngày hết hạn *</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Expiry Date *</label>
                                     <input type="text" 
                                            placeholder="MM/YY" 
                                            maxlength="5"
@@ -270,7 +270,7 @@
                             </div>
                             
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Tên chủ thẻ *</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Cardholder Name *</label>
                                 <input type="text" 
                                        placeholder="NGUYEN VAN A" 
                                        oninput="this.value = this.value.toUpperCase()"
@@ -290,7 +290,7 @@
                                 <div class="flex items-start">
                                     <span class="text-blue-600 mr-2">🔒</span>
                                     <div class="text-sm text-blue-800">
-                                        <strong>Bảo mật SSL 256-bit:</strong> Thông tin thẻ của bạn được mã hóa và bảo vệ tuyệt đối. Chúng tôi không lưu trữ thông tin thẻ.
+                                        <strong>256-bit SSL Encryption:</strong> Your card information is encrypted and protected. We do not store card information.
                                     </div>
                                 </div>
                             </div>
@@ -299,18 +299,18 @@
                     
                     <!-- MoMo QR Form -->
                     <div id="momoForm" class="hidden fade-in">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Thanh toán qua MoMo</h3>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Payment via MoMo</h3>
                         <div class="text-center">
                             <div class="qr-code w-48 h-48 mx-auto mb-4 rounded-lg border-2 border-gray-300 flex items-center justify-center">
                                 <div class="text-gray-500 text-center">
                                     <div class="text-4xl mb-2">📱</div>
-                                    <div class="text-sm">Mã QR MoMo</div>
+                                    <div class="text-sm">MoMo QR Code</div>
                                 </div>
                             </div>
-                            <p class="text-gray-600 mb-4">Mở ứng dụng MoMo và quét mã QR để thanh toán</p>
+                            <p class="text-gray-600 mb-4">Open MoMo app and scan QR code to pay</p>
                             <div class="bg-pink-50 border border-pink-200 rounded-lg p-4">
                                 <p class="text-sm text-pink-800">
-                                    <strong>Hướng dẫn:</strong> Mở MoMo → Quét mã → Xác nhận thanh toán
+                                    <strong>Instructions:</strong> Open MoMo → Scan Code → Confirm Payment
                                 </p>
                             </div>
                         </div>
@@ -318,18 +318,18 @@
                     
                     <!-- ZaloPay Form -->
                     <div id="zalopayForm" class="hidden fade-in">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Thanh toán qua ZaloPay</h3>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Payment via ZaloPay</h3>
                         <div class="text-center">
                             <div class="qr-code w-48 h-48 mx-auto mb-4 rounded-lg border-2 border-gray-300 flex items-center justify-center">
                                 <div class="text-gray-500 text-center">
                                     <div class="text-4xl mb-2">📲</div>
-                                    <div class="text-sm">Mã QR ZaloPay</div>
+                                    <div class="text-sm">ZaloPay QR Code</div>
                                 </div>
                             </div>
-                            <p class="text-gray-600 mb-4">Mở ứng dụng ZaloPay và quét mã QR để thanh toán</p>
+                            <p class="text-gray-600 mb-4">Open ZaloPay app and scan QR code to pay</p>
                             <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
                                 <p class="text-sm text-blue-800">
-                                    <strong>Hướng dẫn:</strong> Mở ZaloPay → Quét mã → Nhập mật khẩu → Xác nhận
+                                    <strong>Instructions:</strong> Open ZaloPay → Scan Code → Enter Password → Confirm
                                 </p>
                             </div>
                         </div>
@@ -337,31 +337,31 @@
                     
                     <!-- Bank Transfer Form -->
                     <div id="bankForm" class="hidden fade-in">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Chuyển khoản ngân hàng</h3>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Bank Transfer</h3>
                         <div class="bank-info rounded-lg p-6 mb-4">
-                            <h4 class="font-semibold text-gray-900 mb-4">Thông tin tài khoản nhận</h4>
+                            <h4 class="font-semibold text-gray-900 mb-4">Account Information</h4>
                             <div class="space-y-3">
                                 <div class="flex justify-between">
-                                    <span class="text-gray-600">Ngân hàng:</span>
+                                    <span class="text-gray-600">Bank:</span>
                                     <span class="font-medium">Vietcombank</span>
                                 </div>
                                 <div class="flex justify-between">
-                                    <span class="text-gray-600">Số tài khoản:</span>
+                                    <span class="text-gray-600">Account Number:</span>
                                     <span class="font-medium font-mono">230103130049</span>
                                 </div>
                                 <div class="flex justify-between">
-                                    <span class="text-gray-600">Chủ tài khoản:</span>
+                                    <span class="text-gray-600">Account Holder:</span>
                                     <span class="font-medium">THU VIEN TRUNG TAM</span>
                                 </div>
                                 <div class="flex justify-between">
-                                    <span class="text-gray-600">Nội dung:</span>
-                                    <span class="font-medium text-blue-600">NANGCAP [SĐT]</span>
+                                    <span class="text-gray-600">Content:</span>
+                                    <span class="font-medium text-blue-600">NANGCAP [PHONE]</span>
                                 </div>
                             </div>
                         </div>
                         <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                             <p class="text-sm text-yellow-800">
-                                <strong>Lưu ý:</strong> Vui lòng ghi đúng nội dung chuyển khoản để hệ thống tự động xác nhận thanh toán.
+                                <strong>Note:</strong> Please enter the correct transfer content for the system to automatically confirm payment.
                             </p>
                         </div>
                     </div>
@@ -371,7 +371,7 @@
             <!-- Order Summary -->
             <div class="lg:col-span-1">
                 <div class="bg-white rounded-2xl shadow-lg p-6 sticky top-8">
-                    <h3 class="text-xl font-bold text-gray-900 mb-6">Tóm tắt đơn hàng</h3>
+                    <h3 class="text-xl font-bold text-gray-900 mb-6">Order Summary</h3>
                     {%if level == "standard"%}                    
                     <!-- Selected Plan -->
                     <div class="border-b border-gray-200 pb-6 mb-6">
@@ -380,26 +380,26 @@
                                 <span class="text-white text-xl">⭐</span>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-gray-900">Gói {{level_name}}</h4>
-                                <p class="text-sm text-gray-600">Thanh toán hàng tháng</p>
+                                <h4 class="font-semibold text-gray-900">{{level_name}} Plan</h4>
+                                <p class="text-sm text-gray-600">Monthly Payment</p>
                             </div>
                         </div>
                             <div class="space-y-2 text-sm">
                                 <div class="flex items-center text-green-600">
                                     <span class="mr-2">✓</span>
-                                    <span>Mượn tối đa 20 cuốn sách</span>
+                                    <span>Borrow up to 20 books</span>
                                 </div>
                                 <div class="flex items-center text-green-600">
                                     <span class="mr-2">✓</span>
-                                    <span>Thời gian mượn: 21 ngày</span>
+                                    <span>Borrowing period: 21 days</span>
                                 </div>
                                 <div class="flex items-center text-green-600">
                                     <span class="mr-2">✓</span>
-                                    <span>3 lần gia hạn miễn phí</span>
+                                    <span>3 free renewals</span>
                                 </div>
                                 <div class="flex items-center text-green-600">
                                     <span class="mr-2">✓</span>
-                                    <span>Đặt chỗ ưu tiên</span>
+                                    <span>Priority reservation</span>
                                 </div>
                             </div>
                         </div>
@@ -407,17 +407,17 @@
                     <!-- Pricing -->
                     <div class="space-y-3 mb-6">
                         <div class="flex justify-between">
-                            <span class="text-gray-600">Gói Tiêu chuẩn (1 tháng)</span>
-                            <span class="font-medium">200,000đ</span>
+                            <span class="text-gray-600">Standard Plan (1 month)</span>
+                            <span class="font-medium">200,000₫</span>
                         </div>
                         <div class="flex justify-between">
-                            <span class="text-gray-600">Thuế VAT (10%)</span>
-                            <span class="font-medium">20,000đ</span>
+                            <span class="text-gray-600">VAT Tax (10%)</span>
+                            <span class="font-medium">20,000₫</span>
                         </div>
                         <div class="border-t border-gray-200 pt-3">
                             <div class="flex justify-between text-lg font-bold">
-                                <span>Tổng cộng</span>
-                                <span class="text-blue-600">220,000đ</span>
+                                <span>Total</span>
+                                <span class="text-blue-600">220,000₫</span>
                             </div>
                         </div>
                     </div>
@@ -426,11 +426,11 @@
                     <div class="mb-6">
                         <div class="flex">
                             <input type="text" 
-                                   placeholder="Mã giảm giá" 
+                                   placeholder="Discount Code" 
                                    class="flex-1 px-3 py-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                             <button onclick="applyPromoCode()" 
                                     class="bg-gray-100 text-gray-700 px-4 py-2 rounded-r-lg border border-l-0 border-gray-300 hover:bg-gray-200 transition-colors">
-                                Áp dụng
+                                Apply
                             </button>
                         </div>
                     </div>
@@ -440,14 +440,14 @@
                         <button onclick="processPayment()" 
                             id="paymentButton"
                             class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 px-6 rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 transition-all mb-4">
-                            💳 Thanh toán 220,000đ
+                            💳 Pay 220,000₫
                         </button>
                     </form>
                     <!-- Security Info -->
                     <div class="text-center text-sm text-gray-500">
                         <div class="flex items-center justify-center mb-2">
                             <span class="mr-1">🔒</span>
-                            <span>Thanh toán được bảo mật bởi SSL</span>
+                            <span>Payment is secured by SSL</span>
                         </div>
                         <div class="flex items-center justify-center space-x-4">
                             <span class="bg-gray-100 px-2 py-1 rounded text-xs">VISA</span>
@@ -462,26 +462,26 @@
                                 <span class="text-white text-xl">⭐</span>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-gray-900">Gói {{level_name}}</h4>
-                                <p class="text-sm text-gray-600">Thanh toán hàng tháng</p>
+                                <h4 class="font-semibold text-gray-900">{{level_name}} Plan</h4>
+                                <p class="text-sm text-gray-600">Monthly Payment</p>
                             </div>
                         </div>
                             <div class="space-y-2 text-sm">
                                 <div class="flex items-center text-green-600">
                                     <span class="mr-2">✓</span>
-                                    <span>Mượn không giới hạn</span>
+                                    <span>Unlimited Borrowing</span>
                                 </div>
                                 <div class="flex items-center text-green-600">
                                     <span class="mr-2">✓</span>
-                                    <span>Thời gian mượn: 30 ngày</span>
+                                    <span>Borrowing period: 30 days</span>
                                 </div>
                                 <div class="flex items-center text-green-600">
                                     <span class="mr-2">✓</span>
-                                    <span>5 lần gia hạn miễn phí</span>
+                                    <span>5 free renewals</span>
                                 </div>
                                 <div class="flex items-center text-green-600">
                                     <span class="mr-2">✓</span>
-                                    <span>Đặt chỗ ưu tiên</span>
+                                    <span>Priority reservation</span>
                                 </div>
                             </div>
                         </div>
@@ -489,17 +489,17 @@
                     <!-- Pricing -->
                     <div class="space-y-3 mb-6">
                         <div class="flex justify-between">
-                            <span class="text-gray-600">Gói Tiêu chuẩn (1 tháng)</span>
-                            <span class="font-medium">400,000đ</span>
+                            <span class="text-gray-600">Standard Plan (1 month)</span>
+                            <span class="font-medium">400,000₫</span>
                         </div>
                         <div class="flex justify-between">
-                            <span class="text-gray-600">Thuế VAT (10%)</span>
-                            <span class="font-medium">40,000đ</span>
+                            <span class="text-gray-600">VAT Tax (10%)</span>
+                            <span class="font-medium">40,000₫</span>
                         </div>
                         <div class="border-t border-gray-200 pt-3">
                             <div class="flex justify-between text-lg font-bold">
-                                <span>Tổng cộng</span>
-                                <span class="text-blue-600">440,000đ</span>
+                                <span>Total</span>
+                                <span class="text-blue-600">440,000₫</span>
                             </div>
                         </div>
                     </div>
@@ -508,11 +508,11 @@
                     <div class="mb-6">
                         <div class="flex">
                             <input type="text" 
-                                   placeholder="Mã giảm giá" 
+                                   placeholder="Discount Code" 
                                    class="flex-1 px-3 py-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                             <button onclick="applyPromoCode()" 
                                     class="bg-gray-100 text-gray-700 px-4 py-2 rounded-r-lg border border-l-0 border-gray-300 hover:bg-gray-200 transition-colors">
-                                Áp dụng
+                                Apply
                             </button>
                         </div>
                     </div>
@@ -522,14 +522,14 @@
                         <button onclick="processPayment()" 
                             id="paymentButton"
                             class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 px-6 rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 transition-all mb-4">
-                            💳 Thanh toán 440,000đ
+                            💳 Pay 440,000₫
                         </button>
                     </form>
                     <!-- Security Info -->
                     <div class="text-center text-sm text-gray-500">
                         <div class="flex items-center justify-center mb-2">
                             <span class="mr-1">🔒</span>
-                            <span>Thanh toán được bảo mật bởi SSL</span>
+                            <span>Payment is secured by SSL</span>
                         </div>
                         <div class="flex items-center justify-center space-x-4">
                             <span class="bg-gray-100 px-2 py-1 rounded text-xs">VISA</span>
@@ -549,11 +549,11 @@
             <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <span class="text-green-600 text-3xl success-checkmark">✅</span>
             </div>
-            <h3 class="text-2xl font-semibold text-gray-900 mb-4">Thanh toán thành công!</h3>
-            <p class="text-gray-600 mb-6">Cảm ơn bạn đã nâng cấp! Gói Cao Cấp đã được kích hoạt và bạn có thể bắt đầu sử dụng ngay.</p>
+            <h3 class="text-2xl font-semibold text-gray-900 mb-4">Payment Successful!</h3>
+            <p class="text-gray-600 mb-6">Thank you for upgrading! Your Premium Plan is now active and you can start using it immediately.</p>
                 <div class="bg-blue-50 rounded-lg p-4 mb-6">
                     <div  class="text-sm text-blue-800">
-                        <strong>Mã giao dịch:</strong> TV29062005 
+                        <strong>Transaction ID:</strong> TV29062005 
                     </div>
                     <div id="real-time" class="text-sm text-blue-800">
                             <script>
@@ -580,7 +580,7 @@
 
     <footer class="bg-gray-800 text-gray-300 py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p>&copy; 2024 Thư Viện Trung Tâm. Tất cả quyền được bảo lưu.</p>
+            <p>&copy; 2024 Library. All rights reserved.</p>
         </div>
     </footer>
     <script>
@@ -607,10 +607,10 @@
             // Update button text
             const button = document.getElementById('paymentButton');
             const methodNames = {
-                'card': '💳 Thanh toán',
-                'momo': '📱 Thanh toán MoMo',
-                'zalopay': '📲 Thanh toán ZaloPay',
-                'bank': '🏦 Chuyển khoản'
+                'card': '💳 Pay',
+                'momo': '📱 Pay with MoMo',
+                'zalopay': '📲 Pay with ZaloPay',
+                'bank': '🏦 Bank Transfer'
             };
         }
         

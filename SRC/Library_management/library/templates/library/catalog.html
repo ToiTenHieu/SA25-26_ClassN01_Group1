@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Thư viện{% endblock %}
+{% block title %}Library{% endblock %}
 
 {% block extra_css%}
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -18,8 +18,8 @@
     <section class="hero-gradient text-white py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="text-center mb-8">
-              <h2 class="text-4xl md:text-5xl font-bold mb-4">Danh Mục Sách</h2>
-              <p class="text-xl opacity-90 max-w-2xl mx-auto">Khám phá bộ sưu tập phong phú với hơn 50,000 đầu sách từ mọi lĩnh vực</p>
+              <h2 class="text-4xl md:text-5xl font-bold mb-4">Book Catalog</h2>
+              <p class="text-xl opacity-90 max-w-2xl mx-auto">Explore our rich collection with over 50,000 books from all fields</p>
           </div>
             
             <!-- Advanced Search -->
@@ -29,7 +29,7 @@
       type="text" 
       name="q"
       id="searchInput"
-      placeholder="Tìm kiếm sách, tác giả, chủ đề..." 
+      placeholder="Search books, authors, topics..." 
       class="flex-1 px-4 py-3 text-gray-700 focus:outline-none rounded-l-lg"
       autocomplete="off"
       required
@@ -38,11 +38,11 @@
       type="submit"
       class="bg-indigo-600 text-white px-8 py-3 rounded-r-lg hover:bg-indigo-700 transition-colors"
     >
-      Tìm kiếm
+      Search
     </button>
   </form>
 
-  <!-- Hộp gợi ý -->
+  <!-- Suggestions Box -->
   <ul id="suggestionBox" class="absolute left-0 right-0 bg-white border border-gray-200 rounded-lg mt-1 hidden z-50 max-h-60 overflow-y-auto shadow-lg"></ul>
 </div>
 
@@ -98,7 +98,7 @@ document.addEventListener("click", (e) => {
           <span class="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center mr-3">
             <span class="text-white text-sm">🏷️</span>
         </span>
-          Lọc Theo Thể Loại
+          Filter by Category
         </h3>
   
         <div class="flex flex-wrap justify-center gap-3">
@@ -106,48 +106,48 @@ document.addEventListener("click", (e) => {
             onclick="filterBooks('all')"
             class="category-btn filter-btn bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            ✨ Tất Cả
+            ✨ All
           </button>
           <button
             onclick="filterBooks('cong-nghe')"
             class="category-btn filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold shadow-md hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white transition-all duration-300 border border-gray-200"
           >
-            💻 Công Nghệ
+            💻 Technology
           </button>
           <button
             onclick="filterBooks('toan-hoc')"
             class="category-btn filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold shadow-md hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white transition-all duration-300 border border-gray-200"
           >
-            🔢 Toán Học
+            🔢 Mathematics
           </button>
           <button
             onclick="filterBooks('ngoai-ngu')"
             class="category-btn filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold shadow-md hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white transition-all duration-300 border border-gray-200"
           >
-            🌍 Ngoại Ngữ
+            🌍 Foreign Languages
           </button>
           <button
             onclick="filterBooks('van-hoc')"
             class="category-btn filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold shadow-md hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white transition-all duration-300 border border-gray-200"
           >
-            📖 Văn Học
+            📖 Literature
           </button>
           <button
             onclick="filterBooks('khoa-hoc')"
             class="category-btn filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold shadow-md hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white transition-all duration-300 border border-gray-200"
           >
-            🔬 Khoa Học
+            🔬 Science
           </button>
           <button
             onclick="filterBooks('kinh-te')"
             class="category-btn filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold shadow-md hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white transition-all duration-300 border border-gray-200"
           >
-            💰 Kinh Tế
+            💰 Economics
           </button>
         </div>
     </div>
 
-<!-- Danh sách sách với thiết kế card đẹp -->
+<!-- Book List with Beautiful Card Design -->
     <div class="container mx-auto px-6 py-8">
       <div
         id="bookList"
@@ -169,47 +169,47 @@ document.addEventListener("click", (e) => {
                 <h4 class="text-xl font-bold text-gray-800 break-words line-clamp-2 ">{{ book.title }}</h4>
               </div>
 
-          <!-- Thông tin sách -->
+          <!-- Book Info -->
           <div class="space-y-2 text-gray-600">
             <p class="flex items-center whitespace-nowrap">
               <span class="mr-2">👤</span>
-              <span>Tác giả:</span>
+              <span>Author:</span>
               <span class="font-semibold ml-1">{{ book.author }}</span>
             </p>
             <p class="flex items-center whitespace-nowrap">
               <span class="mr-2">🏷️</span>
-              <span>Thể loại:</span>
+              <span>Category:</span>
               <span class="font-semibold ml-1">{{ book.category }}</span>
             </p>
             <p class="flex items-center whitespace-nowrap">
               <span class="mr-2">📦</span>
-              <span>Số lượng:</span>
-              <span class="font-semibold ml-1">{{ book.quantity }} cuốn</span>
+              <span>Quantity:</span>
+              <span class="font-semibold ml-1">{{ book.quantity }} books</span>
             </p>
             <p class="flex items-center whitespace-nowrap">
               <span class="mr-2">📅</span>
-              <span>Năm xuất bản:</span>
+              <span>Published Year:</span>
               <span class="font-semibold ml-1">{{ book.year }}</span>
             </p>
           </div>
         </div>
 
-        <!-- Trạng thái + nút -->
+        <!-- Status + Buttons -->
         <div class="flex flex-col space-y-3 items-end">
           {% if book.quantity > 5 %}
           <span
             class="status-badge bg-green-100 text-green-800 px-4 py-2 rounded-xl text-sm font-bold"
-            >✅ Còn hàng</span
+            >✅ In Stock</span
           >
           {% elif book.quantity > 0 %}
           <span
             class="status-badge bg-yellow-100 text-yellow-800 px-4 py-2 rounded-xl text-sm font-bold"
-            >⚠️ Sắp hết</span
+            >⚠️ Running Low</span
           >
           {% else %}
           <span
             class="status-badge bg-red-100 text-red-800 px-4 py-2 rounded-xl text-sm font-bold"
-            >❌ Hết hàng</span
+            >❌ Out of Stock</span
           >
           {% endif %}
 
@@ -218,12 +218,12 @@ document.addEventListener("click", (e) => {
   onclick="openBorrowModal('{{ book.book_id }}', '{{ book.title }}', '{{ book.author }}')"
   class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all duration-300 text-sm font-semibold whitespace-nowrap min-w-[120px]"
 >
-  Mượn sách
+  Borrow Book
 </button>
 </div>
 <a href="{% url 'library:book_detail_view' book.book_id %}"
     class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-2 rounded-lg font-bold text-sm hover:shadow-md hover:scale-105 transition-all duration-300">
-    Chi tiết
+    Details
 </a>
         </div>
       </div>
@@ -239,7 +239,7 @@ document.addEventListener("click", (e) => {
 <div class="flex justify-center mt-6 mb-12 space-x-2">
   {% if page_obj.has_previous %}
     <a href="?page={{ page_obj.previous_page_number }}"
-       class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">⬅ Trước</a>
+       class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">⬅ Previous</a>
   {% endif %}
 
   {% for num in page_obj.paginator.page_range %}
@@ -253,7 +253,7 @@ document.addEventListener("click", (e) => {
 
   {% if page_obj.has_next %}
     <a href="?page={{ page_obj.next_page_number }}"
-       class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Sau ➡</a>
+       class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Next ➡</a>
   {% endif %}
 </div>
 <div
@@ -262,20 +262,20 @@ document.addEventListener("click", (e) => {
 >
   <div class="bg-white rounded-2xl p-6 w-[400px] shadow-2xl">
     <h2 class="text-2xl font-bold text-center mb-4 text-orange-600">
-      Mượn sách 📚
+      Borrow Book 📚
     </h2>
 
-    <!-- Thông tin sách -->
+    <!-- Book Info -->
     <div class="mb-4">
-      <p id="bookTitle" class="font-semibold text-lg">Tên sách</p>
-      <p id="bookAuthor" class="text-gray-600">Tác giả</p>
+      <p id="bookTitle" class="font-semibold text-lg">Book Title</p>
+      <p id="bookAuthor" class="text-gray-600">Author</p>
     </div>
 
-    <!-- Form chọn ngày và số lượng -->
+    <!-- Form to Select Date and Quantity -->
     <form id="borrowForm" class="space-y-3">
       {% csrf_token %}
       <div>
-        <label class="block font-medium">Ngày mượn:</label>
+        <label class="block font-medium">Borrow Date:</label>
         <input
           type="date"
           id="borrowDate"
@@ -285,7 +285,7 @@ document.addEventListener("click", (e) => {
       </div>
 
       <div>
-        <label class="block font-medium">Ngày trả:</label>
+        <label class="block font-medium">Return Date:</label>
         <input
           type="date"
           id="returnDate"
@@ -295,7 +295,7 @@ document.addEventListener("click", (e) => {
       </div>
 
       <div>
-        <label for="quantity" class="block text-gray-700 font-semibold">Số lượng:</label>
+        <label for="quantity" class="block text-gray-700 font-semibold">Quantity:</label>
   <input 
       type="number" 
       id="quantity" 
@@ -312,13 +312,13 @@ document.addEventListener("click", (e) => {
           onclick="closeBorrowModal()"
           class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-lg"
         >
-          Hủy
+          Cancel
         </button>
         <button
           type="submit"
           class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all"
         >
-          Xác nhận
+          Confirm Borrow
         </button>
       </div>
     </form>
@@ -326,7 +326,7 @@ document.addEventListener("click", (e) => {
 </div>
 
 
-<!-- Thêm thư viện SweetAlert2 -->
+<!-- Include SweetAlert2 library -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
@@ -334,7 +334,7 @@ document.addEventListener("click", (e) => {
 
   function openBorrowModal(id, title, author) {
     selectedBookId = id;
-    document.getElementById("bookTitle").textContent = `Tên sách: ${title}`;
+    document.getElementById("bookTitle").textContent = `Book Title: ${title}`;
     document.getElementById("bookAuthor").textContent = `Tác giả: ${author}`;
     
     const today = new Date();
@@ -343,7 +343,7 @@ document.addEventListener("click", (e) => {
     const dd = String(today.getDate()).padStart(2, "0");
     const todayStr = `${yyyy}-${mm}-${dd}`;
 
-    // Gán giá trị mặc định cho ngày mượn (hôm nay)
+    // Set default value for borrow date (today)
     const borrowDateInput = document.getElementById("borrowDate");
     borrowDateInput.value = todayStr;
     borrowDateInput.min = todayStr;
@@ -392,7 +392,7 @@ document.addEventListener("click", (e) => {
       if (data.success) {
         Swal.fire({
           icon: "success",
-          title: "Mượn sách thành công!",
+          title: "Book borrowed successfully!",
           text: "Hệ thống đã ghi nhận yêu cầu của bạn.",
           showConfirmButton: false,
           timer: 2000,
@@ -405,7 +405,7 @@ document.addEventListener("click", (e) => {
         Swal.fire({
           icon: "error",
           title: "Lỗi!",
-          text: data.message || "Không thể mượn sách, vui lòng thử lại.",
+          text: data.message || "Unable to borrow book, please try again.",
           confirmButtonColor: "#d33",
         });
       }
@@ -454,13 +454,13 @@ document.addEventListener("click", (e) => {
                                     <span class="text-sm text-gray-600">${book.rating}</span>
                                 </div>
                                 <span class="px-3 py-1 text-xs rounded-full ${book.available ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
-                                    ${book.available ? 'Có sẵn' : 'Đã mượn'}
+                                    ${book.available ? 'Available' : 'Borrowed'}
                                 </span>
                             </div>
                             <button onclick="borrowBook(${book.id})" 
                                     class="w-full py-2 px-4 rounded-lg transition-colors ${book.available ? 'bg-indigo-600 hover:bg-indigo-700 text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}"
                                     ${!book.available ? 'disabled' : ''}>
-                                ${book.available ? 'Mượn sách' : 'Không có sẵn'}
+                                ${book.available ? 'Borrow Book' : 'Unavailable'}
                             </button>
                         </div>
                     </div>
@@ -483,7 +483,7 @@ document.addEventListener("click", (e) => {
                                         <span class="text-sm text-gray-600">${book.rating}</span>
                                     </div>
                                     <span class="px-3 py-1 text-xs rounded-full ${book.available ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
-                                        ${book.available ? 'Có sẵn' : 'Đã mượn'}
+                                        ${book.available ? 'Available' : 'Borrowed'}
                                     </span>
                                 </div>
                             </div>
@@ -491,7 +491,7 @@ document.addEventListener("click", (e) => {
                                 <button onclick="borrowBook(${book.id})" 
                                         class="py-2 px-6 rounded-lg transition-colors ${book.available ? 'bg-indigo-600 hover:bg-indigo-700 text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}"
                                         ${!book.available ? 'disabled' : ''}>
-                                    ${book.available ? 'Mượn sách' : 'Không có sẵn'}
+                                    ${book.available ? 'Borrow Book' : 'Unavailable'}
                                 </button>
                             </div>
                         </div>
@@ -576,7 +576,7 @@ document.addEventListener("click", (e) => {
         function updateResultsCount(total) {
             const start = (currentPage - 1) * itemsPerPage + 1;
             const end = Math.min(currentPage * itemsPerPage, total);
-            document.getElementById('resultsCount').textContent = `Hiển thị ${start}-${end} trong tổng số ${total} cuốn sách`;
+            document.getElementById('resultsCount').textContent = `Showing ${start}-${end} of ${total} books`;
         }
 
         // Update pagination
@@ -646,7 +646,7 @@ document.addEventListener("click", (e) => {
             );
           }
 
-          // Lọc sách
+          // Filter books
           let visibleCount = 0;
           bookItems.forEach((item, index) => {
             if (category === "all" || item.dataset.category === category) {
@@ -668,7 +668,7 @@ document.addEventListener("click", (e) => {
             content.classList.add("hidden");
           });
 
-          // Hiển thị tab được chọn
+          // Display selected tab
           document.getElementById(tabName).classList.remove("hidden");
           document.getElementById(tabName).classList.add("fade-in");
 
@@ -678,7 +678,7 @@ document.addEventListener("click", (e) => {
             btn.classList.add("text-gray-600");
           });
 
-          // Thêm active state cho button được click
+          // Add active state to clicked button
           if (buttonElement) {
             buttonElement.classList.remove("text-gray-600");
             buttonElement.classList.add("bg-green-500", "text-white");
@@ -686,7 +686,7 @@ document.addEventListener("click", (e) => {
         }
         window.onload = function () {
           const params = new URLSearchParams(window.location.search);
-          const section = params.get("section") || "quanLySach"; // mặc định mở quản lý sách
+          const section = params.get("section") || "quanLySach"; // default open book management
 
           // Tìm đúng nút tương ứng (dùng nav-item, không phải nav-btn)
           const button = document.querySelector(
@@ -705,7 +705,7 @@ document.addEventListener("click", (e) => {
         function borrowBook(bookId) {
             const book = books.find(b => b.id === bookId);
             if (book && book.available) {
-                alert(`Bạn đã mượn thành công cuốn sách "${book.title}". Vui lòng đến quầy thủ thư để hoàn tất thủ tục.`);
+                alert(`You have successfully borrowed the book \"${book.title}\". Please go to the library counter to complete the process.`);
                 book.available = false;
                 displayBooks(currentBooks, currentPage);
             }

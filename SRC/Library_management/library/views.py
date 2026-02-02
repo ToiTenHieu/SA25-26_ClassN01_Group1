@@ -45,8 +45,7 @@ from account.models import UserProfile
 from .models import Book
 
 def home(request):
-    if not request.user.is_authenticated:
-        return redirect("account:logout")
+
 
     sort_type = request.GET.get("sort", "rating")
     category = request.GET.get("category", "all")  # vd: van-hoc
@@ -86,11 +85,16 @@ def home(request):
     newest_books = Book.objects.annotate(avg_rating=Avg("reviews__rating")) \
         .order_by(F("year").desc(nulls_last=True))[:5]
 
-    user_profile = UserProfile.objects.get(user=request.user)
+    user_profile = None
+    if request.user.is_authenticated:
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+        except UserProfile.DoesNotExist:
+            user_profile = None
 
     return render(request, "library/home.html", {
         "user_profile": user_profile,
-        "max_days": getattr(user_profile, "max_days", 10),
+        "max_days": getattr(user_profile, "max_days", 10) if user_profile else 10,
         "page_obj": page_obj,
         "top_rated_books": top_rated_books,
         "newest_books": newest_books,
@@ -117,8 +121,12 @@ from django.contrib.auth.decorators import login_required
 from account.membership_context import MembershipContext
 from account.models import UserProfile
 
+from django.contrib.auth.decorators import login_required
+
 @login_required
 def membership(request):
+    if not request.user.is_authenticated:
+        return redirect("account:login")
     profile = UserProfile.objects.get(user=request.user)
     current_rank = profile.membership_level
     membership_context = MembershipContext(current_rank)

@@ -4,7 +4,7 @@ from django.utils import timezone
 from library.models import BorrowRecord
 
 class Command(BaseCommand):
-    help = "Gửi mail cho người quá hạn trả sách"
+    help = "Send an email to the person who is overdue on returning the book."
 
     def handle(self, *args, **kwargs):
         today = timezone.localdate()
@@ -34,22 +34,22 @@ class Command(BaseCommand):
             days = (today - record.due_date).days
 
             send_mail(
-                subject="⏰ Thông báo quá hạn trả sách",
+                subject="⏰ Overdue Book Return Reminder",
                 message=(
-                    f"Xin chào {record.user.user.username},\n\n"
-                    f"Bạn đang quá hạn trả sách: {record.book.title}\n"
-                    f"Hạn trả: {record.due_date.strftime('%d/%m/%Y')}\n"
-                    f"Quá hạn: {days} ngày\n\n"
-                    f"Vui lòng hoàn trả hoặc gia hạn (nếu còn lượt) sớm nhất.\n\n"
-                    f"Thư viện xin cảm ơn!"
+                    f"Hello {record.user.user.username},\n\n"
+                    f"You are overdue returning the book: {record.book.title}\n"
+                    f"Return deadline: {record.due_date.strftime('%d/%m/%Y')}\n"
+                    f"Overdue by: {days} days\n\n"
+                    f"Please return or extend the loan (if you still have one) as soon as possible.\n\n"
+                    f"Thank you for using our library!"
                 ),
                 from_email=None,
                 recipient_list=[email],
             )
 
             sent += 1
-            self.stdout.write(f"✔ Đã gửi mail quá hạn cho {email} (Record #{record.record_id})")
+            self.stdout.write(f"✔ Sent overdue reminder email to {email} (Record #{record.record_id})")
 
         self.stdout.write(self.style.SUCCESS(
-            f"✅ Update borrowed->overdue: {updated} | Tổng quá hạn: {overdue_qs.count()} | Đã gửi: {sent} | Bỏ qua (không email): {skipped_no_email}"
+            f"✅ Update borrowed->overdue: {updated} | total overdue: {overdue_qs.count()} | Sent emails: {sent} | Skipped (no email): {skipped_no_email}"
         ))

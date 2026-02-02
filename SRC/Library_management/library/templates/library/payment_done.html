@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Đăng nhập{% endblock %}
+{% block title %}Payment Completed{% endblock %}
 {% block extra_css %}
         body {
             box-sizing: border-box;
@@ -165,21 +165,21 @@
                     <span class="text-5xl">🎉</span>
                 </div>
                 <h1 class="text-4xl md:text-6xl font-bold mb-6">
-                    Chúc Mừng!
-                    <span class="block text-yellow-300">Bạn Đã Trở Thành{{ profile_form.instance.get_membership_level_display }}</span>
+                    Congratulations!
+                    <span class="block text-yellow-300">You've Become a {{ profile_form.instance.get_membership_level_display }}</span>
                 </h1>
                 <p class="text-xl md:text-2xl mb-8 opacity-90">
-                    Cảm ơn bạn đã tin tưởng và nâng cấp! Hãy khám phá những đặc quyền tuyệt vời đang chờ bạn.
+                    Thank you for trusting and upgrading! Discover the amazing benefits waiting for you.
                 </p>
                 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
                     <a href="{% url 'library:home' %}">
                     <button  class="bg-white text-indigo-600 px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 transition-colors">
-                        🚀 Bắt đầu khám phá
+                        🚀 Start Exploring
                     </button>
                     </a>
                     <button onclick="scrollToFeatures()" class="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-indigo-600 transition-colors">
-                        📋 Xem đặc quyền
+                        📋 View Benefits
                     </button>
                 </div>
             </div>
@@ -192,25 +192,25 @@
             <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                     <div class="slide-in-left">
-                        <h2 class="text-3xl font-bold text-gray-900 mb-4">Thông Tin Thành Viên</h2>
+                        <h2 class="text-3xl font-bold text-gray-900 mb-4">Membership Information</h2>
                         <div class="space-y-4">
                             <div class="flex items-center">
                                 <span class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3">
                                     <span class="text-white text-xs">✓</span>
                                 </span>
-                                <span class="text-gray-700">Gói: Thành viên <strong>{{ profile_form.instance.get_membership_level_display }}</strong></span>
+                                <span class="text-gray-700">Plan: <strong>{{ profile_form.instance.get_membership_level_display }}</strong> Member</span>
                             </div>
                             <div class="flex items-center">
                                 <span class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3">
                                     <span class="text-white text-xs">✓</span>
                                 </span>
-                                <span class="text-gray-700">Kích hoạt: <strong>{{ profile_form.instance.membership_upgrade_date|date:"d/m/Y" }}</strong></span>
+                                <span class="text-gray-700">Activated: <strong>{{ profile_form.instance.membership_upgrade_date|date:"d/m/Y" }}</strong></span>
                             </div>
                             <div class="flex items-center">
                                 <span class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mr-3">
                                     <span class="text-white text-xs">✓</span>
                                 </span>
-                                <span class="text-gray-700">Hết hạn: <strong style="color: red;">{{ profile_form.instance.membership_expiry_date|date:"d/m/Y" }}</strong></span>
+                                <span class="text-gray-700">Expires: <strong style="color: red;">{{ profile_form.instance.membership_expiry_date|date:"d/m/Y" }}</strong></span>
                             </div>
                             <div class="flex items-center">
 
@@ -227,11 +227,11 @@
                             <div class="absolute inset-0 flex items-center justify-center">
                                 <div class="text-center">
                                     <div class="text-2xl font-bold text-indigo-600">30</div>
-                                    <div class="text-sm text-gray-600">ngày còn lại</div>
+                                    <div class="text-sm text-gray-600">days remaining</div>
                                 </div>
                             </div>
                         </div>
-                        <p class="mt-4 text-gray-600">Thời gian sử dụng gói Cao Cấp</p>
+                        <p class="mt-4 text-gray-600">Premium Plan Duration</p>
                     </div>
                 </div>
             </div>
@@ -242,8 +242,8 @@
     <section id="features" class="py-16 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 fade-in">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Đặc Quyền Mới Của Bạn</h2>
-                <p class="text-xl text-gray-600">Khám phá những tính năng độc quyền dành cho thành viên Cao Cấp</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Your New Privileges</h2>
+                <p class="text-xl text-gray-600">Discover exclusive features for Premium members</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -251,12 +251,12 @@
                     <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">
                         <span class="text-3xl">📚</span>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Mượn Nhiều Sách Hơn</h3>
-                    <p class="text-gray-600 mb-4">Tăng từ 3 lên 8 cuốn sách cùng lúc</p>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Borrow More Books</h3>
+                    <p class="text-gray-600 mb-4">Increase from 3 to 8 books at a time</p>
                     <div class="bg-blue-50 rounded-lg p-4">
                         <div class="flex justify-between items-center">
-                            <span class="text-sm text-blue-800">Hiện tại: 2/8 cuốn</span>
-                            <span class="text-blue-600 font-semibold">+5 cuốn</span>
+                            <span class="text-sm text-blue-800">Current: 2/8 books</span>
+                            <span class="text-blue-600 font-semibold">+5 books</span>
                         </div>
                         <div class="w-full bg-blue-200 rounded-full h-2 mt-2">
                             <div class="bg-blue-600 h-2 rounded-full" style="width: 25%"></div>
@@ -268,14 +268,14 @@
                     <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
                         <span class="text-3xl">⏰</span>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Thời Gian Dài Hơn</h3>
-                    <p class="text-gray-600 mb-4">Mượn sách 21 ngày thay vì 14 ngày</p>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Longer Duration</h3>
+                    <p class="text-gray-600 mb-4">Borrow books for 21 days instead of 14 days</p>
                     <div class="bg-green-50 rounded-lg p-4">
                         <div class="flex justify-between items-center">
-                            <span class="text-sm text-green-800">Thời gian mượn</span>
-                            <span class="text-green-600 font-semibold">21 ngày</span>
+                            <span class="text-sm text-green-800">Loan Duration</span>
+                            <span class="text-green-600 font-semibold">21 days</span>
                         </div>
-                        <div class="text-xs text-green-600 mt-1">+7 ngày so với trước</div>
+                        <div class="text-xs text-green-600 mt-1">+7 days compared to before</div>
                     </div>
                 </div>
                 
@@ -283,14 +283,14 @@
                     <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-6">
                         <span class="text-3xl">🔄</span>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Gia Hạn Miễn Phí</h3>
-                    <p class="text-gray-600 mb-4">3 lần gia hạn miễn phí mỗi cuốn sách</p>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Free Renewal</h3>
+                    <p class="text-gray-600 mb-4">3 free renewals for each book</p>
                     <div class="bg-purple-50 rounded-lg p-4">
                         <div class="flex justify-between items-center">
-                            <span class="text-sm text-purple-800">Lượt gia hạn</span>
-                            <span class="text-purple-600 font-semibold">3 lần</span>
+                            <span class="text-sm text-purple-800">Renewal Times</span>
+                            <span class="text-purple-600 font-semibold">3 times</span>
                         </div>
-                        <div class="text-xs text-purple-600 mt-1">Tiết kiệm đến 30,000đ/tháng</div>
+                        <div class="text-xs text-purple-600 mt-1">Save up to 30,000đ/month</div>
                     </div>
                 </div>
                 
@@ -298,14 +298,14 @@
                     <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-6">
                         <span class="text-3xl">🎯</span>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Đặt Chỗ Ưu Tiên</h3>
-                    <p class="text-gray-600 mb-4">Được ưu tiên khi đặt chỗ sách hot</p>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Priority Reservation</h3>
+                    <p class="text-gray-600 mb-4">Get priority when reserving popular books</p>
                     <div class="bg-yellow-50 rounded-lg p-4">
                         <div class="flex items-center justify-between">
-                            <span class="text-sm text-yellow-800">Hàng đợi</span>
-                            <span class="text-yellow-600 font-semibold">Ưu tiên</span>
+                            <span class="text-sm text-yellow-800">Queue</span>
+                            <span class="text-yellow-600 font-semibold">Priority</span>
                         </div>
-                        <div class="text-xs text-yellow-600 mt-1">Giảm 70% thời gian chờ</div>
+                        <div class="text-xs text-yellow-600 mt-1">Reduce wait time by 70%</div>
                     </div>
                 </div>
                 
@@ -313,14 +313,14 @@
                     <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mb-6">
                         <span class="text-3xl">📱</span>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Sách Điện Tử</h3>
-                    <p class="text-gray-600 mb-4">Truy cập thư viện sách điện tử</p>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">E-books</h3>
+                    <p class="text-gray-600 mb-4">Access our e-book library</p>
                     <div class="bg-indigo-50 rounded-lg p-4">
                         <div class="flex items-center justify-between">
-                            <span class="text-sm text-indigo-800">Sách có sẵn</span>
+                            <span class="text-sm text-indigo-800">Available Books</span>
                             <span class="text-indigo-600 font-semibold">5,000+</span>
                         </div>
-                        <div class="text-xs text-indigo-600 mt-1">Đọc mọi lúc, mọi nơi</div>
+                        <div class="text-xs text-indigo-600 mt-1">Read anytime, anywhere</div>
                     </div>
                 </div>
                 
@@ -328,14 +328,14 @@
                     <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-6">
                         <span class="text-3xl">💬</span>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Hỗ Trợ Ưu Tiên</h3>
-                    <p class="text-gray-600 mb-4">Hỗ trợ khách hàng 24/7 ưu tiên</p>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Priority Support</h3>
+                    <p class="text-gray-600 mb-4">24/7 priority customer support</p>
                     <div class="bg-red-50 rounded-lg p-4">
                         <div class="flex items-center justify-between">
-                            <span class="text-sm text-red-800">Thời gian phản hồi</span>
-                            <span class="text-red-600 font-semibold">< 5 phút</span>
+                            <span class="text-sm text-red-800">Response Time</span>
+                            <span class="text-red-600 font-semibold">< 5 mins</span>
                         </div>
-                        <div class="text-xs text-red-600 mt-1">Hỗ trợ qua chat, email, điện thoại</div>
+                        <div class="text-xs text-red-600 mt-1">Support via chat, email, phone</div>
                     </div>
                 </div>
             </div>
@@ -346,8 +346,8 @@
     <section class="py-16 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Hướng Dẫn Bắt Đầu</h2>
-                <p class="text-xl text-gray-600">4 bước đơn giản để tận dụng tối đa gói Cao Cấp</p>
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Getting Started Guide</h2>
+                <p class="text-xl text-gray-600">4 simple steps to make the most of your Premium plan</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -355,10 +355,10 @@
                     <div class="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold">
                         1
                     </div>
-                    <h3 class="font-semibold text-gray-900 mb-2">Cập Nhật Hồ Sơ</h3>
-                    <p class="text-sm text-gray-600 mb-4">Hoàn thiện thông tin để nhận đề xuất sách phù hợp</p>
+                    <h3 class="font-semibold text-gray-900 mb-2">Update Profile</h3>
+                    <p class="text-sm text-gray-600 mb-4">Complete your profile for personalized book recommendations</p>
                     <button onclick="updateProfile()" class="text-blue-600 hover:text-blue-700 font-medium text-sm">
-                        Cập nhật ngay →
+                        Update now →
                     </button>
                 </div>
                 
@@ -366,10 +366,10 @@
                     <div class="w-12 h-12 bg-green-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold">
                         2
                     </div>
-                    <h3 class="font-semibold text-gray-900 mb-2">Khám Phá Sách Mới</h3>
-                    <p class="text-sm text-gray-600 mb-4">Duyệt danh mục sách được cập nhật hàng tuần</p>
+                    <h3 class="font-semibold text-gray-900 mb-2">Discover New Books</h3>
+                    <p class="text-sm text-gray-600 mb-4">Browse our catalog updated every week</p>
                     <button onclick="browseCatalog()" class="text-green-600 hover:text-green-700 font-medium text-sm">
-                        Xem danh mục →
+                        View catalog →
                     </button>
                 </div>
                 
@@ -377,10 +377,10 @@
                     <div class="w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold">
                         3
                     </div>
-                    <h3 class="font-semibold text-gray-900 mb-2">Mượn Sách Đầu Tiên</h3>
-                    <p class="text-sm text-gray-600 mb-4">Thử nghiệm khả năng mượn 8 cuốn cùng lúc</p>
+                    <h3 class="font-semibold text-gray-900 mb-2">Borrow First Book</h3>
+                    <p class="text-sm text-gray-600 mb-4">Try out the ability to borrow 8 books at once</p>
                     <button onclick="borrowBooks()" class="text-purple-600 hover:text-purple-700 font-medium text-sm">
-                        Mượn sách →
+                        Borrow books →
                     </button>
                 </div>
                 
@@ -388,10 +388,10 @@
                     <div class="w-12 h-12 bg-yellow-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold">
                         4
                     </div>
-                    <h3 class="font-semibold text-gray-900 mb-2">Tải App Mobile</h3>
-                    <p class="text-sm text-gray-600 mb-4">Đọc sách điện tử mọi lúc mọi nơi</p>
+                    <h3 class="font-semibold text-gray-900 mb-2">Download Mobile App</h3>
+                    <p class="text-sm text-gray-600 mb-4">Read e-books anytime, anywhere</p>
                     <button onclick="downloadApp()" class="text-yellow-600 hover:text-yellow-700 font-medium text-sm">
-                        Tải app →
+                        Download app →
                     </button>
                 </div>
             </div>
@@ -402,8 +402,8 @@
     <section class="py-16 bg-gradient-to-br from-indigo-50 to-blue-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Ưu Đãi Đặc Biệt</h2>
-                <p class="text-xl text-gray-600">Những món quà chào mừng dành riêng cho bạn</p>
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Special Offers</h2>
+                <p class="text-xl text-gray-600">Welcome gifts specially for you</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -412,17 +412,17 @@
                         <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                             <span class="text-3xl">🎁</span>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900">Voucher Giảm Giá</h3>
+                        <h3 class="text-xl font-semibold text-gray-900">Discount Voucher</h3>
                     </div>
                     <div class="bg-green-50 rounded-lg p-4 mb-4">
                         <div class="text-center">
                             <div class="text-2xl font-bold text-green-600">20%</div>
-                            <div class="text-sm text-green-800">Giảm giá tháng tiếp theo</div>
+                            <div class="text-sm text-green-800">Off next month</div>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-600 text-center mb-4">Mã: <strong>WELCOME20</strong></p>
+                    <p class="text-sm text-gray-600 text-center mb-4">Code: <strong>WELCOME20</strong></p>
                     <button onclick="claimVoucher('WELCOME20')" class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors">
-                        Nhận voucher
+                        Claim voucher
                     </button>
                 </div>
                 
@@ -431,17 +431,17 @@
                         <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                             <span class="text-3xl">📖</span>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900">Sách Miễn Phí</h3>
+                        <h3 class="text-xl font-semibold text-gray-900">Free Books</h3>
                     </div>
                     <div class="bg-blue-50 rounded-lg p-4 mb-4">
                         <div class="text-center">
                             <div class="text-2xl font-bold text-blue-600">3</div>
-                            <div class="text-sm text-blue-800">Cuốn sách bestseller</div>
+                            <div class="text-sm text-blue-800">Bestseller books</div>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-600 text-center mb-4">Đã thêm vào thư viện của bạn</p>
+                    <p class="text-sm text-gray-600 text-center mb-4">Added to your library</p>
                     <button onclick="viewFreeBooks()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
-                        Xem sách
+                        View books
                     </button>
                 </div>
                 
@@ -450,17 +450,17 @@
                         <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                             <span class="text-3xl">⭐</span>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900">Điểm Thưởng</h3>
+                        <h3 class="text-xl font-semibold text-gray-900">Reward Points</h3>
                     </div>
                     <div class="bg-purple-50 rounded-lg p-4 mb-4">
                         <div class="text-center">
                             <div class="text-2xl font-bold text-purple-600">500</div>
-                            <div class="text-sm text-purple-800">Điểm thưởng khởi đầu</div>
+                            <div class="text-sm text-purple-800">Starter reward points</div>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-600 text-center mb-4">Đổi quà tặng và ưu đãi</p>
+                    <p class="text-sm text-gray-600 text-center mb-4">Redeem gifts and offers</p>
                     <button onclick="viewRewards()" class="w-full bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition-colors">
-                        Xem điểm thưởng
+                        View rewards
                     </button>
                 </div>
             </div>
@@ -470,8 +470,8 @@
     <!-- Support Section -->
     <section class="py-16 bg-white">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl font-bold text-gray-900 mb-4">Cần Hỗ Trợ?</h2>
-            <p class="text-xl text-gray-600 mb-8">Đội ngũ hỗ trợ ưu tiên 24/7 luôn sẵn sàng giúp bạn</p>
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Need Support?</h2>
+            <p class="text-xl text-gray-600 mb-8">Our priority support team is available 24/7 to help you</p>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="bg-gray-50 rounded-xl p-6">
@@ -479,9 +479,9 @@
                         <span class="text-2xl">💬</span>
                     </div>
                     <h3 class="font-semibold text-gray-900 mb-2">Live Chat</h3>
-                    <p class="text-sm text-gray-600 mb-4">Phản hồi trong vòng 5 phút</p>
+                    <p class="text-sm text-gray-600 mb-4">Response within 5 minutes</p>
                     <button onclick="openChat()" class="text-blue-600 hover:text-blue-700 font-medium">
-                        Bắt đầu chat
+                        Start chat
                     </button>
                 </div>
                 
@@ -492,7 +492,7 @@
                     <h3 class="font-semibold text-gray-900 mb-2">Hotline</h3>
                     <p class="text-sm text-gray-600 mb-4">1900-1234 (24/7)</p>
                     <button onclick="callSupport()" class="text-green-600 hover:text-green-700 font-medium">
-                        Gọi ngay
+                        Call now
                     </button>
                 </div>
                 
@@ -503,7 +503,7 @@
                     <h3 class="font-semibold text-gray-900 mb-2">Email</h3>
                     <p class="text-sm text-gray-600 mb-4">support@thuvien.com</p>
                     <button onclick="sendEmail()" class="text-purple-600 hover:text-purple-700 font-medium">
-                        Gửi email
+                        Send email
                     </button>
                 </div>
             </div>
@@ -513,15 +513,15 @@
     <!-- Footer CTA -->
     <section class="py-16 bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl font-bold mb-4">Sẵn Sàng Bắt Đầu?</h2>
-            <p class="text-xl mb-8 opacity-90">Hãy khám phá thế giới sách với những đặc quyền mới của bạn!</p>
+            <h2 class="text-3xl font-bold mb-4">Ready to Get Started?</h2>
+            <p class="text-xl mb-8 opacity-90">Discover the world of books with your new privileges!</p>
             
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <button onclick="goToDashboard()" class="bg-white text-indigo-600 px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 transition-colors">
-                    🏠 Về trang chủ
+                    🏠 Back to Home
                 </button>
                 <button onclick="browseCatalog()" class="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-indigo-600 transition-colors">
-                    📚 Duyệt sách ngay
+                    📚 Browse Books Now
                 </button>
             </div>
         </div>
@@ -535,63 +535,63 @@
         
         // Start interactive tour
         function startTour() {
-            alert('🎯 Chào mừng bạn! Hãy bắt đầu với việc cập nhật hồ sơ để nhận đề xuất sách phù hợp nhất.');
+            alert('🎯 Welcome! Start by updating your profile to get personalized book recommendations.');
             updateProfile();
         }
         
         // Navigation functions
         function updateProfile() {
-            alert('📝 Đang chuyển đến trang cập nhật hồ sơ...');
+            alert('📝 Redirecting to profile update page...');
             // window.location.href = '/profile';
         }
         
         function browseCatalog() {
-            alert('📚 Đang mở danh mục sách với hơn 50,000 đầu sách...');
+            alert('📚 Opening catalog with over 50,000 books...');
             // window.location.href = '/catalog';
         }
         
         function borrowBooks() {
-            alert('📖 Đang chuyển đến trang mượn sách. Bạn có thể mượn tối đa 8 cuốn!');
+            alert('📖 Redirecting to borrow page. You can borrow up to 8 books!');
             // window.location.href = '/borrow';
         }
         
         function downloadApp() {
-            alert('📱 Đang chuyển đến trang tải ứng dụng mobile...');
+            alert('📱 Redirecting to mobile app download page...');
             // window.open('https://app.thuvien.com/download', '_blank');
         }
         
         // Offer functions
         function claimVoucher(code) {
-            alert(`🎁 Voucher ${code} đã được thêm vào tài khoản của bạn! Sử dụng khi gia hạn gói tiếp theo.`);
+            alert(`🎁 Voucher ${code} has been added to your account! Use it when renewing your subscription.`);
         }
         
         function viewFreeBooks() {
-            alert('📖 Đang mở danh sách 3 cuốn sách bestseller miễn phí của bạn...');
+            alert('📖 Opening your list of 3 free bestseller books...');
             // window.location.href = '/my-books?filter=free';
         }
         
         function viewRewards() {
-            alert('⭐ Bạn có 500 điểm thưởng! Có thể đổi voucher giảm giá hoặc quà tặng.');
+            alert('⭐ You have 500 reward points! You can redeem discount vouchers or gifts.');
             // window.location.href = '/rewards';
         }
         
         // Support functions
         function openChat() {
-            alert('💬 Đang kết nối với tư vấn viên ưu tiên...');
+            alert('💬 Connecting with priority support agent...');
             // Open chat widget
         }
         
         function callSupport() {
-            alert('📞 Số hotline ưu tiên: 1900-1234. Bạn sẽ được ưu tiên trong hàng đợi!');
+            alert('📞 Priority hotline: 1900-1234. You will get priority in queue!');
         }
         
         function sendEmail() {
-            alert('📧 Đang mở ứng dụng email để gửi đến support@thuvien.com...');
-            // window.location.href = 'mailto:support@thuvien.com?subject=Hỗ trợ thành viên Cao Cấp';
+            alert('📧 Opening email application to send to support@thuvien.com...');
+            // window.location.href = 'mailto:support@thuvien.com?subject=Premium Member Support';
         }
         
         function goToDashboard() {
-            alert('🏠 Đang chuyển về trang chủ với giao diện thành viên Cao Cấp...');
+            alert('🏠 Redirecting to home with Premium member interface...');
             // window.location.href = '/dashboard';
         }
         

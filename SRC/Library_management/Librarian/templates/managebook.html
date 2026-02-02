@@ -17,7 +17,7 @@
       <h2
         class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
       >
-        Quản Lý Sách
+        Manage Books
       </h2>
     </div>
     <button
@@ -25,7 +25,7 @@
       class="btn-primary text-white px-8 py-4 rounded-2xl font-bold flex items-center space-x-3 shadow-lg"
     >
       <span class="text-xl">➕</span>
-      <span>Thêm Sách Mới</span>
+      <span>Add New Book</span>
     </button>
   </div>
 
@@ -37,50 +37,50 @@
       >
         <span class="text-white text-sm">🏷️</span>
       </span>
-      Lọc Theo Thể Loại
+      Filter by Category
     </h3>
     <div class="flex flex-wrap gap-3">
       <button
         onclick="filterBooks('all')"
         class="category-btn filter-btn bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
       >
-        ✨ Tất Cả
+        ✨ All Categories
       </button>
       <button
         onclick="filterBooks('cong-nghe')"
         class="category-btn filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold shadow-md hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white transition-all duration-300 border border-gray-200"
       >
-        💻 Công Nghệ
+        💻 Technology
       </button>
       <button
         onclick="filterBooks('toan-hoc')"
         class="category-btn filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold shadow-md hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white transition-all duration-300 border border-gray-200"
       >
-        🔢 Toán Học
+        🔢 mathematics
       </button>
       <button
         onclick="filterBooks('ngoai-ngu')"
         class="category-btn filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold shadow-md hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white transition-all duration-300 border border-gray-200"
       >
-        🌍 Ngoại Ngữ
+        🌍 foreign language
       </button>
       <button
         onclick="filterBooks('van-hoc')"
         class="category-btn filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold shadow-md hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white transition-all duration-300 border border-gray-200"
       >
-        📖 Văn Học
+        📖 literature
       </button>
       <button
         onclick="filterBooks('khoa-hoc')"
         class="category-btn filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold shadow-md hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white transition-all duration-300 border border-gray-200"
       >
-        🔬 Khoa Học
+        🔬 science
       </button>
       <button
         onclick="filterBooks('kinh-te')"
         class="category-btn filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold shadow-md hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 hover:text-white transition-all duration-300 border border-gray-200"
       >
-        💰 Kinh Tế
+        💰 economy
       </button>
     </div>
   </div>
@@ -96,12 +96,12 @@
         >
           <span class="text-white text-sm">📋</span>
         </span>
-        Danh Sách Sách
+        Book List
       </h3>
       <div class="bg-white px-4 py-2 rounded-xl shadow-md">
-        <span class="text-gray-600">Tổng: </span>
+        <span class="text-gray-600">Total: </span>
         <span id="bookCount" class="font-bold text-blue-600 text-lg">0</span>
-        <span class="text-gray-600"> cuốn</span>
+        <span class="text-gray-600"> books</span>
       </div>
     </div>
 
@@ -117,28 +117,30 @@
         <div class="flex justify-between items-start">
           <div class="flex-1">
             <div class="flex items-center space-x-3 mb-3">
-              <div
-                class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center"
-              >
-                <span class="text-white text-sm"> 📚 </span>
+              <div class="w-10 h-10 overflow-hidden rounded-lg flex items-center justify-center bg-gray-100">
+                {% if book.cover_image %}
+                  <img src="{{ book.cover_image.url }}" alt="{{ book.title }}" class="w-full h-full object-cover">
+                {% else %}
+                  <span class="text-gray-400 text-sm">📚</span>
+                {% endif %}
               </div>
               <h4 class="text-xl font-bold text-gray-800">{{ book.title }}</h4>
             </div>
             <div class="space-y-2 text-gray-600">
               <p class="flex items-center">
-                <span class="mr-2">👤</span> Tác giả:
+                <span class="mr-2">👤</span> Author:
                 <span class="font-semibold ml-1">{{ book.author }}</span>
               </p>
               <p class="flex items-center">
-                <span class="mr-2">🏷️</span> Thể loại:
+                <span class="mr-2">🏷️</span> Category:
                 <span class="font-semibold ml-1">{{ book.category }}</span>
               </p>
               <p class="flex items-center">
-                <span class="mr-2">📦</span> Số lượng:
-                <span class="font-semibold ml-1">{{ book.quantity }} cuốn</span>
+                <span class="mr-2">📦</span> Quantity:
+                <span class="font-semibold ml-1">{{ book.quantity }} books</span>
               </p>
               <p class="flex items-center">
-                <span class="mr-2">📅</span> Năm xuất bản:
+                <span class="mr-2">📅</span> Year of Publication:
                 <span class="font-semibold ml-1">{{ book.year }}</span>
               </p>
             </div>
@@ -147,17 +149,17 @@
             {% if book.quantity > 5 %}
             <span
               class="status-badge bg-green-100 text-green-800 px-4 py-2 rounded-xl text-sm font-bold"
-              >✅ Còn hàng</span
+              >✅ In Stock</span
             >
             {% elif book.quantity > 0 %}
             <span
               class="status-badge bg-yellow-100 text-yellow-800 px-4 py-2 rounded-xl text-sm font-bold"
-              >⚠️ Sắp hết</span
+              >⚠️ Almost Out of Stock</span
             >
             {% else %}
             <span
               class="status-badge bg-red-100 text-red-800 px-4 py-2 rounded-xl text-sm font-bold"
-              >❌ Hết hàng</span
+              >❌ Out of Stock</span
             >
             {% endif %}
 
@@ -166,13 +168,13 @@
                 onclick="editBook({{ book.book_id }})"
                 class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all duration-300 text-sm font-semibold"
               >
-                ✏️ Sửa
+                ✏️ Edit
               </button>
               <button
                 onclick="deleteBook({{ book.book_id }})"
                 class="bg-gradient-to-r from-red-500 to-pink-600 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all duration-300 text-sm font-semibold"
               >
-                🗑️ Xóa
+                🗑️ Delete
               </button>
             </div>
           </div>
@@ -199,7 +201,7 @@
           >
             <span class="text-white text-xl">✏️</span>
           </div>
-          <h3 class="text-2xl font-bold text-white">Sửa Sách</h3>
+          <h3 class="text-2xl font-bold text-white">Edit Book</h3>
         </div>
         <button
           onclick="closeEditBookModal()"
@@ -219,7 +221,7 @@
           <label
             class="block text-sm font-bold text-gray-700 mb-3 flex items-center"
           >
-            <span class="mr-2">📖</span> Tên Sách
+            <span class="mr-2">📖</span> Book Title
           </label>
           <input
             type="text"
@@ -234,7 +236,7 @@
           <label
             class="block text-sm font-bold text-gray-700 mb-3 flex items-center"
           >
-            <span class="mr-2">👤</span> Tác Giả
+            <span class="mr-2">👤</span> Author
           </label>
           <input
             type="text"
@@ -251,7 +253,7 @@
           <label
             class="block text-sm font-bold text-gray-700 mb-3 flex items-center"
           >
-            <span class="mr-2">🏷️</span> Thể Loại
+            <span class="mr-2">🏷️</span> Category
           </label>
           <select
             name="category"
@@ -259,17 +261,17 @@
             class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all duration-300"
             required
           >
-            <option value="">Chọn thể loại...</option>
+            <option value="">Choose category...</option>
             <option value="cong-nghe" data-label="Công Nghệ">
-              💻 Công Nghệ
+              💻 Technology
             </option>
-            <option value="toan-hoc" data-label="Toán Học">🔢 Toán Học</option>
+            <option value="toan-hoc" data-label="Toán Học">🔢 Mathematics</option>
             <option value="ngoai-ngu" data-label="Ngoại Ngữ">
-              🌍 Ngoại Ngữ
+              🌍 Foreign Languages
             </option>
-            <option value="van-hoc" data-label="Văn Học">📖 Văn Học</option>
-            <option value="khoa-hoc" data-label="Khoa Học">🔬 Khoa Học</option>
-            <option value="kinh-te" data-label="Kinh Tế">💰 Kinh Tế</option>
+            <option value="van-hoc" data-label="Văn Học">📖 Literature</option>
+            <option value="khoa-hoc" data-label="Khoa Học">🔬 Science</option>
+            <option value="kinh-te" data-label="Kinh Tế">💰 Economics</option>
           </select>
         </div>
 
@@ -277,7 +279,7 @@
           <label
             class="block text-sm font-bold text-gray-700 mb-3 flex items-center"
           >
-            <span class="mr-2">📦</span> Số Lượng
+            <span class="mr-2">📦</span> Quantity
           </label>
           <input
             type="number"
@@ -294,7 +296,7 @@
         <label
           class="block text-sm font-bold text-gray-700 mb-3 flex items-center"
         >
-          <span class="mr-2">📅</span> Năm Xuất Bản
+          <span class="mr-2">📅</span> Publication Year
         </label>
         <input
           type="number"
@@ -311,7 +313,7 @@
         <label
           class="block text-sm font-bold text-gray-700 mb-3 flex items-center"
         >
-          <span class="mr-2">📝</span> Mô Tả (Tùy chọn)
+          <span class="mr-2">📝</span> Description (Optional)
         </label>
         <textarea
           name="description"
@@ -324,7 +326,7 @@
         <label
           class="block text-sm font-bold text-gray-700 mb-3 flex items-center"
         >
-          <span class="mr-2">📌</span> Trạng Thái
+          <span class="mr-2">📌</span> Status
         </label>
         <select
           name="status"
@@ -341,14 +343,14 @@
           type="submit"
           class="flex-1 bg-gradient-to-r from-yellow-500 to-orange-500 text-white py-4 px-6 rounded-xl font-bold text-lg shadow-lg"
         >
-          💾 Lưu Thay Đổi
+          💾 Save Changes
         </button>
         <button
           type="button"
           onclick="closeEditBookModal()"
           class="flex-1 bg-gradient-to-r from-gray-500 to-gray-600 text-white py-4 px-6 rounded-xl hover:shadow-lg transition-all duration-300 font-bold text-lg"
         >
-          ❌ Hủy
+          ❌ Cancel
         </button>
       </div>
     </form>
@@ -360,12 +362,12 @@
 <script>
   // Map từ emoji → slug
   const categoryMap = {
-    "💻 Công Nghệ": "cong-nghe",
-    "🔢 Toán Học": "toan-hoc",
-    "🌍 Ngoại Ngữ": "ngoai-ngu",
-    "📖 Văn Học": "van-hoc",
-    "🔬 Khoa Học": "khoa-hoc",
-    "💰 Kinh Tế": "kinh-te",
+    "💻 Technology": "cong-nghe",
+    "🔢 Mathematics": "toan-hoc",
+    "🌍 Foreign Language": "ngoai-ngu",
+    "📖 Literature": "van-hoc",
+    "🔬 Science": "khoa-hoc",
+    "💰 Economics": "kinh-te",
   };
 
   // Map ngược từ slug → emoji
@@ -379,7 +381,7 @@
 
     fetch(`/librarian/api/books/${bookId}/`) // endpoint GET chi tiết sách
       .then((response) => {
-        if (!response.ok) throw new Error("Không tìm thấy sách");
+        if (!response.ok) throw new Error("Could not fetch book details");
         return response.json();
       })
       .then((data) => {
@@ -403,8 +405,8 @@
         document.getElementById("editBookModal").classList.remove("hidden");
       })
       .catch((error) => {
-        console.error("Lỗi load chi tiết sách:", error);
-        alert("Không tìm thấy sách!");
+        console.error("Error fetching book details:", error);
+        alert("Failed to load book details!");
       });
   }
 
@@ -425,35 +427,30 @@
     // ⚙️ Chuyển slug -> emoji + tiếng Việt
     const categoryFull = reverseCategoryMap[categorySlug] || categorySlug;
 
-    const formData = {
-      title: document.getElementById("editTitle").value,
-      author: document.getElementById("editAuthor").value,
-      category: categoryFull, // ✅ Lưu emoji vào DB
-      quantity: parseInt(document.getElementById("editQuantity").value),
-      year: parseInt(document.getElementById("editYear").value),
-      description: document.getElementById("editDescription").value,
-      status: document.getElementById("editStatus").value,
-    };
+    // build FormData from the form to allow file uploads
+    const formEl = document.getElementById('editBookForm');
+    const fd = new FormData(formEl);
+    // override category with emoji/text
+    fd.set('category', categoryFull);
 
     fetch(`/librarian/api/books/${bookId}/`, {
-      method: "PUT",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        "X-CSRFToken": getCookie("csrftoken"), // Django CSRF
+        'X-CSRFToken': getCookie('csrftoken'),
       },
-      body: JSON.stringify(formData),
+      body: fd,
     })
       .then((response) => {
         if (response.ok) {
           closeEditBookModal();
-          location.reload(); // reload lại danh sách
+          location.reload();
         } else {
-          alert("Cập nhật thất bại!");
+          alert('Cập nhật thất bại!');
         }
       })
       .catch((error) => {
-        console.error("Lỗi:", error);
-        alert("Có lỗi khi cập nhật sách!");
+        console.error('Error:', error);
+        alert('There was an error updating the book!');
       });
   }
 
@@ -477,14 +474,14 @@
 <script>
   function deleteBook(bookId) {
   Swal.fire({
-    title: "Bạn có chắc chắn?",
-    text: "Sách sẽ bị xóa vĩnh viễn và không thể khôi phục!",
+    title: "Delete Book?",
+    text: "This book will be permanently deleted and cannot be recovered!",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#d33",
     cancelButtonColor: "#3085d6",
-    confirmButtonText: "🗑️ Xóa",
-    cancelButtonText: "❌ Hủy",
+    confirmButtonText: "🗑️ Delete",
+    cancelButtonText: "❌ Cancel",
   }).then((result) => {
     if (result.isConfirmed) {
       fetch(`/librarian/api/books/${bookId}/`, {
@@ -494,13 +491,13 @@
         },
       })
         .then((response) => {
-          if (!response.ok) throw new Error("Không thể xoá sách");
+          if (!response.ok) throw new Error("Could not delete book");
           return response.json();
         })
         .then((data) => {
           Swal.fire({
-            title: "Đã xóa!",
-            text: data.message || "Sách đã được xóa thành công.",
+            title: "Deleted!",
+            text: data.message || "Book has been deleted successfully.",
             icon: "success",
             confirmButtonText: "OK",
           }).then(() => {
@@ -508,7 +505,7 @@
           });
         })
         .catch((error) => {
-          Swal.fire("Lỗi!", "Không thể xoá sách. Vui lòng thử lại!", "error");
+          Swal.fire("Error!", "Could not delete book. Please try again!", "error");
         });
     }
   });

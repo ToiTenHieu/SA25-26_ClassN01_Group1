@@ -30,7 +30,7 @@ def send_due_reminder_view(request):
         call_command("send_due_reminder")
         return JsonResponse({
             "success": True,
-            "message": "📧 Đã gửi mail nhắc hạn trả sách (trước 1 ngày)"
+            "message": "📧 sent a reminder email about the book return deadline (one day in advance)."
         })
 
     return JsonResponse({"success": False}, status=400)
@@ -38,7 +38,7 @@ def send_due_reminder_view(request):
 def send_overdue_reminder_api(request):
     try:
         call_command("send_overdue_reminder")
-        return JsonResponse({"success": True, "message": "Đã gửi mail cho người quá hạn!"})
+        return JsonResponse({"success": True, "message": "📧 Sent reminder email to overdue users."})
     except Exception as e:
         return JsonResponse({"success": False, "message": str(e)}, status=500)
 @login_required
@@ -148,7 +148,7 @@ def user_logout(request):
 
 
 def home(request):
-    return render(request, "accounts/home.html")
+    return render(request, "account/home.html")
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -179,10 +179,10 @@ def catalog(request):
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
-    return render(request, "accounts/catalog.html", {"page_obj": page_obj})
+    return render(request, "/catalog.html", {"page_obj": page_obj})
 @login_required
 def payment_done(request):
-    return render(request, "accounts/payment_done.html")  
+    return render(request, "account/payment_done.html")  
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import UserProfile  # model chứa phone, address, gender,...
 
@@ -202,9 +202,9 @@ def delete_user_api(request, user_id):
     if request.method == "DELETE":
         user_profile = get_object_or_404(UserProfile, pk=user_id)
         user_profile.delete()
-        return JsonResponse({"message": "Người dùng đã được xóa thành công."})
+        return JsonResponse({"message": "User deleted successfully."})
     
-    return JsonResponse({"error": "Phương thức không hợp lệ."}, status=400)
+    return JsonResponse({"error": "Invalid request method."}, status=400)
 from django.template.defaultfilters import slugify
 
 # views.py
@@ -234,8 +234,8 @@ def add_book(request):
             description=description
         )
 
-        return JsonResponse({"message": "Thêm sách thành công", "id": book.book_id}, status=201)
-    return JsonResponse({"error": "Phương thức không hợp lệ"}, status=400)
+        return JsonResponse({"message": "Book added successfully", "id": book.book_id}, status=201)
+    return JsonResponse({"error": "Invalid request method"}, status=400)
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
@@ -282,7 +282,6 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import Book
 import json
 
-# accounts/views.py
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
@@ -359,10 +358,10 @@ def return_book_api(request, record_id):
         # book.quantity += 1
         # book.save()
 
-        return JsonResponse({'message': 'Sách đã được trả và trạng thái đã cập nhật.'}, status=200)
+        return JsonResponse({'message': 'Book returned and status updated successfully.'}, status=200)
 
     except BorrowRecord.DoesNotExist:
-        return JsonResponse({'error': 'Không tìm thấy bản ghi mượn sách.'}, status=404)
+        return JsonResponse({'error': 'Borrow record not found.'}, status=404)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 from django.shortcuts import render

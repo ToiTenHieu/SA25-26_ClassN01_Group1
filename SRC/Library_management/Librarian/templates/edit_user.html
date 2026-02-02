@@ -12,7 +12,7 @@
     <!-- Header Gradient -->
     <div class="bg-gradient-to-r from-blue-500 to-purple-500 p-4 rounded-t-2xl -mx-6 -mt-6 mb-6 flex items-center justify-between">
       <h2 class="text-white font-bold text-lg flex items-center gap-2">
-        👤 Chỉnh Sửa Người Dùng
+        👤 Edit User Information
       </h2>
     </div>
 
@@ -21,35 +21,35 @@
       {% csrf_token %}
 
       <div>
-        <label class="block text-gray-700 font-medium mb-1">Tên đầy đủ</label>
+        <label class="block text-gray-700 font-medium mb-1">Full Name</label>
         <input type="text" name="name" value="{{ user.name }}"
                class="border rounded-lg p-2 w-full focus:ring-2 focus:ring-purple-400"/>
       </div>
 
       <div>
-        <label class="block text-gray-700 font-medium mb-1">Điện thoại</label>
+        <label class="block text-gray-700 font-medium mb-1">Phone Number</label>
         <input type="text" name="phone" value="{{ user.phone }}"
                class="border rounded-lg p-2 w-full focus:ring-2 focus:ring-purple-400"/>
       </div>
 
       <div>
-        <label class="block text-gray-700 font-medium mb-1">Địa chỉ</label>
+        <label class="block text-gray-700 font-medium mb-1">Address</label>
         <input type="text" name="address" value="{{ user.address }}"
                class="border rounded-lg p-2 w-full focus:ring-2 focus:ring-purple-400"/>
       </div>
 
       <div>
-        <label class="block text-gray-700 font-medium mb-1">Ngày sinh</label>
+        <label class="block text-gray-700 font-medium mb-1">Date of Birth</label>
         <input type="date" name="date_of_birth" value="{{ user.date_of_birth|date:'Y-m-d' }}"
                class="border rounded-lg p-2 w-full focus:ring-2 focus:ring-purple-400"/>
       </div>
 
       <div>
-        <label class="block text-gray-700 font-medium mb-1">Giới tính</label>
+        <label class="block text-gray-700 font-medium mb-1">Gender</label>
         <select name="gender"
                 class="border rounded-lg p-2 w-full focus:ring-2 focus:ring-purple-400">
-          <option value="male" {% if user.gender == 'male' %}selected{% endif %}>Nam</option>
-          <option value="female" {% if user.gender == 'female' %}selected{% endif %}>Nữ</option>
+          <option value="male" {% if user.gender == 'male' %}selected{% endif %}>Male</option>
+          <option value="female" {% if user.gender == 'female' %}selected{% endif %}>Female </option>
         </select>
       </div>
 
@@ -58,12 +58,12 @@
         <button type="submit"
                 class="px-5 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-blue-500 text-white font-medium hover:opacity-90"
                 onclick="unlockPage()">
-          ✔ Lưu
+          ✔ Save Changes
         </button>
         <a href="{% url 'librarian:managebook' %}?section=quanLyNguoiDung"
            class="px-5 py-2 rounded-lg bg-gray-400 hover:bg-gray-500 text-white font-medium"
            onclick="unlockPage()">
-          ✖ Huỷ
+          ✖ Cancel
         </a>
       </div>
     </form>
@@ -71,7 +71,6 @@
 </div>
 
 <style>
-/* Hiệu ứng hover nhẹ cho form */
 .card-hover {
   transition: all 0.3s ease;
 }
