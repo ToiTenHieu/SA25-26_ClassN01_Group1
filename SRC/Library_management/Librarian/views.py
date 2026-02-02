@@ -16,7 +16,31 @@ from django.contrib.auth.models import User
 from django.utils.timezone import now
 from django.core.paginator import Paginator
 from django.urls import reverse
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.core.management import call_command
 
+@login_required
+def send_due_reminder_view(request):
+    # 👉 nếu bạn có role thủ thư thì check thêm ở đây
+    # ví dụ:
+    # if request.user.role != "librarian": ...
+
+    if request.method == "POST":
+        call_command("send_due_reminder")
+        return JsonResponse({
+            "success": True,
+            "message": "📧 Đã gửi mail nhắc hạn trả sách (trước 1 ngày)"
+        })
+
+    return JsonResponse({"success": False}, status=400)
+@login_required
+def send_overdue_reminder_api(request):
+    try:
+        call_command("send_overdue_reminder")
+        return JsonResponse({"success": True, "message": "Đã gửi mail cho người quá hạn!"})
+    except Exception as e:
+        return JsonResponse({"success": False, "message": str(e)}, status=500)
 @login_required
 def librarian_dashboard(request):
     profile = UserProfile.objects.get(user=request.user)

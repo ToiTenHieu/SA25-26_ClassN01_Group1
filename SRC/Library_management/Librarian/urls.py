@@ -10,4 +10,12 @@ urlpatterns = [
     path("api/books/<int:book_id>/", views.book_detail, name="book_detail"),
     path('managebook/', views.librarian_dashboard, name='managebook'),
     path('api/return-book/<int:record_id>/', views.return_book_api, name='return_book_api'),
+        path(
+        "send-due-reminder/",
+        views.send_due_reminder_view,
+        name="send_due_reminder"
+    ),
+    path("send-overdue-reminder/", views.send_overdue_reminder_api, name="send_overdue_reminder_api"),
+
 ]
+
