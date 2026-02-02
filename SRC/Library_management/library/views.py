@@ -3,6 +3,7 @@ from django.core.paginator import Paginator
 from Librarian.models import Book
 from django.contrib import messages
 import json
+from django.utils.text import slugify
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
@@ -37,48 +38,65 @@ def catalog(request):
     return render(request, "library/catalog.html", context)
 
 
+from django.shortcuts import render, redirect
+from django.core.paginator import Paginator
+from django.db.models import Avg, F
+from account.models import UserProfile
+from .models import Book
+
 def home(request):
     if not request.user.is_authenticated:
         return redirect("account:logout")
 
     sort_type = request.GET.get("sort", "rating")
+    category = request.GET.get("category", "all")  # vd: van-hoc
 
-    # Danh sách chính (lọc theo sort)
+    qs = Book.objects.annotate(avg_rating=Avg("reviews__rating"))
+
+    # ✅ Filter trước
+    if category != "all":
+        matched_ids = [
+            b.book_id
+            for b in qs.only("book_id", "category")
+            if slugify(b.category or "") == category
+        ]
+        qs = qs.filter(book_id__in=matched_ids)
+
+    # ✅ Sort sau filter
     if sort_type == "new":
-        books_with_rating = Book.objects.annotate(
-            avg_rating=Avg('reviews__rating')
-        ).order_by(F('year').desc(nulls_last=True))
+        qs = qs.order_by(F("year").desc(nulls_last=True))
     else:
-        books_with_rating = Book.objects.annotate(
-            avg_rating=Avg('reviews__rating')
-        ).order_by(F('avg_rating').desc(nulls_last=True))
+        qs = qs.order_by(F("avg_rating").desc(nulls_last=True))
 
-    paginator = Paginator(books_with_rating, 8)
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
+    # ✅ Paginate cuối cùng
+    paginator = Paginator(qs, 8)
+    page_obj = paginator.get_page(request.GET.get("page", 1))
 
-    # Hai danh sách phụ
-    top_rated_books = Book.objects.annotate(
-        avg_rating=Avg("reviews__rating")
-    ).order_by(F("avg_rating").desc(nulls_last=True))[:5]
+    # ✅ AJAX: trả về partial
+    if request.headers.get("x-requested-with") == "XMLHttpRequest":
+        return render(request, "library/partials/_catalog.html", {
+            "page_obj": page_obj,
+            "sort_type": sort_type,
+            "category": category,
+        })
 
-    newest_books = Book.objects.annotate(
-        avg_rating=Avg("reviews__rating")
-    ).order_by(F("year").desc(nulls_last=True))[:5]
+    # Full page
+    top_rated_books = Book.objects.annotate(avg_rating=Avg("reviews__rating")) \
+        .order_by(F("avg_rating").desc(nulls_last=True))[:5]
+    newest_books = Book.objects.annotate(avg_rating=Avg("reviews__rating")) \
+        .order_by(F("year").desc(nulls_last=True))[:5]
 
     user_profile = UserProfile.objects.get(user=request.user)
 
-    context = {
+    return render(request, "library/home.html", {
         "user_profile": user_profile,
         "max_days": getattr(user_profile, "max_days", 10),
         "page_obj": page_obj,
         "top_rated_books": top_rated_books,
         "newest_books": newest_books,
         "sort_type": sort_type,
-    }
-
-    return render(request, "library/home.html", context)
-
+        "category": category,
+    })
 
 def services(request):
     return render(request, 'library/services.html')
@@ -297,26 +315,23 @@ def borrow_book(request):
 from django.shortcuts import render, get_object_or_404
 # library/views.py
 
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib import messages
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
-from django.db.models import Avg # Cần thiết để tính điểm trung bình
-from .models import Book, Review
+from django.contrib import messages
+from django.db.models import Avg
+from .models import Book, Review  # nhớ import đúng
 
 def book_detail_view(request, book_id):
     book = get_object_or_404(Book, pk=book_id)
-    
-    # 1. Xử lý Form Đánh Giá
+
+    # 1) Xử lý Form Đánh Giá
     if request.method == 'POST':
         if not request.user.is_authenticated:
-            # Chuyển hướng nếu người dùng chưa đăng nhập
-            return redirect('account:login') 
-            
+            return redirect('account:login')
+
         rating = request.POST.get('rating')
         comment = request.POST.get('comment')
-        
-        
-        # Tạo hoặc Cập nhật đánh giá
+
         Review.objects.update_or_create(
             book=book,
             user=request.user,
@@ -325,27 +340,34 @@ def book_detail_view(request, book_id):
         messages.success(request, 'Cảm ơn bạn đã gửi đánh giá!')
         return redirect(reverse('library:book_detail_view', args=[book_id]))
 
-    # 2. Truy vấn dữ liệu cho Template (GET)
-    
-    # Lấy tất cả đánh giá cho sách này
+    # 2) GET: load dữ liệu
     reviews = book.reviews.all()
-    
-    # Tính điểm trung bình
     avg_rating = reviews.aggregate(Avg('rating'))['rating__avg']
-    
-    # Kiểm tra xem người dùng hiện tại đã đánh giá chưa
+
     user_review = None
     if request.user.is_authenticated:
         user_review = reviews.filter(user=request.user).first()
-    
+
+    # ✅ 3) Sách tương tự theo thể loại (loại trừ cuốn hiện tại)
+    similar_books = Book.objects.none()
+    if book.category:
+        similar_books = (
+            Book.objects
+            .filter(category=book.category)
+            .exclude(pk=book.pk)
+            .order_by('-quantity', '-year')[:8]   # ưu tiên còn hàng + sách mới hơn
+        )
+
     context = {
         'book': book,
         'reviews': reviews,
         'avg_rating': avg_rating,
-        'user_review': user_review, # Đánh giá của người dùng hiện tại
+        'user_review': user_review,
+        'similar_books': similar_books,   # ✅ thêm biến này
     }
-    
+
     return render(request, 'library/book_detail.html', context)
+
 from django.db.models import Avg
 from .models import Review # Cần import Model Review
 

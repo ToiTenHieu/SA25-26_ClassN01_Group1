@@ -2,786 +2,479 @@
 
 {% block title %}Thư viện{% endblock %}
 
-{% block extra_css%}
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-    .book-card:hover { transform: translateY(-4px); }
-    .hero-gradienthome { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+{% block extra_css %}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+.book-card:hover { transform: translateY(-4px); }
+.hero-gradienthome { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+
+/* ✅ Active filter button (chắc chắn không bị Tailwind purge) */
+.filter-btn.is-active{
+  background-image: linear-gradient(90deg, #3b82f6, #4f46e5);
+  color: white !important;
+  border-color: transparent !important;
+}
 {% endblock %}
+
 {% block content %}
 <div class="bg-gray-50" style="font-family:'Inter', sans-serif;">
-    <section id="home" class="relative text-white py-28 overflow-hidden">
-  <!-- Gradient nền -->
-  <div class="absolute inset-0 bg-gradient-to-br from-indigo-700 via-purple-700 to-pink-600 opacity-90"></div>
-  
-  <!-- Hiệu ứng ánh sáng -->
-  <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.2),transparent_70%)]"></div>
 
-  <!-- Nội dung chính -->
-  <div class="relative max-w-7xl mx-auto px-6 text-center">
-    <h2 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight animate-fade-in-down">
-      Khám phá thế giới tri thức
-    </h2>
-    <p class="text-lg md:text-2xl mb-10 text-indigo-100 animate-fade-in-up">
-      Hơn <span class="font-semibold text-white">50,000+</span> đầu sách và tài liệu số đang chờ bạn!
-    </p>
+  <!-- HERO -->
+  <section id="home" class="relative text-white py-28 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-indigo-700 via-purple-700 to-pink-600 opacity-90"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.2),transparent_70%)]"></div>
 
-    <!-- Thanh tìm kiếm -->
-<div class="max-w-2xl mx-auto animate-fade-in-up relative">
-  <!-- Thanh tìm kiếm -->
-  <div class="flex items-center bg-white/10 backdrop-blur-md rounded-full shadow-xl overflow-hidden ring-1 ring-white/20 transition hover:ring-white/40">
-    <form action="{% url 'library:search' %}" method="GET" class="flex w-full">
-      <input 
-        type="text" 
-        name="q"
-        id="searchInput"
-        placeholder="🔍 Tìm kiếm sách, tác giả hoặc chủ đề..."
-        class="flex-1 px-6 py-4 bg-transparent text-white placeholder-gray-200 focus:outline-none"
-        autocomplete="off"
-        required
-      >
-      <button 
-        type="submit"
-        class="bg-white text-indigo-700 font-semibold px-8 py-3 rounded-full hover:bg-indigo-100 transition-all duration-300"
-      >
-        Tìm kiếm
-      </button>
-    </form>
-  </div>
+    <div class="relative max-w-7xl mx-auto px-6 text-center">
+      <h2 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
+        Khám phá thế giới tri thức
+      </h2>
+      <p class="text-lg md:text-2xl mb-10 text-indigo-100">
+        Hơn <span class="font-semibold text-white">50,000+</span> đầu sách và tài liệu số đang chờ bạn!
+      </p>
 
-  <!-- Hộp gợi ý -->
-<ul id="suggestions" class="absolute left-0 top-full bg-white text-gray-800 rounded-lg mt-2 shadow-lg hidden z-50 w-full border border-gray-200 max-h-none"></ul>
-</div>
-
-<script>
-const searchInput = document.getElementById("searchInput");
-const suggestionBox = document.getElementById("suggestions");
-
-searchInput.addEventListener("input", async () => {
-  const query = searchInput.value.trim();
-  if (!query) {
-    suggestionBox.classList.add("hidden");
-    return;
-  }
-
-  try {
-    const response = await fetch(`/library/autocomplete/?q=${encodeURIComponent(query)}`);
-    const data = await response.json();
-
-    suggestionBox.innerHTML = "";
-
-    if (data.results.length > 0) {
-      data.results.forEach(item => {
-        const li = document.createElement("li");
-        li.className = "px-4 py-2 hover:bg-indigo-50 cursor-pointer text-gray-700";
-        li.textContent = `${item.title || item.author || item.category}`;
-        li.addEventListener("click", () => {
-          searchInput.value = li.textContent;
-          suggestionBox.classList.add("hidden");
-        });
-        suggestionBox.appendChild(li);
-      });
-      suggestionBox.classList.remove("hidden");
-    } else {
-      suggestionBox.classList.add("hidden");
-    }
-  } catch (error) {
-    console.error("Autocomplete error:", error);
-  }
-});
-
-// Ẩn khi click ra ngoài
-document.addEventListener("click", (e) => {
-  if (!suggestionBox.contains(e.target) && e.target !== searchInput) {
-    suggestionBox.classList.add("hidden");
-  }
-});
-</script>
-
-
-
-    </div>
-  </div>
-
-  <!-- Hiệu ứng sóng dưới chân -->
-  <svg class="absolute bottom-0 left-0 w-full text-white opacity-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-    <path fill="currentColor" fill-opacity="1" d="M0,192L60,176C120,160,240,128,360,112C480,96,600,96,720,122.7C840,149,960,203,1080,224C1200,245,1320,235,1380,229.3L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
-  </svg>
-</section>
-
-
-    <!-- Quick Stats -->
-<section class="relative py-20 bg-gradient-to-br from-indigo-50 via-white to-purple-50 overflow-hidden">
-  <!-- Hiệu ứng ánh sáng nền -->
-  <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(99,102,241,0.15),transparent_70%)]"></div>
-
-  <div class="relative max-w-7xl mx-auto px-6 sm:px-8">
-    <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">
-      Những con số ấn tượng 🌟
-    </h2>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-center">
-      <!-- Box 1 -->
-      <div class="p-8 bg-white/80 backdrop-blur-md rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-        <div class="flex justify-center mb-4 text-indigo-600 text-5xl">
-          📚
+      <!-- SEARCH + AUTOCOMPLETE -->
+      <div class="max-w-2xl mx-auto relative">
+        <div class="flex items-center bg-white/10 backdrop-blur-md rounded-full shadow-xl overflow-hidden ring-1 ring-white/20 transition hover:ring-white/40">
+          <form action="{% url 'library:search' %}" method="GET" class="flex w-full">
+            <input
+              type="text"
+              name="q"
+              id="searchInput"
+              placeholder="🔍 Tìm kiếm sách, tác giả hoặc chủ đề..."
+              class="flex-1 px-6 py-4 bg-transparent text-white placeholder-gray-200 focus:outline-none"
+              autocomplete="off"
+              required
+            >
+            <button
+              type="submit"
+              class="bg-white text-indigo-700 font-semibold px-8 py-3 rounded-full hover:bg-indigo-100 transition-all duration-300"
+            >
+              Tìm kiếm
+            </button>
+          </form>
         </div>
-        <div class="text-4xl font-extrabold text-indigo-700 mb-2 counter" data-target="50000">50,000+</div>
-        <div class="text-gray-600 font-medium">Đầu sách</div>
-      </div>
 
-      <!-- Box 2 -->
-      <div class="p-8 bg-white/80 backdrop-blur-md rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-        <div class="flex justify-center mb-4 text-indigo-600 text-5xl">
-          👥
-        </div>
-        <div class="text-4xl font-extrabold text-indigo-700 mb-2 counter" data-target="15000">15,000+</div>
-        <div class="text-gray-600 font-medium">Thành viên</div>
-      </div>
-
-      <!-- Box 3 -->
-      <div class="p-8 bg-white/80 backdrop-blur-md rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-        <div class="flex justify-center mb-4 text-indigo-600 text-5xl">
-          🌐
-        </div>
-        <div class="text-4xl font-extrabold text-indigo-700 mb-2">24/7</div>
-        <div class="text-gray-600 font-medium">Truy cập online</div>
-      </div>
-
-      <!-- Box 4 -->
-      <div class="p-8 bg-white/80 backdrop-blur-md rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-        <div class="flex justify-center mb-4 text-indigo-600 text-5xl">
-          🎉
-        </div>
-        <div class="text-4xl font-extrabold text-indigo-700 mb-2 counter" data-target="100">100+</div>
-        <div class="text-gray-600 font-medium">Sự kiện/năm</div>
+        <ul id="suggestions"
+            class="absolute left-0 top-full bg-white text-gray-800 rounded-lg mt-2 shadow-lg hidden z-50 w-full border border-gray-200">
+        </ul>
       </div>
     </div>
-  </div>
-</section>
-<script>
-  const counters = document.querySelectorAll('.counter');
-  const options = { threshold: 0.6 };
 
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const counter = entry.target;
-        const target = +counter.getAttribute('data-target');
-        let count = 0;
+    <svg class="absolute bottom-0 left-0 w-full text-white opacity-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+      <path fill="currentColor" fill-opacity="1" d="M0,192L60,176C120,160,240,128,360,112C480,96,600,96,720,122.7C840,149,960,203,1080,224C1200,245,1320,235,1380,229.3L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
+    </svg>
+  </section>
 
-        const update = () => {
-          count += target / 60; // tốc độ đếm
-          if (count < target) {
-            counter.textContent = Math.floor(count).toLocaleString() + '+';
-            requestAnimationFrame(update);
-          } else {
-            counter.textContent = target.toLocaleString() + '+';
-          }
-        };
-        update();
-        observer.unobserve(counter);
-      }
-    });
-  }, options);
+  <!-- STATS -->
+  <section class="relative py-20 bg-gradient-to-br from-indigo-50 via-white to-purple-50 overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(99,102,241,0.15),transparent_70%)]"></div>
 
-  counters.forEach(c => observer.observe(c));
-</script>
+    <div class="relative max-w-7xl mx-auto px-6 sm:px-8">
+      <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">
+        Những con số ấn tượng 🌟
+      </h2>
 
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div class="p-8 bg-white/80 backdrop-blur-md rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+          <div class="flex justify-center mb-4 text-indigo-600 text-5xl">📚</div>
+          <div class="text-4xl font-extrabold text-indigo-700 mb-2 counter" data-target="50000">50,000+</div>
+          <div class="text-gray-600 font-medium">Đầu sách</div>
+        </div>
 
+        <div class="p-8 bg-white/80 backdrop-blur-md rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+          <div class="flex justify-center mb-4 text-indigo-600 text-5xl">👥</div>
+          <div class="text-4xl font-extrabold text-indigo-700 mb-2 counter" data-target="15000">15,000+</div>
+          <div class="text-gray-600 font-medium">Thành viên</div>
+        </div>
 
-    <!-- Book Catalog -->
-<section id="catalog" class="py-20 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+        <div class="p-8 bg-white/80 backdrop-blur-md rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+          <div class="flex justify-center mb-4 text-indigo-600 text-5xl">🌐</div>
+          <div class="text-4xl font-extrabold text-indigo-700 mb-2">24/7</div>
+          <div class="text-gray-600 font-medium">Truy cập online</div>
+        </div>
+
+        <div class="p-8 bg-white/80 backdrop-blur-md rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+          <div class="flex justify-center mb-4 text-indigo-600 text-5xl">🎉</div>
+          <div class="text-4xl font-extrabold text-indigo-700 mb-2 counter" data-target="100">100+</div>
+          <div class="text-gray-600 font-medium">Sự kiện/năm</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATALOG -->
+  <section id="catalog" class="py-20 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
-        <!-- Tiêu đề -->
-        <div class="text-center mb-16">
-            <h3 class="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">
-                📚 Danh Mục Sách Nổi Bật
-            </h3>
-            <p class="text-gray-600 text-lg max-w-2xl mx-auto">
-                Khám phá những cuốn sách được yêu thích và đánh giá cao nhất tại thư viện của chúng tôi.
-            </p>
+
+      <div class="text-center mb-16">
+        <h3 class="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">
+          📚 Danh Mục Sách Nổi Bật
+        </h3>
+        <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+          Khám phá những cuốn sách được yêu thích và đánh giá cao nhất tại thư viện của chúng tôi.
+        </p>
+      </div>
+
+      <!-- FILTER BUTTONS -->
+      <div class="mb-10 flex flex-col items-center">
+        <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center justify-center">
+          <span class="w-9 h-9 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center mr-3 text-white">🏷️</span>
+          Lọc Theo Thể Loại
+        </h3>
+
+        <div class="flex flex-wrap justify-center gap-3">
+          <button type="button" data-category="all" onclick="filterBooks('all')"
+            class="filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold border border-gray-200 shadow-sm hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white transition-all duration-300">
+            ✨ Tất Cả
+          </button>
+
+          <button type="button" data-category="cong-nghe" onclick="filterBooks('cong-nghe')"
+            class="filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold border border-gray-200 shadow-sm hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white transition-all duration-300">
+            💻 Công Nghệ
+          </button>
+
+          <button type="button" data-category="toan-hoc" onclick="filterBooks('toan-hoc')"
+            class="filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold border border-gray-200 shadow-sm hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white transition-all duration-300">
+            🔢 Toán Học
+          </button>
+
+          <button type="button" data-category="ngoai-ngu" onclick="filterBooks('ngoai-ngu')"
+            class="filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold border border-gray-200 shadow-sm hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white transition-all duration-300">
+            🌍 Ngoại Ngữ
+          </button>
+
+          <button type="button" data-category="van-hoc" onclick="filterBooks('van-hoc')"
+            class="filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold border border-gray-200 shadow-sm hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white transition-all duration-300">
+            📖 Văn Học
+          </button>
+
+          <button type="button" data-category="khoa-hoc" onclick="filterBooks('khoa-hoc')"
+            class="filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold border border-gray-200 shadow-sm hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white transition-all duration-300">
+            🔬 Khoa Học
+          </button>
+
+          <button type="button" data-category="kinh-te" onclick="filterBooks('kinh-te')"
+            class="filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold border border-gray-200 shadow-sm hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white transition-all duration-300">
+            💰 Kinh Tế
+          </button>
         </div>
+      </div>
 
+      <!-- CATALOG WRAPPER -->
+      <div id="catalog-wrapper">
+        {% include "library/partials/_catalog.html" %}
+      </div>
 
-        <!-- Bộ lọc thể loại -->
-        <div class="mb-10 flex flex-col items-center">
-            <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center justify-center">
-                <span class="w-9 h-9 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center mr-3 text-white">🏷️</span>
-                Lọc Theo Thể Loại
-            </h3>
-            <div class="flex flex-wrap justify-center gap-3">
-                <button onclick="filterBooks('all')"
-                    class="filter-btn bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-xl font-semibold shadow-md hover:scale-105 hover:shadow-lg transition-all duration-300">
-                    ✨ Tất Cả
-                </button>
-                <button onclick="filterBooks('cong-nghe')"
-                    class="filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold border border-gray-200 shadow-sm hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white transition-all duration-300">
-                    💻 Công Nghệ
-                </button>
-                <button onclick="filterBooks('toan-hoc')"
-                    class="filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold border border-gray-200 shadow-sm hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white transition-all duration-300">
-                    🔢 Toán Học
-                </button>
-                <button onclick="filterBooks('ngoai-ngu')"
-                    class="filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold border border-gray-200 shadow-sm hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white transition-all duration-300">
-                    🌍 Ngoại Ngữ
-                </button>
-                <button onclick="filterBooks('van-hoc')"
-                    class="filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold border border-gray-200 shadow-sm hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white transition-all duration-300">
-                    📖 Văn Học
-                </button>
-                <button onclick="filterBooks('khoa-hoc')"
-                    class="filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold border border-gray-200 shadow-sm hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white transition-all duration-300">
-                    🔬 Khoa Học
-                </button>
-                <button onclick="filterBooks('kinh-te')"
-                    class="filter-btn bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold border border-gray-200 shadow-sm hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white transition-all duration-300">
-                    💰 Kinh Tế
-                </button>
-            </div>
-        </div>
-        <!-- Lưới sách -->
-        <div id="bookList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            {% for book in page_obj %}
-            <div class="book-item book-card bg-white rounded-2xl shadow-lg p-6 flex flex-col border border-gray-100 transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl" data-category="{{ book.category|slugify }}">
-                <div class="flex items-start justify-between mb-4">
-                    <div class="flex items-start flex-1 mr-3">
-                        <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center mr-3">
-                            <span class="text-white text-lg">📘</span>
-                        </div>
-                        <h4 class="text-lg font-bold text-gray-900 line-clamp-2">{{ book.title }}</h4>
-                    </div>
-                    <span class="text-sm font-bold bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full whitespace-nowrap">
-                        {% if book.avg_rating %}
-                        ⭐ {{ book.avg_rating|floatformat:1 }}/5
-                        {% else %}
-                        Mới
-                        {% endif %}
-                    </span>
-                </div>
-
-                <div class="text-gray-600 text-sm space-y-1 mb-4 flex-grow">
-                    <p><span class="font-semibold text-gray-800">👤 Tác giả:</span> {{ book.author }}</p>
-                    <p><span class="font-semibold text-gray-800">🏷️ Thể loại:</span> {{ book.category }}</p>
-                    <p><span class="font-semibold text-gray-800">📅 Năm:</span> {{ book.year }}</p>
-                </div>
-
-                <div class="flex justify-between items-center border-t pt-3 mt-auto">
-                    <span class="text-xs font-semibold px-3 py-1 rounded-full 
-                        {% if book.quantity > 5 %}bg-green-100 text-green-700{% elif book.quantity > 0 %}bg-yellow-100 text-yellow-700{% else %}bg-red-100 text-red-700{% endif %}">
-                        {% if book.quantity > 5 %}✅ Còn hàng{% elif book.quantity > 0 %}⚠️ Sắp hết{% else %}❌ Hết hàng{% endif %}
-                    </span>
-                    <a href="{% url 'library:book_detail_view' book.book_id %}"
-                        class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-2 rounded-lg font-bold text-sm hover:shadow-md hover:scale-105 transition-all duration-300">
-                        Chi tiết
-                    </a>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-
-        <!-- Phân trang -->
-        <div class="flex justify-center mt-12 space-x-2">
-            {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}" class="px-4 py-2 rounded-lg bg-gray-100 hover:bg-indigo-500 hover:text-white transition-all">⬅ Trước</a>
-            {% endif %}
-
-            {% for num in page_obj.paginator.page_range %}
-            {% if page_obj.number == num %}
-            <span class="px-4 py-2 rounded-lg bg-indigo-600 text-white font-semibold">{{ num }}</span>
-            {% else %}
-            <a href="?page={{ num }}" class="px-4 py-2 rounded-lg bg-gray-100 hover:bg-indigo-500 hover:text-white transition-all">{{ num }}</a>
-            {% endif %}
-            {% endfor %}
-
-            {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}" class="px-4 py-2 rounded-lg bg-gray-100 hover:bg-indigo-500 hover:text-white transition-all">Sau ➡</a>
-            {% endif %}
-        </div>
     </div>
-</section>
+  </section>
 
-<section class="max-w-7xl mx-auto py-10 px-6 space-y-16">
-
-    <!-- Sách đánh giá cao -->
+  <!-- TOP / NEW BOOKS -->
+  <section class="max-w-7xl mx-auto py-10 px-6 space-y-16">
     <div>
-    <h2 class="text-3xl font-extrabold text-gray-900 mb-6 flex items-center gap-2">
+      <h2 class="text-3xl font-extrabold text-gray-900 mb-6 flex items-center gap-2">
         ⭐ Sách được đánh giá cao nhất
-    </h2>
+      </h2>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
         {% for book in top_rated_books %}
         <div class="relative bg-gradient-to-tr from-white to-gray-100 shadow-lg rounded-2xl overflow-hidden transform hover:scale-105 transition-transform duration-300">
-            <div class="p-5 flex flex-col justify-between h-full">
-                <div>
-                    <h3 class="font-bold text-lg mb-2 text-gray-800 line-clamp-2">{{ book.title }}</h3>
-                    <p class="text-gray-600 text-sm mb-1">Tác giả: {{ book.author }}</p>
-                    <p class="text-gray-500 text-sm mb-2">Năm: {{ book.year }}</p>
-                    <p class="text-yellow-500 font-semibold mt-2 text-sm flex items-center gap-1">
-                        <span>⭐</span> {{ book.avg_rating|default:"0.0" }}
-                    </p>
-                </div>
-
-                <div class="mt-4 flex justify-center">
-                    <a href="{% url 'library:book_detail_view' book.book_id %}"
-                        class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-xl font-semibold text-sm shadow-md hover:shadow-xl hover:scale-105 hover:from-orange-500 hover:to-yellow-500 transition-all duration-300 ease-in-out">
-                        📘 Chi tiết
-                    </a>
-                </div>
+          <div class="p-5 flex flex-col justify-between h-full">
+            <div>
+              <h3 class="font-bold text-lg mb-2 text-gray-800 line-clamp-2">{{ book.title }}</h3>
+              <p class="text-gray-600 text-sm mb-1">Tác giả: {{ book.author }}</p>
+              <p class="text-gray-500 text-sm mb-2">Năm: {{ book.year }}</p>
+              <p class="text-yellow-500 font-semibold mt-2 text-sm flex items-center gap-1">
+                <span>⭐</span> {{ book.avg_rating|default:"0.0" }}
+              </p>
             </div>
 
-            <div class="absolute top-0 right-0 bg-yellow-400 text-white px-3 py-1 text-xs font-semibold rounded-bl-xl">
-                Hot
+            <div class="mt-4 flex justify-center">
+              <a href="{% url 'library:book_detail_view' book.book_id %}"
+                 class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-xl font-semibold text-sm shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 ease-in-out">
+                📘 Chi tiết
+              </a>
             </div>
+          </div>
+
+          <div class="absolute top-0 right-0 bg-yellow-400 text-white px-3 py-1 text-xs font-semibold rounded-bl-xl">
+            Hot
+          </div>
         </div>
         {% endfor %}
+      </div>
     </div>
-</div>
 
-
-    <!-- Sách mới xuất bản -->
     <div>
-    <h2 class="text-3xl font-extrabold text-gray-900 mb-6 flex items-center gap-2">
+      <h2 class="text-3xl font-extrabold text-gray-900 mb-6 flex items-center gap-2">
         🆕 Sách mới xuất bản
-    </h2>
+      </h2>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
         {% for book in newest_books %}
         <div class="relative bg-gradient-to-tr from-white to-blue-50 shadow-lg rounded-2xl overflow-hidden transform hover:scale-105 transition-transform duration-300">
-            <div class="p-5 flex flex-col justify-between h-full">
-                <div>
-                    <h3 class="font-bold text-lg mb-2 text-gray-800 line-clamp-2">{{ book.title }}</h3>
-                    <p class="text-gray-600 text-sm mb-1">Tác giả: {{ book.author }}</p>
-                    <p class="text-gray-500 text-sm mb-2">Năm: {{ book.year }}</p>
-                    <p class="text-yellow-500 font-semibold mt-2 text-sm flex items-center gap-1">
-                        <span>⭐</span> {{ book.avg_rating|default:"0.0" }}
-                    </p>
-                </div>
-
-                <div class="mt-4 flex justify-center">
-                    <a href="{% url 'library:book_detail_view' book.book_id %}"
-                        class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-2 rounded-xl font-semibold text-sm shadow-md hover:shadow-xl hover:scale-105 hover:from-indigo-500 hover:to-blue-600 transition-all duration-300 ease-in-out">
-                        📘 Chi tiết
-                    </a>
-                </div>
+          <div class="p-5 flex flex-col justify-between h-full">
+            <div>
+              <h3 class="font-bold text-lg mb-2 text-gray-800 line-clamp-2">{{ book.title }}</h3>
+              <p class="text-gray-600 text-sm mb-1">Tác giả: {{ book.author }}</p>
+              <p class="text-gray-500 text-sm mb-2">Năm: {{ book.year }}</p>
+              <p class="text-yellow-500 font-semibold mt-2 text-sm flex items-center gap-1">
+                <span>⭐</span> {{ book.avg_rating|default:"0.0" }}
+              </p>
             </div>
 
-            <div class="absolute top-0 right-0 bg-blue-500 text-white px-3 py-1 text-xs font-semibold rounded-bl-xl">
-                New
+            <div class="mt-4 flex justify-center">
+              <a href="{% url 'library:book_detail_view' book.book_id %}"
+                 class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-2 rounded-xl font-semibold text-sm shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 ease-in-out">
+                📘 Chi tiết
+              </a>
             </div>
+          </div>
+
+          <div class="absolute top-0 right-0 bg-blue-500 text-white px-3 py-1 text-xs font-semibold rounded-bl-xl">
+            New
+          </div>
         </div>
         {% endfor %}
+      </div>
     </div>
-</div>
+  </section>
 
-
-</section>
-
-    <!-- Services -->
-<section id="services" class="relative py-20 bg-gradient-to-b from-white to-gray-50 overflow-hidden">
+  <!-- SERVICES -->
+  <section id="services" class="relative py-20 bg-gradient-to-b from-white to-gray-50 overflow-hidden">
     <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-[600px] h-[600px] bg-indigo-100 rounded-full blur-3xl opacity-30"></div>
 
     <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
-        <!-- Tiêu đề -->
-        <div class="text-center mb-16">
-            <h3 class="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">
-                🌟 Dịch Vụ Thư Viện
-            </h3>
-            <p class="text-gray-600 max-w-2xl mx-auto text-lg">
-                Chúng tôi cung cấp đa dạng dịch vụ hỗ trợ học tập và nghiên cứu — nhanh chóng, hiện đại, tiện lợi.
-            </p>
-        </div>
+      <div class="text-center mb-16">
+        <h3 class="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">
+          🌟 Dịch Vụ Thư Viện
+        </h3>
+        <p class="text-gray-600 max-w-2xl mx-auto text-lg">
+          Chúng tôi cung cấp đa dạng dịch vụ hỗ trợ học tập và nghiên cứu — nhanh chóng, hiện đại, tiện lợi.
+        </p>
+      </div>
 
-        <!-- Danh sách dịch vụ -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-            <!-- Dịch vụ 1 -->
-            <a href="{% url 'library:services' %}"
-                class="group bg-white rounded-2xl shadow-md hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-500 border border-gray-100 p-8 text-center">
-                <div
-                    class="w-20 h-20 mx-auto mb-6 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
-                    <span class="text-3xl text-white">📖</span>
-                </div>
-                <h4 class="text-2xl font-semibold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors">
-                    Mượn Sách
-                </h4>
-                <p class="text-gray-600 leading-relaxed">
-                    Mượn sách tại chỗ hoặc mang về với thời hạn linh hoạt và quy trình đơn giản.
-                </p>
-            </a>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <a href="{% url 'library:services' %}"
+           class="group bg-white rounded-2xl shadow-md hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-500 border border-gray-100 p-8 text-center">
+          <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+            <span class="text-3xl text-white">📖</span>
+          </div>
+          <h4 class="text-2xl font-semibold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors">
+            Mượn Sách
+          </h4>
+          <p class="text-gray-600 leading-relaxed">
+            Mượn sách tại chỗ hoặc mang về với thời hạn linh hoạt và quy trình đơn giản.
+          </p>
+        </a>
 
-            <!-- Dịch vụ 2 -->
-            <a href="{% url 'library:services' %}"
-                class="group bg-white rounded-2xl shadow-md hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-500 border border-gray-100 p-8 text-center">
-                <div
-                    class="w-20 h-20 mx-auto mb-6 bg-gradient-to-r from-blue-500 to-teal-400 rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
-                    <span class="text-3xl text-white">💻</span>
-                </div>
-                <h4 class="text-2xl font-semibold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors">
-                    Thư Viện Số
-                </h4>
-                <p class="text-gray-600 leading-relaxed">
-                    Truy cập hàng nghìn tài liệu số, e-book và bài nghiên cứu chất lượng cao, mọi lúc mọi nơi.
-                </p>
-            </a>
+        <a href="{% url 'library:services' %}"
+           class="group bg-white rounded-2xl shadow-md hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-500 border border-gray-100 p-8 text-center">
+          <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-r from-blue-500 to-teal-400 rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+            <span class="text-3xl text-white">💻</span>
+          </div>
+          <h4 class="text-2xl font-semibold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors">
+            Thư Viện Số
+          </h4>
+          <p class="text-gray-600 leading-relaxed">
+            Truy cập hàng nghìn tài liệu số, e-book và bài nghiên cứu chất lượng cao, mọi lúc mọi nơi.
+          </p>
+        </a>
 
-            <!-- Dịch vụ 3 -->
-            <a href="{% url 'library:services' %}"
-                class="group bg-white rounded-2xl shadow-md hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-500 border border-gray-100 p-8 text-center">
-                <div
-                    class="w-20 h-20 mx-auto mb-6 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
-                    <span class="text-3xl text-white">🎓</span>
-                </div>
-                <h4 class="text-2xl font-semibold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors">
-                    Hỗ Trợ Nghiên Cứu
-                </h4>
-                <p class="text-gray-600 leading-relaxed">
-                    Được tư vấn và hướng dẫn nghiên cứu bởi các chuyên gia và giảng viên nhiều kinh nghiệm.
-                </p>
-            </a>
-        </div>
+        <a href="{% url 'library:services' %}"
+           class="group bg-white rounded-2xl shadow-md hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-500 border border-gray-100 p-8 text-center">
+          <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+            <span class="text-3xl text-white">🎓</span>
+          </div>
+          <h4 class="text-2xl font-semibold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors">
+            Hỗ Trợ Nghiên Cứu
+          </h4>
+          <p class="text-gray-600 leading-relaxed">
+            Được tư vấn và hướng dẫn nghiên cứu bởi các chuyên gia và giảng viên nhiều kinh nghiệm.
+          </p>
+        </a>
+      </div>
     </div>
-</section>
+  </section>
 
-    <!-- Contact -->
-    <section id="contact" class="py-16 bg-gray-900 text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <div>
-                    <h3 class="text-3xl font-bold mb-6">Liên hệ với chúng tôi</h3>
-                    <div class="space-y-4">
-                        <div class="flex items-center space-x-3">
-                            <span class="text-xl">📍</span>
-                            <span>Thúy Lai, Phú Kim, Thạch Thất, Hà Nội</span>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <span class="text-xl">📞</span>
-                            <span>0396984248</span>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <span class="text-xl">✉️</span>
-                            <span>ntson10052005@st.phenikaa-uni.edu.vn</span>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <span class="text-xl">🕒</span>
-                            <span>Thứ 2 - Chủ nhật: 7:00 - 22:00</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-gray-800 p-8 rounded-xl">
-                    <h4 class="text-xl font-semibold mb-4">Gửi tin nhắn</h4>
-                    <form class="space-y-4">
-                        <input type="text" placeholder="Họ và tên" 
-                               class="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                        <input type="email" placeholder="Email" 
-                               class="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                        <textarea placeholder="Tin nhắn" rows="4" 
-                                  class="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
-                        <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition-colors">
-                            Gửi tin nhắn
-                        </button>
-                    </form>
-                </div>
-            </div>
+  <!-- CONTACT -->
+  <section id="contact" class="py-16 bg-gray-900 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div>
+          <h3 class="text-3xl font-bold mb-6">Liên hệ với chúng tôi</h3>
+          <div class="space-y-4">
+            <div class="flex items-center space-x-3"><span class="text-xl">📍</span><span>Thúy Lai, Phú Kim, Thạch Thất, Hà Nội</span></div>
+            <div class="flex items-center space-x-3"><span class="text-xl">📞</span><span>0396984248</span></div>
+            <div class="flex items-center space-x-3"><span class="text-xl">✉️</span><span>ntson10052005@st.phenikaa-uni.edu.vn</span></div>
+            <div class="flex items-center space-x-3"><span class="text-xl">🕒</span><span>Thứ 2 - Chủ nhật: 7:00 - 22:00</span></div>
+          </div>
         </div>
-    </section>
-    
+
+        <div class="bg-gray-800 p-8 rounded-xl">
+          <h4 class="text-xl font-semibold mb-4">Gửi tin nhắn</h4>
+          <form class="space-y-4">
+            <input type="text" placeholder="Họ và tên"
+                   class="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <input type="email" placeholder="Email"
+                   class="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <textarea placeholder="Tin nhắn" rows="4"
+                      class="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+            <button type="submit"
+                    class="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition-colors">
+              Gửi tin nhắn
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </div>
- <script>
-        // Extended book data
-        let currentCategory = 'all';
 
-        let currentPage = 1;
-        let itemsPerPage = 12;
-        let currentView = 'grid';
+<!-- ===================== JS (CHỈ 1 BỘ, KHÔNG TRÙNG) ===================== -->
+<script>
+/* ===== Autocomplete ===== */
+const searchInput = document.getElementById("searchInput");
+const suggestionBox = document.getElementById("suggestions");
 
-        // Display books
-        function displayBooks(booksToShow, page = 1) {
-            const startIndex = (page - 1) * itemsPerPage;
-            const endIndex = startIndex + itemsPerPage;
-            const paginatedBooks = booksToShow.slice(startIndex, endIndex);
-            
-            const grid = document.getElementById('booksGrid');
-            
-            if (currentView === 'grid') {
-                grid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8';
-                grid.innerHTML = paginatedBooks.map(book => `
-                    <div class="book-card bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:shadow-lg">
-                        <div class="h-48 bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center">
-                            <span class="text-white text-4xl">📚</span>
-                        </div>
-                        <div class="p-6">
-                            <h4 class="font-semibold text-lg mb-2 text-gray-900">${book.title}</h4>
-                            <p class="text-gray-600 mb-1">Tác giả: ${book.author}</p>
-                            <p class="text-gray-500 text-sm mb-3">Năm xuất bản: ${book.year}</p>
-                            <div class="flex items-center justify-between mb-4">
-                                <div class="flex items-center space-x-1">
-                                    <span class="text-yellow-400">⭐</span>
-                                    <span class="text-sm text-gray-600">${book.rating}</span>
-                                </div>
-                                <span class="px-3 py-1 text-xs rounded-full ${book.available ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
-                                    ${book.available ? 'Có sẵn' : 'Đã mượn'}
-                                </span>
-                            </div>
-                            <button onclick="borrowBook(${book.id})" 
-                                    class="w-full py-2 px-4 rounded-lg transition-colors ${book.available ? 'bg-indigo-600 hover:bg-indigo-700 text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}"
-                                    ${!book.available ? 'disabled' : ''}>
-                                ${book.available ? 'Mượn sách' : 'Không có sẵn'}
-                            </button>
-                        </div>
-                    </div>
-                `).join('');
-            } else {
-                grid.className = 'space-y-4 mb-8';
-                grid.innerHTML = paginatedBooks.map(book => `
-                    <div class="book-card bg-white rounded-xl shadow-md p-6 transition-transform duration-300 hover:shadow-lg">
-                        <div class="flex items-center space-x-6">
-                            <div class="w-20 h-28 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                                <span class="text-white text-2xl">📚</span>
-                            </div>
-                            <div class="flex-1">
-                                <h4 class="font-semibold text-xl mb-2 text-gray-900">${book.title}</h4>
-                                <p class="text-gray-600 mb-1">Tác giả: ${book.author}</p>
-                                <p class="text-gray-500 text-sm mb-2">Năm xuất bản: ${book.year}</p>
-                                <div class="flex items-center space-x-4 mb-3">
-                                    <div class="flex items-center space-x-1">
-                                        <span class="text-yellow-400">⭐</span>
-                                        <span class="text-sm text-gray-600">${book.rating}</span>
-                                    </div>
-                                    <span class="px-3 py-1 text-xs rounded-full ${book.available ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
-                                        ${book.available ? 'Có sẵn' : 'Đã mượn'}
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="flex-shrink-0">
-                                <button onclick="borrowBook(${book.id})" 
-                                        class="py-2 px-6 rounded-lg transition-colors ${book.available ? 'bg-indigo-600 hover:bg-indigo-700 text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}"
-                                        ${!book.available ? 'disabled' : ''}>
-                                    ${book.available ? 'Mượn sách' : 'Không có sẵn'}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
-            }
-            
-            updateResultsCount(booksToShow.length);
-            updatePagination(booksToShow.length);
-        }
+if (searchInput && suggestionBox) {
+  searchInput.addEventListener("input", async () => {
+    const query = searchInput.value.trim();
+    if (!query) {
+      suggestionBox.classList.add("hidden");
+      return;
+    }
+    try {
+      const response = await fetch(`/library/autocomplete/?q=${encodeURIComponent(query)}`);
+      const data = await response.json();
 
-        // Filter books by category
-        function filterBooks(category) {
-            currentBooks = category === 'all' ? [...books] : books.filter(book => book.category === category);
-            currentPage = 1;
-            displayBooks(currentBooks, currentPage);
-            
-            // Update active filter button
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('bg-indigo-600', 'text-white');
-                btn.classList.add('bg-gray-200', 'text-gray-700');
-            });
-            event.target.classList.remove('bg-gray-200', 'text-gray-700');
-            event.target.classList.add('bg-indigo-600', 'text-white');
-        }
+      suggestionBox.innerHTML = "";
 
-        // Advanced search
-        function performSearch() {
-            const titleSearch = document.getElementById('searchTitle').value.toLowerCase();
-            const authorSearch = document.getElementById('searchAuthor').value.toLowerCase();
-            const sortBy = document.getElementById('sortBy').value;
-            
-            let filteredBooks = books.filter(book => {
-                const titleMatch = !titleSearch || book.title.toLowerCase().includes(titleSearch);
-                const authorMatch = !authorSearch || book.author.toLowerCase().includes(authorSearch);
-                return titleMatch && authorMatch;
-            });
-            
-            // Sort books
-            filteredBooks.sort((a, b) => {
-                switch(sortBy) {
-                    case 'author':
-                        return a.author.localeCompare(b.author);
-                    case 'rating':
-                        return b.rating - a.rating;
-                    case 'year':
-                        return b.year - a.year;
-                    default:
-                        return a.title.localeCompare(b.title);
-                }
-            });
-            
-            currentBooks = filteredBooks;
-            currentPage = 1;
-            displayBooks(currentBooks, currentPage);
-        }
-
-        // Toggle view
-        function toggleView(view) {
-            currentView = view;
-            document.getElementById('gridView').classList.toggle('bg-indigo-600', view === 'grid');
-            document.getElementById('gridView').classList.toggle('text-white', view === 'grid');
-            document.getElementById('gridView').classList.toggle('bg-gray-200', view !== 'grid');
-            document.getElementById('gridView').classList.toggle('text-gray-600', view !== 'grid');
-            
-            document.getElementById('listView').classList.toggle('bg-indigo-600', view === 'list');
-            document.getElementById('listView').classList.toggle('text-white', view === 'list');
-            document.getElementById('listView').classList.toggle('bg-gray-200', view !== 'list');
-            document.getElementById('listView').classList.toggle('text-gray-600', view !== 'list');
-            
-            displayBooks(currentBooks, currentPage);
-        }
-
-        // Update items per page
-        function updateItemsPerPage() {
-            itemsPerPage = parseInt(document.getElementById('itemsPerPage').value);
-            currentPage = 1;
-            displayBooks(currentBooks, currentPage);
-        }
-
-        // Update results count
-        function updateResultsCount(total) {
-            const start = (currentPage - 1) * itemsPerPage + 1;
-            const end = Math.min(currentPage * itemsPerPage, total);
-            document.getElementById('resultsCount').textContent = `Hiển thị ${start}-${end} trong tổng số ${total} cuốn sách`;
-        }
-
-        // Update pagination
-        function updatePagination(totalItems) {
-            const totalPages = Math.ceil(totalItems / itemsPerPage);
-            const pagination = document.getElementById('pagination');
-            
-            pagination.innerHTML = '';
-            for (let i = 1; i <= totalPages; i++) {
-                const button = document.createElement('button');
-                button.textContent = i;
-                button.className = `px-4 py-2 rounded-lg transition-colors ${i === currentPage ? 'bg-indigo-600 text-white' : 'bg-white border border-gray-300 hover:bg-gray-50'}`;
-                button.onclick = () => {
-                    currentPage = i;
-                    displayBooks(currentBooks, currentPage);
-                };
-                pagination.appendChild(button);
-            }
-        }
-
-        // Change page
-        function changePage(direction) {
-            const totalPages = Math.ceil(currentBooks.length / itemsPerPage);
-            const newPage = currentPage + direction;
-            
-            if (newPage >= 1 && newPage <= totalPages) {
-                currentPage = newPage;
-                displayBooks(currentBooks, currentPage);
-            }
-        }
-         function filterBooks(category) {
-          const bookItems = document.querySelectorAll(".book-item");
-          const filterButtons = document.querySelectorAll(".filter-btn");
-
-          // Reset trạng thái nút
-          filterButtons.forEach((btn) => {
-            btn.classList.remove(
-              "bg-gradient-to-r",
-              "from-blue-500",
-              "to-purple-600",
-              "text-white"
-            );
-            btn.classList.add(
-              "bg-white",
-              "text-gray-700",
-              "border",
-              "border-gray-200"
-            );
+      if (data.results && data.results.length > 0) {
+        data.results.forEach(item => {
+          const li = document.createElement("li");
+          li.className = "px-4 py-2 hover:bg-indigo-50 cursor-pointer text-gray-700";
+          li.textContent = `${item.title || item.author || item.category}`;
+          li.addEventListener("click", () => {
+            searchInput.value = li.textContent;
+            suggestionBox.classList.add("hidden");
           });
+          suggestionBox.appendChild(li);
+        });
+        suggestionBox.classList.remove("hidden");
+      } else {
+        suggestionBox.classList.add("hidden");
+      }
+    } catch (error) {
+      console.error("Autocomplete error:", error);
+    }
+  });
 
-          // Active nút vừa click
-          const activeButton = Array.from(filterButtons).find((btn) =>
-            btn.getAttribute("onclick")?.includes(category)
-          );
-          if (activeButton) {
-            activeButton.classList.remove(
-              "bg-white",
-              "text-gray-700",
-              "border",
-              "border-gray-200"
-            );
-            activeButton.classList.add(
-              "bg-gradient-to-r",
-              "from-blue-500",
-              "to-purple-600",
-              "text-white"
-            );
-          }
+  document.addEventListener("click", (e) => {
+    if (!suggestionBox.contains(e.target) && e.target !== searchInput) {
+      suggestionBox.classList.add("hidden");
+    }
+  });
+}
 
-          // Lọc sách
-          let visibleCount = 0;
-          bookItems.forEach((item, index) => {
-            if (category === "all" || item.dataset.category === category) {
-              item.style.display = "block";
-              item.style.animationDelay = `${index * 0.1}s`;
-              visibleCount++;
-            } else {
-              item.style.display = "none";
-            }
-          });
+/* ===== Counter ===== */
+const counters = document.querySelectorAll(".counter");
+const options = { threshold: 0.6 };
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const counter = entry.target;
+      const target = +counter.getAttribute("data-target");
+      let count = 0;
 
-          // Cập nhật số lượng
-          //document.getElementById("bookCount").textContent = visibleCount;
+      const update = () => {
+        count += target / 60;
+        if (count < target) {
+          counter.textContent = Math.floor(count).toLocaleString() + "+";
+          requestAnimationFrame(update);
+        } else {
+          counter.textContent = target.toLocaleString() + "+";
         }
+      };
+      update();
+      observer.unobserve(counter);
+    }
+  });
+}, options);
 
-        function showBorrowTab(tabName, buttonElement) {
-          // Ẩn tất cả borrow content
-          document.querySelectorAll(".borrow-content").forEach((content) => {
-            content.classList.add("hidden");
-          });
+counters.forEach(c => observer.observe(c));
 
-          // Hiển thị tab được chọn
-          document.getElementById(tabName).classList.remove("hidden");
-          document.getElementById(tabName).classList.add("fade-in");
+/* ===== Catalog AJAX + Active Button ===== */
+let currentSort = "{{ sort_type|default:'rating' }}";
+let currentCategory = "{{ category|default:'all' }}";
 
-          // Cập nhật active state cho borrow tab buttons
-          document.querySelectorAll(".borrow-tab").forEach((btn) => {
-            btn.classList.remove("bg-green-500", "text-white");
-            btn.classList.add("text-gray-600");
-          });
+function setActiveCategory(category) {
+  document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("is-active"));
+  const active = document.querySelector(`.filter-btn[data-category="${category}"]`);
+  if (active) active.classList.add("is-active");
+}
 
-          // Thêm active state cho button được click
-          if (buttonElement) {
-            buttonElement.classList.remove("text-gray-600");
-            buttonElement.classList.add("bg-green-500", "text-white");
-          }
-        }
-        window.onload = function () {
-          const params = new URLSearchParams(window.location.search);
-          const section = params.get("section") || "quanLySach"; // mặc định mở quản lý sách
+async function loadCatalog({ page = 1, category = currentCategory, sort = currentSort } = {}) {
+  const url = `?page=${page}&category=${encodeURIComponent(category)}&sort=${encodeURIComponent(sort)}`;
 
-          // Tìm đúng nút tương ứng (dùng nav-item, không phải nav-btn)
-          const button = document.querySelector(
-            `.nav-item[onclick*="${section}"]`
-          );
+  const res = await fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } });
+  const html = await res.text();
 
-          // Gọi showSection để hiển thị
-          if (button) {
-            showSection(section, button);
-          } else {
-            // fallback nếu không có button (tránh lỗi)
-          }
-        };
+  const wrapper = document.getElementById("catalog-wrapper");
+  if (wrapper) wrapper.innerHTML = html;
 
-        // Borrow book function
-        function borrowBook(bookId) {
-            const book = books.find(b => b.id === bookId);
-            if (book && book.available) {
-                alert(`Bạn đã mượn thành công cuốn sách "${book.title}". Vui lòng đến quầy thủ thư để hoàn tất thủ tục.`);
-                book.available = false;
-                displayBooks(currentBooks, currentPage);
-            }
-        }
+  currentCategory = category;
+  currentSort = sort;
 
-        //
-    </script>
+  history.pushState({}, "", url);
+  setActiveCategory(currentCategory);
+}
 
+function filterBooks(category) {
+  currentCategory = category;
+  setActiveCategory(currentCategory);
+  loadCatalog({ page: 1, category: currentCategory });
+}
 
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97e6d15c33c1b451',t:'MTc1Nzc1NzgzOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+// Click pagination trong catalog-wrapper
+document.addEventListener("click", function(e) {
+  const a = e.target.closest("#catalog-wrapper a");
+  if (!a) return;
 
+  const href = a.getAttribute("href");
+  if (!href || !href.startsWith("?")) return;
+
+  e.preventDefault();
+
+  const params = new URLSearchParams(href.slice(1));
+  loadCatalog({
+    page: params.get("page") || 1,
+    category: params.get("category") || currentCategory,
+    sort: params.get("sort") || currentSort
+  });
+
+  // cuộn nhẹ lên catalog (tuỳ bạn, không thích thì xoá)
+  const catalog = document.getElementById("catalog");
+  if (catalog) catalog.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+// Load lần đầu theo URL
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(location.search);
+  currentCategory = params.get("category") || currentCategory;
+  currentSort = params.get("sort") || currentSort;
+  setActiveCategory(currentCategory);
+});
+
+// Back/Forward
+window.addEventListener("popstate", () => {
+  const params = new URLSearchParams(location.search);
+  loadCatalog({
+    page: params.get("page") || 1,
+    category: params.get("category") || "all",
+    sort: params.get("sort") || "rating"
+  });
+});
+</script>
 
 {% endblock %}

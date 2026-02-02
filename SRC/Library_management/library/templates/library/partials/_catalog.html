@@ -1,0 +1,74 @@
+{# templates/library/partials/_catalog.html #}
+<div id="catalog-container">
+  <!-- Lưới sách -->
+  <div id="bookList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    {% for book in page_obj %}
+    <div class="book-item book-card bg-white rounded-2xl shadow-lg p-6 flex flex-col border border-gray-100 transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl"
+         data-category="{{ book.category|slugify }}">
+      <div class="flex items-start justify-between mb-4">
+        <div class="flex items-start flex-1 mr-3">
+          <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center mr-3">
+            <span class="text-white text-lg">📘</span>
+          </div>
+          <h4 class="text-lg font-bold text-gray-900 line-clamp-2">{{ book.title }}</h4>
+        </div>
+        <span class="text-sm font-bold bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full whitespace-nowrap">
+          {% if book.avg_rating %}
+            ⭐ {{ book.avg_rating|floatformat:1 }}/5
+          {% else %}
+            Mới
+          {% endif %}
+        </span>
+      </div>
+
+      <div class="text-gray-600 text-sm space-y-1 mb-4 flex-grow">
+        <p><span class="font-semibold text-gray-800">👤 Tác giả:</span> {{ book.author }}</p>
+        <p><span class="font-semibold text-gray-800">🏷️ Thể loại:</span> {{ book.category }}</p>
+        <p><span class="font-semibold text-gray-800">📅 Năm:</span> {{ book.year }}</p>
+      </div>
+
+      <div class="flex justify-between items-center border-t pt-3 mt-auto">
+        <span class="text-xs font-semibold px-3 py-1 rounded-full 
+          {% if book.quantity > 5 %}bg-green-100 text-green-700{% elif book.quantity > 0 %}bg-yellow-100 text-yellow-700{% else %}bg-red-100 text-red-700{% endif %}">
+          {% if book.quantity > 5 %}✅ Còn hàng{% elif book.quantity > 0 %}⚠️ Sắp hết{% else %}❌ Hết hàng{% endif %}
+        </span>
+
+        <a href="{% url 'library:book_detail_view' book.book_id %}"
+           class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-2 rounded-lg font-bold text-sm hover:shadow-md hover:scale-105 transition-all duration-300">
+          Chi tiết
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Phân trang -->
+<div class="flex justify-center mt-12 space-x-2">
+  {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}&sort={{ sort_type }}&category={{ category }}"
+       class="px-4 py-2 rounded-lg bg-gray-100 hover:bg-indigo-500 hover:text-white transition-all">
+      ⬅ Trước
+    </a>
+  {% endif %}
+
+  {% for num in page_obj.paginator.page_range %}
+    {% if page_obj.number == num %}
+      <span class="px-4 py-2 rounded-lg bg-indigo-600 text-white font-semibold">{{ num }}</span>
+    {% else %}
+      <a href="?page={{ num }}&sort={{ sort_type }}&category={{ category }}"
+         class="px-4 py-2 rounded-lg bg-gray-100 hover:bg-indigo-500 hover:text-white transition-all">
+        {{ num }}
+      </a>
+    {% endif %}
+  {% endfor %}
+
+  {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}&sort={{ sort_type }}&category={{ category }}"
+       class="px-4 py-2 rounded-lg bg-gray-100 hover:bg-indigo-500 hover:text-white transition-all">
+      Sau ➡
+    </a>
+  {% endif %}
+</div>
+
+</div>
+
