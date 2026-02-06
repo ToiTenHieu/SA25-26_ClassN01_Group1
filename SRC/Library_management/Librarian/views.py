@@ -216,23 +216,50 @@ from .models import Book
 @csrf_exempt
 def add_book(request):
     if request.method == "POST":
-        data = json.loads(request.body)
-        name = data.get("name")
-        author = data.get("author")
-        category = data.get("category")
-        quantity = data.get("quantity")
-        publish_year = data.get("publishYear")
-        description = data.get("description")
+        # Kiểm tra xem có phải FormData (file upload) hay JSON
+        if request.content_type and 'multipart/form-data' in request.content_type:
+            # Xử lý FormData (có file upload)
+            name = request.POST.get("bookName") or request.POST.get("name")
+            author = request.POST.get("author")
+            category = request.POST.get("category")
+            quantity = request.POST.get("quantity")
+            publish_year = request.POST.get("publishYear") or request.POST.get("year")
+            description = request.POST.get("description")
+            cover_image = request.FILES.get("cover_image")
+            
+            # Lưu vào DB
+            book = Book.objects.create(
+                title=name,
+                author=author,
+                category=category,
+                quantity=quantity,
+                year=publish_year,
+                description=description
+            )
+            
+            # Lưu ảnh bìa nếu có
+            if cover_image:
+                book.cover_image = cover_image
+                book.save()
+        else:
+            # Xử lý JSON (backward compatibility)
+            data = json.loads(request.body)
+            name = data.get("name")
+            author = data.get("author")
+            category = data.get("category")
+            quantity = data.get("quantity")
+            publish_year = data.get("publishYear")
+            description = data.get("description")
 
-        # Lưu vào DB
-        book = Book.objects.create(
-            title=name,
-            author=author,
-            category=category,
-            quantity=quantity,
-            year=publish_year,
-            description=description
-        )
+            # Lưu vào DB
+            book = Book.objects.create(
+                title=name,
+                author=author,
+                category=category,
+                quantity=quantity,
+                year=publish_year,
+                description=description
+            )
 
         return JsonResponse({"message": "Book added successfully", "id": book.book_id}, status=201)
     return JsonResponse({"error": "Invalid request method"}, status=400)
@@ -300,7 +327,7 @@ def book_detail(request, book_id):
     book = get_object_or_404(Book, pk=book_id)
 
     if request.method == "GET":
-        return JsonResponse({
+        response_data = {
             "book_id": book.book_id,
             "title": book.title,
             "author": book.author,
@@ -309,9 +336,47 @@ def book_detail(request, book_id):
             "quantity": book.quantity,
             "status": book.status,
             "description": book.description,
-        })
+        }
+        # Thêm URL ảnh bìa nếu có
+        if book.cover_image:
+            response_data["cover_image_url"] = book.cover_image.url
+        return JsonResponse(response_data)
+
+    elif request.method == "POST":  # Đổi từ PUT sang POST để hỗ trợ FormData
+        # Kiểm tra xem có phải FormData (file upload) hay JSON
+        if request.content_type and 'multipart/form-data' in request.content_type:
+            # Xử lý FormData (có file upload)
+            book.title = request.POST.get("title", book.title)
+            book.author = request.POST.get("author", book.author)
+            book.year = request.POST.get("year", book.year)
+            book.category = request.POST.get("category", book.category)
+            book.quantity = request.POST.get("quantity", book.quantity)
+            book.status = request.POST.get("status", book.status)
+            book.description = request.POST.get("description", book.description)
+            
+            # Xử lý ảnh bìa nếu có
+            cover_image = request.FILES.get("cover_image")
+            if cover_image:
+                book.cover_image = cover_image
+            
+            book.save()
+        else:
+            # Xử lý JSON (backward compatibility)
+            data = json.loads(request.body.decode("utf-8"))
+
+            book.title = data.get("title", book.title)
+            book.author = data.get("author", book.author)
+            book.year = data.get("year", book.year)
+            book.category = data.get("category", book.category)
+            book.quantity = data.get("quantity", book.quantity)
+            book.status = data.get("status", book.status)
+            book.description = data.get("description", book.description)
+            book.save()
+
+        return JsonResponse({"message": "Book updated successfully"})
 
     elif request.method == "PUT":
+        # Backward compatibility với PUT
         data = json.loads(request.body.decode("utf-8"))
 
         book.title = data.get("title", book.title)

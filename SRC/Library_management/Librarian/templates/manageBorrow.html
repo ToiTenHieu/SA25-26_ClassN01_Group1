@@ -173,7 +173,7 @@
   class="fixed inset-0 modal-backdrop bg-black/50 hidden z-50 flex items-center justify-center p-4"
 >
   <div
-    class="bg-white rounded-3xl shadow-2xl w-full max-w-2xl mx-4 slide-in-right border border-white/20"
+    class="bg-white rounded-3xl shadow-2xl w-full max-w-2xl mx-4 slide-in-right border border-white/20 flex flex-col max-h-[90vh] overflow-hidden"
   >
     <div class="bg-gradient-to-r from-blue-500 to-purple-600 p-6 rounded-t-3xl">
       <div class="flex justify-between items-center">
@@ -194,7 +194,7 @@
       </div>
     </div>
 
-    <form onsubmit="addNewBook(event)" class="p-8 space-y-6">
+    <form onsubmit="addNewBook(event)" class="flex-1 overflow-y-auto p-8 space-y-6" enctype="multipart/form-data">
       <div class="grid md:grid-cols-2 gap-6">
         <div>
           <label
@@ -295,6 +295,21 @@
           rows="4"
           class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 resize-none"
         ></textarea>
+      </div>
+
+      <div>
+        <label
+          class="block text-sm font-bold text-gray-700 mb-3 flex items-center"
+        >
+          <span class="mr-2">🖼️</span> Book Cover Image (Optional)
+        </label>
+        <input
+          type="file"
+          name="cover_image"
+          accept="image/*"
+          class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300"
+        />
+        <p class="text-xs text-gray-500 mt-2">Chọn ảnh bìa sách (JPG, PNG, etc.)</p>
       </div>
 
       <div class="flex space-x-4 pt-6">

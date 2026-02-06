@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from account.models import UserProfile
 from datetime import date
+from cloudinary.models import CloudinaryField
 # Create your models here.
 class Book(models.Model):
     STATUS_CHOICES = [
@@ -17,6 +18,7 @@ class Book(models.Model):
     quantity = models.PositiveIntegerField(default=0)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='available')
     description = models.TextField(blank=True, null=True)
+    cover_image = CloudinaryField('image', folder='book_covers', blank=True, null=True)
     def __str__(self):
         return f"{self.title} - {self.author}"
 from datetime import date, timedelta

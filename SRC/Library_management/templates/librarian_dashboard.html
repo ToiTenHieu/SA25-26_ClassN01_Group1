@@ -490,23 +490,17 @@
           const selectedCategoryText =
             categorySelect.options[categorySelect.selectedIndex].text;
 
-          const bookData = {
-            name: formData.get("bookName"),
-            author: formData.get("author"),
-            category: selectedCategoryText,
-            quantity: parseInt(formData.get("quantity")),
-            publishYear: formData.get("publishYear"),
-            description: formData.get("description"),
-          };
+          // Cập nhật category trong FormData với text đầy đủ
+          formData.set('category', selectedCategoryText);
 
           try {
             const response = await fetch("/librarian/api/add-book/", {
               method: "POST",
               headers: {
-                "Content-Type": "application/json",
                 "X-CSRFToken": getCookie("csrftoken"), // cần cho Django
+                // KHÔNG set Content-Type để browser tự động set với boundary cho multipart/form-data
               },
-              body: JSON.stringify(bookData),
+              body: formData, // Gửi FormData trực tiếp để hỗ trợ file upload
             });
 
             const result = await response.json();
@@ -515,7 +509,7 @@
               showNotification("📚 New book added successfully!");
               closeAddBookModal();
               form.reset();
-              // 👉 If you want, after successfully adding a book, call loadBooks() to reload the list from DB
+              location.reload(); // Reload để hiển thị sách mới
             } else {
               showNotification("❌ Error: " + result.error);
             }

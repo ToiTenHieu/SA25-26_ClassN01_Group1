@@ -161,10 +161,14 @@ document.addEventListener("click", (e) => {
           <div class="flex justify-between items-start">
             <div class="flex-1">
               <div class="flex items-center space-x-3 mb-3">
-                <div
-                  class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center"
-                >
-                  <span class="text-white text-sm"> 📚 </span>
+                <div class="w-16 h-24 overflow-hidden rounded-lg flex items-center justify-center flex-shrink-0">
+                  {% if book.cover_image %}
+                    <img src="{{ book.cover_image.url }}" alt="{{ book.title }}" class="w-full h-full object-cover">
+                  {% else %}
+                    <div class="w-full h-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                      <span class="text-white text-2xl"> 📚 </span>
+                    </div>
+                  {% endif %}
                 </div>
                 <h4 class="text-xl font-bold text-gray-800 break-words line-clamp-2 ">{{ book.title }}</h4>
               </div>
