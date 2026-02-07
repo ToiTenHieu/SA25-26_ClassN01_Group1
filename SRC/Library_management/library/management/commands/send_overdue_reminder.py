@@ -34,7 +34,7 @@ class Command(BaseCommand):
             days = (today - record.due_date).days
 
             send_mail(
-                subject="⏰ Overdue Book Return Reminder",
+                subject="Overdue Book Return Reminder",
                 message=(
                     f"Hello {record.user.user.username},\n\n"
                     f"You are overdue returning the book: {record.book.title}\n"
@@ -48,8 +48,8 @@ class Command(BaseCommand):
             )
 
             sent += 1
-            self.stdout.write(f"✔ Sent overdue reminder email to {email} (Record #{record.record_id})")
+            self.stdout.write(f"[OK] Sent overdue reminder email to {email} (Record #{record.record_id})")
 
         self.stdout.write(self.style.SUCCESS(
-            f"✅ Update borrowed->overdue: {updated} | total overdue: {overdue_qs.count()} | Sent emails: {sent} | Skipped (no email): {skipped_no_email}"
+            f"[SUCCESS] Update borrowed->overdue: {updated} | total overdue: {overdue_qs.count()} | Sent emails: {sent} | Skipped (no email): {skipped_no_email}"
         ))

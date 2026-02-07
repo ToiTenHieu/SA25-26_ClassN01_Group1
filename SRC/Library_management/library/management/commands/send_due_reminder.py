@@ -11,7 +11,7 @@ class Command(BaseCommand):
         for record in records:
             if record.days_left == 1:
                 send_mail(
-                    subject='📚 Reminder of book return deadline',
+                    subject='Reminder of book return deadline',
                     message=(
                         f"Hello {record.user.user.username},\n\n"
                         f"You are borrowing the book: {record.book.title}\n"
@@ -24,5 +24,5 @@ class Command(BaseCommand):
                 )
 
                 self.stdout.write(
-                    f"✔ Sent reminder email to {record.user.user.email}"
+                    f"[OK] Sent reminder email to {record.user.user.email}"
                 )

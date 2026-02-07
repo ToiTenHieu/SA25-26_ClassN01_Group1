@@ -417,7 +417,7 @@ from django.contrib import messages
 from datetime import date
 
 def renew_book(request, record_id):
-    record = get_object_or_404(BorrowRecord, id=record_id, user=request.user.userprofile)
+    record = get_object_or_404(BorrowRecord, pk=record_id, user=request.user.userprofile)
     if record.extend_due_date():
         messages.success(request, "📅 Gia hạn thành công thêm 7 ngày!")
     else:
